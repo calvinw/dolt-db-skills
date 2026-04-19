@@ -112,11 +112,7 @@ The report file must contain:
 Followed by all content from Steps 4–7 in full: anomaly detection table, side-by-side comparison table, reconciled recommendation, and the readiness signal (including any unresolved flags).
 
 After writing the markdown file, tell the user:
-> Report saved to `skills/reports/{TICKER}-{YEAR}.md`.
-> To generate a styled HTML version for sharing, run:
-> `bash skills/reports/generate-html-report.sh {TICKER} {YEAR}`
-> After committing and pushing the HTML, it will be published at:
-> `https://calvinw.github.io/BusMgmtBenchmarks/reports/{TICKER}-{YEAR}.html`
+> Report saved to `reports/{TICKER}-{YEAR}.md`.
 
 ## References
 
