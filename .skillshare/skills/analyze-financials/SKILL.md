@@ -112,22 +112,29 @@ For each field state:
 
 ## Step 7 — Signal readiness
 
-End with:
+End with the appropriate message based on mode:
 
+**Single-year mode:**
 > **Analysis complete.** Run `/insert-financials {TICKER} {YEAR}` to write these values to the database.
+
+**Multi-year mode** (after all years have been analyzed): emit a single combined message — do NOT repeat this per year:
+> **Analysis complete.** Run `/insert-financials {TICKER}` to write all changed years to the database.
 
 List any unresolved flags for the user to review before inserting.
 
 ## Step 8 — Save report to file
 
-After displaying the full analysis to the user, write the complete report as a markdown file:
+**Single-year mode:** write `reports/{TICKER}-{YEAR}.md` containing all content from Steps 4–7 for that year.
 
-**Path:** `reports/{TICKER}-{YEAR}.md`
+**Multi-year mode:** after all years have been analyzed, write a single combined file `reports/{TICKER}-all-years.md`. This file is what `/insert-financials` reads when run later in a separate session, so it must include:
 
-The report file must contain:
+1. A per-year summary table near the top with columns: Year | reportDate | Action (values: "No change", "New insert", "Correction: [field]", etc.)
+2. The full per-year analysis sections (Steps 4–7 content) for every year, in ascending order.
+
+The file must start with:
 
 ```
-# {Company Name} ({TICKER}) — FY{YEAR} Financial Analysis
+# {Company Name} ({TICKER}) — FY{YEAR_RANGE} Financial Analysis
 
 **Generated:** {today's date}
 **Source:** /analyze-financials skill
@@ -135,10 +142,9 @@ The report file must contain:
 ---
 ```
 
-Followed by all content from Steps 4–7 in full: anomaly detection table, side-by-side comparison table, reconciled recommendation, and the readiness signal (including any unresolved flags).
-
-After writing the markdown file, tell the user:
-> Report saved to `reports/{TICKER}-{YEAR}.md`.
+After writing the file(s), tell the user:
+> Report saved to `reports/{TICKER}-{YEAR}.md`. (single-year)
+> Report saved to `reports/{TICKER}-all-years.md`. (multi-year)
 
 ## References
 

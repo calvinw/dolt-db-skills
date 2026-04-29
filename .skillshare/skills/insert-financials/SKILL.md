@@ -1,26 +1,31 @@
 ---
 name: insert-financials
-description: Generate a SQL file containing REPLACE INTO statements for the BusMgmtBenchmarks Dolt database, based on reconciled values from /analyze-financials. Does NOT connect to or write to any database — output is a .sql file only, which the user applies manually to their local Dolt clone. Always run AFTER /analyze-financials in the same session. Triggered by "/insert-financials TICKER YEAR" (single year) or "/insert-financials TICKER" (all years from a multi-year analysis).
+description: Generate a SQL file containing REPLACE INTO statements for the BusMgmtBenchmarks Dolt database, based on reconciled values from /analyze-financials report files saved in reports/. Does NOT connect to or write to any database — output is a .sql file only, which the user applies manually to their local Dolt clone. Run /analyze-financials first to produce the report file. Triggered by "/insert-financials TICKER YEAR" (single year) or "/insert-financials TICKER" (all years from a multi-year analysis).
 ---
 
 # insert-financials
 
 Generate a SQL file for inserting or correcting reconciled financial data into the BusMgmtBenchmarks Dolt database. **No database connection is made — this skill writes a file only.**
 
-Always run `/analyze-financials` first in the same session.
+Run `/analyze-financials` first to produce the report file that this skill reads from.
 
 ## Inputs
 
 - **Single-year mode:** `/insert-financials TICKER YEAR`
-- **Multi-year mode:** `/insert-financials TICKER` (no year — uses all years from the current session's analyze-financials output)
+- **Multi-year mode:** `/insert-financials TICKER` (no year — reads all years from the saved report file)
 
-## Step 0 — Determine mode and years to process
+## Step 0 — Determine mode and locate report file
 
-**If YEAR is provided:** process only that single year. Skip to Step 1.
+**Single-year mode (YEAR provided):**
+- Look for `reports/{TICKER}-{YEAR}.md`.
+- If not found, stop and tell the user: "Please run `/analyze-financials {TICKER} {YEAR}` first to generate the report."
+- Skip to Step 1.
 
-**If YEAR is omitted (multi-year mode):**
-- Scan the analyze-financials reconciled recommendations table from the current session.
-- Collect every year whose Action is NOT "No change" (i.e., any year marked as new insert, must correct, or update).
+**Multi-year mode (YEAR omitted):**
+- Look for `reports/{TICKER}-all-years.md`.
+- If not found, stop and tell the user: "Please run `/analyze-financials {TICKER}` first to generate the report."
+- Read the per-year summary table from the report (columns: Year | reportDate | Action).
+- Collect every year whose Action is NOT "No change" (i.e., any year marked as new insert, correction, or update).
 - If all years are "No change", tell the user: "No changes needed — all years in Dolt already match the reconciled values."
 - Display the list of years to be processed:
 
@@ -28,15 +33,15 @@ Always run `/analyze-financials` first in the same session.
 
 Then run Steps 1–3 once per year (oldest first), accumulating all statements into a single SQL file.
 
-## Step 1 — Confirm analysis is in context
+## Step 1 — Read reconciled values from report file
 
-Check that `/analyze-financials` was run earlier this session and produced reconciled recommendations for the ticker.
+Open the report file located in Step 0. Find the reconciled recommendations section for the target year. Extract the **Recommended** column values for all 13 fields + metadata.
 
-If not, stop and tell the user: "Please run `/analyze-financials TICKER` first."
+Do not use session memory or prior conversation output — use only what is in the report file.
 
 ## Step 2 — Collect the 13 fields + metadata (per year)
 
-From the analyze-financials reconciled output for this year, collect the **Recommended** column values:
+From the report file's reconciled output for this year, collect:
 
 | Field | Notes |
 |-------|-------|
