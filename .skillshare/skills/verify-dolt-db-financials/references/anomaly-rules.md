@@ -1,6 +1,6 @@
 # Anomaly Detection Rules
 
-Apply all rules in Step 4 of analyze-financials. Flag issues as [WARNING] or [ERROR].
+Apply all rules in Step 4 of verify-dolt-db-financials. Flag issues as [WARNING] or [ERROR].
 
 ---
 

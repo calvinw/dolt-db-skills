@@ -2,11 +2,11 @@
 
 This repo is for working on skills that manage the **BusMgmtBenchmarks** Dolt database — a financial data project tracking retail company financials from SEC 10-K filings and Yahoo Finance.
 
-Skills are slash commands (e.g., `/analyze-financials`) available through AI tool agents.
+Skills are slash commands (e.g., `/verify-dolt-db-financials`) available through AI tool agents.
 
 ## Available Skills
 
-### `/analyze-financials TICKER YEAR`
+### `/verify-dolt-db-financials TICKER YEAR`
 
 **Purpose:** Fetch, compare, and reconcile financial data for a retail company across multiple sources (SEC 10-K, Yahoo Finance, and Dolt DB), then produce database-ready reconciled values.
 
@@ -19,21 +19,21 @@ Skills are slash commands (e.g., `/analyze-financials`) available through AI too
 6. Recommends reconciled values with source attribution
 7. Generates and saves a markdown report to `reports/{TICKER}-{YEAR}.md`
 
-**Usage:** `/analyze-financials TRR 2024`
+**Usage:** `/verify-dolt-db-financials TRR 2024`
 
 ### `/insert-financials TICKER YEAR`
 
-**Purpose:** Generate a SQL `REPLACE INTO` file containing reconciled financial data from `/analyze-financials`. This skill does NOT connect to or modify the database — it writes a `.sql` file that you apply manually.
+**Purpose:** Generate a SQL `REPLACE INTO` file containing reconciled financial data from `/verify-dolt-db-financials`. This skill does NOT connect to or modify the database — it writes a `.sql` file that you apply manually.
 
 **What it does:**
-1. Collects reconciled values and metadata from the prior `/analyze-financials` run
+1. Collects reconciled values and metadata from the prior `/verify-dolt-db-financials` run
 2. Constructs a `REPLACE INTO financials` SQL statement with all 13 fields
 3. Writes the SQL to `extract/2026/inserts/{TICKER}_{YEAR}_insert.sql`
 4. Provides instructions for applying the SQL to your local Dolt clone
 
-**Usage:** `/insert-financials TRR 2024` (after running `/analyze-financials TRR 2024` in the same session)
+**Usage:** `/insert-financials TRR 2024` (after running `/verify-dolt-db-financials TRR 2024` in the same session)
 
-**Workflow:** Always run `/analyze-financials` first, review the analysis and reconciled values, then run `/insert-financials` to generate the insert file.
+**Workflow:** Always run `/verify-dolt-db-financials` first, review the analysis and reconciled values, then run `/insert-financials` to generate the insert file.
 
 ## Starting Agents
 

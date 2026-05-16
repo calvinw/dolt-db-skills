@@ -1,13 +1,13 @@
 ---
 name: insert-financials
-description: Generate a SQL file containing REPLACE INTO statements for the BusMgmtBenchmarks Dolt database, based on reconciled values from /analyze-financials report files saved in reports/. Does NOT connect to or write to any database — output is a .sql file only, which the user applies manually to their local Dolt clone. Run /analyze-financials first to produce the report file. Triggered by "/insert-financials TICKER YEAR" (single year) or "/insert-financials TICKER" (all years from a multi-year analysis).
+description: Generate a SQL file containing REPLACE INTO statements for the BusMgmtBenchmarks Dolt database, based on reconciled values from /verify-dolt-db-financials report files saved in reports/. Does NOT connect to or write to any database — output is a .sql file only, which the user applies manually to their local Dolt clone. Run /verify-dolt-db-financials first to produce the report file. Triggered by "/insert-financials TICKER YEAR" (single year) or "/insert-financials TICKER" (all years from a multi-year analysis).
 ---
 
 # insert-financials
 
 Generate a SQL file for inserting or correcting reconciled financial data into the BusMgmtBenchmarks Dolt database. **No database connection is made — this skill writes a file only.**
 
-Run `/analyze-financials` first to produce the report file that this skill reads from.
+Run `/verify-dolt-db-financials` first to produce the report file that this skill reads from.
 
 ## Inputs
 
@@ -18,12 +18,12 @@ Run `/analyze-financials` first to produce the report file that this skill reads
 
 **Single-year mode (YEAR provided):**
 - Look for `reports/{TICKER}-{YEAR}.md`.
-- If not found, stop and tell the user: "Please run `/analyze-financials {TICKER} {YEAR}` first to generate the report."
+- If not found, stop and tell the user: "Please run `/verify-dolt-db-financials {TICKER} {YEAR}` first to generate the report."
 - Skip to Step 1.
 
 **Multi-year mode (YEAR omitted):**
 - Look for `reports/{TICKER}-all-years.md`.
-- If not found, stop and tell the user: "Please run `/analyze-financials {TICKER}` first to generate the report."
+- If not found, stop and tell the user: "Please run `/verify-dolt-db-financials {TICKER}` first to generate the report."
 - Read the per-year summary table from the report (columns: Year | reportDate | Action).
 - Collect every year whose Action is NOT "No change" (i.e., any year marked as new insert, correction, or update).
 - If all years are "No change", tell the user: "No changes needed — all years in Dolt already match the reconciled values."

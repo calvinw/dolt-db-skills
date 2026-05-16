@@ -1,15 +1,15 @@
 ---
-name: analyze-financials
-description: Fetch financial statements from SEC 10-K filings and Yahoo Finance for a BusMgmtBenchmarks retail company, compare all sources side by side, detect anomalies (especially SGA composite line items, restatements, and balance sheet mismatches), and produce reconciled values ready for the Dolt database. Use when validating or adding financial data for any company tracked in the BusMgmtBenchmarks project. Triggered by commands like "/analyze-financials TICKER YEAR" or "/analyze-financials TICKER" (all years) or requests to fetch, check, or validate financials for a company in the project.
+name: verify-dolt-db-financials
+description: Fetch financial statements from SEC 10-K filings and Yahoo Finance for a BusMgmtBenchmarks retail company, compare all sources side by side, detect anomalies (especially SGA composite line items, restatements, and balance sheet mismatches), and produce reconciled values ready for the Dolt database. Use when validating or adding financial data for any company tracked in the BusMgmtBenchmarks project. Triggered by commands like "/verify-dolt-db-financials TICKER YEAR" or "/verify-dolt-db-financials TICKER" (all years) or requests to fetch, check, or validate financials for a company in the project.
 ---
 
-# analyze-financials
+# verify-dolt-db-financials
 
 Fetch, compare, and reconcile financial data for a BusMgmtBenchmarks retail company across multiple sources, then produce DB-ready reconciled values.
 
 ## Inputs
 
-`/analyze-financials TICKER [YEAR]`
+`/verify-dolt-db-financials TICKER [YEAR]`
 
 - `TICKER` — stock ticker (e.g. TRR, WMT, M)
 - `YEAR` — fiscal year (e.g. 2024). **Optional.** If omitted, analyze all available years for the company (see Step 0).
@@ -137,7 +137,7 @@ The file must start with:
 # {Company Name} ({TICKER}) — FY{YEAR_RANGE} Financial Analysis
 
 **Generated:** {today's date}
-**Source:** /analyze-financials skill
+**Source:** /verify-dolt-db-financials skill
 
 ---
 ```
