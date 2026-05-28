@@ -1,7 +1,7 @@
 {
   "managed": {
-    "verify-dolt-db-financials": "symlink",
-    "insert-financials": "symlink"
+    "insert-financials": "symlink",
+    "verify-dolt-db-financials": "symlink"
   },
-  "updated_at": "2026-05-12T16:14:58.447965263Z"
+  "updated_at": "2026-05-28T16:21:13.631536147Z"
 }
