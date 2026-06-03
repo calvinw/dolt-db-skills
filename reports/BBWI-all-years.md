@@ -1,392 +1,363 @@
 # Bath & Body Works (BBWI) — FY2018–FY2025 Financial Analysis
 
-**Generated:** 2026-05-29
+**Generated:** 2026-06-03
 **Source:** /verify-dolt-db-financials skill
+
+---
+
+## Critical Findings
+
+### 1. Wrong CIK in company_info
+The Dolt `company_info` table has `CIK = 886158` for BBWI. **CIK 886158 is Bed Bath & Beyond (BBBY)**, not Bath & Body Works. The correct CIK for Bath & Body Works / L Brands is **701985**.
+
+The insert SQL must include: `UPDATE company_info SET CIK = 701985 WHERE ticker_symbol = 'BBWI'`
+
+### 2. Dolt years 2018–2022 contain Bed Bath & Beyond data
+Because the wrong CIK was used in prior analysis, all five pre-2023 rows in Dolt for BBWI actually contain BBBY financial data. All reportDates in those rows end in late February / early March — BBBY's fiscal year end — not BBWI's late January / early February end.
+
+- Dolt year 2022 (reportDate 2023-02-25): Revenue 5,344,685K with $1.3B impairment charges → BBBY going-bankrupt year
+- Dolt year 2021 (reportDate 2022-02-26): Revenue 7,867,778K → matches BBBY FY2021, not BBWI
+- Dolt years 2018–2020: Revenue $9–12B range → all match BBBY revenue, not BBWI
+
+### 4. FY2018–FY2020: L Brands combined (pre-spinoff)
+SEC data fetched for years 2018–2020 using the correct CIK 701985. These filings are **L Brands combined** — including both the Bath & Body Works segment and the Victoria's Secret segment, which was not spun off until August 2021. Revenues ($11.8–13.2B) are therefore much larger than BBWI standalone ($7.9B FY2021+) and include VS assets/liabilities on the balance sheet.
+
+This is the only available data for CIK 701985 for those years. It is used to replace the completely wrong BBBY data. The report clearly labels all three years as L Brands combined.
+
+### 3. BBWI background
+- **CIK:** 701985 (formerly L Brands, Inc.)
+- **Spinoff:** Victoria's Secret (VSCO) was spun off on August 2, 2021. The remaining L Brands entity was renamed Bath & Body Works, Inc. CIK 701985 was retained by BBWI.
+- **Fiscal year end:** Late January / early February (e.g., Jan 28, Jan 29, Feb 1, Feb 3)
+- **Segment:** Specialty (beauty / personal care). Expected gross margin: 35–55%.
+- **Equity:** Negative TSE is expected — company carries significant long-term debt.
+- **Discontinued operations:** VS appears as discontinued ops in FY2021 10-K (and prior comparatives). For FY2021, $258M gain from VS spinoff is included in total Net Income. FY2022+ have no material discontinued ops.
+- **SGA:** Single `us-gaap_SellingGeneralAndAdministrativeExpense` line — no separate marketing split. Use directly.
+- **Currency:** All values in $thousands (USD).
 
 ---
 
 ## Per-Year Summary
 
 | Year | reportDate | Action |
-|------|------------|--------|
-| 2018 | 2019-03-02 | No change — pre-spinoff L Brands data; no alternate source |
-| 2019 | 2020-02-29 | No change — pre-spinoff L Brands data; no alternate source |
-| 2020 | 2021-02-27 | No change — pre-spinoff L Brands data; no alternate source |
-| 2021 | 2022-02-26 | No change — L Brands transition year; no alternate source |
-| 2022 | 2023-01-31 | **Correction: All fields** — Dolt data is incorrect; replacing with Yahoo FY2022 values |
-| 2023 | 2024-01-31 | No change — Yahoo values match exactly |
-| 2024 | 2025-01-31 | **New insert** |
-| 2025 | 2026-01-31 | **New insert** |
+|------|-----------|--------|
+| 2018 | 2019-02-02 | Correction: ALL fields — was BBBY data; replacing with L Brands combined (B&BW + VS pre-spinoff) |
+| 2019 | 2020-02-01 | Correction: ALL fields — was BBBY data; replacing with L Brands combined (includes $720M VS goodwill impairment) |
+| 2020 | 2021-01-30 | Correction: ALL fields — was BBBY data; replacing with L Brands combined (final pre-spinoff year) |
+| 2021 | 2022-01-29 | Correction: ALL fields — replacing BBBY data with BBWI standalone |
+| 2022 | 2023-01-28 | Correction: ALL fields — replacing BBBY data with BBWI standalone |
+| 2023 | 2024-02-03 | Correction: reportDate only (was 2024-01-31, should be 2024-02-03); financials ✓ |
+| 2024 | 2025-02-01 | New insert |
+| 2025 | 2026-01-31 | New insert |
 
 ---
 
-## Company Metadata
+## FY2018
 
-- **Company name (DB):** Bath & Body Works
-- **Display name:** Bath & Body Works
-- **Ticker:** BBWI
-- **CIK:** 886158
-- **Segment:** Specialty — Personal Care / Home Fragrance
-- **Fiscal year end:** Late January
-- **SEC available:** Yes (CIK present), but SEC MCP unavailable this session — Yahoo Finance + Dolt only
-- **Spinoff note:** BBWI was spun off from L Brands (CIK 886158) on August 2, 2021. The CIK 886158 was retained by BBWI. Dolt years 2018–2021 contain L Brands combined data (included Victoria's Secret segment). Years 2022+ are BBWI standalone.
-- **Operating Profit convention:** Yahoo "Operating Income" = "Total Operating Income As Reported" for all years — no special charges in the operating line; use directly
-- **TSE convention:** Common Stock Equity (negative for all post-spinoff years due to leveraged capital structure and accumulated losses — valid)
+**Sources:** SEC 10-K (CIK 701985, L Brands FY2018, period ending 2019-02-02) — **L Brands combined (B&BW + Victoria's Secret)**
 
----
+### Anomaly Detection
+- `[WARNING]` This is **L Brands combined** data — includes both Bath & Body Works and Victoria's Secret segments. Revenue ($13,237,000K) is much larger than BBWI standalone ($7.9B in FY2021) because it includes VS. Flag for awareness.
+- `[ERROR]` Current Dolt row contains BBBY data (Revenue $12,028,797K, reportDate 2019-03-02). All fields replaced.
+- Gross margin: 4,899,000 / 13,237,000 = 37.0% — within Specialty benchmark (35–55%) ✓
+- Operating Profit includes −99,000K loss on La Senza divestiture; already embedded in the 1,237,000K total.
+- Balance sheet identity: 8,959,000 + (−869,000) = 8,090,000 ✓
+- Note: Goodwill of 1,348,000K includes both B&BW and VS goodwill; VS goodwill was later impaired in FY2019.
 
-## Anomaly Rules Applied
+### Side-by-Side
 
-- **Rule 3 (Yahoo SGA = Total OpEx):** Not triggered. Yahoo Total Expenses (~$6.2B for FY2022) >> SGA (~$1.9B). SGA is safe to use.
-- **Rule 1 (SGA + Marketing):** No separate Marketing line in Yahoo for BBWI. Single combined G&A/SGA line. Use directly.
-- **Rule 4:** Not needed — combined SGA line present.
-- **SGA verification (years 2022–2025):** Gross Profit − SGA = Operating Income for all years ✓ (2022: 3,255,000−1,879,000=1,376,000 ✓; 2023: 3,236,000−1,951,000=1,285,000 ✓; 2024: 3,234,000−1,968,000=1,266,000 ✓; 2025: 3,189,000−2,063,000=1,126,000 ✓)
-- **Gross margin benchmark:** Specialty expected 35–55%. All post-spinoff years: 43–44% ✓
-- **Negative TSE:** All post-spinoff years have negative TSE. Valid — BBWI carries significant lease and long-term debt with accumulated losses.
-- **Balance sheet identity:** Verified for all years. ✓
-- **Year 2022 ERROR:** Existing Dolt data (Revenue 5.3B, Op Profit −2.8B) is completely inconsistent with Yahoo FY2022 data (Revenue 7.56B, Op Profit +1.4B). The Dolt year 2022 reportDate (2023-02-25) also doesn't match BBWI's FY2022 fiscal year end (Jan 28, 2023). Dolt data appears to be from a wrong source. Correcting to Yahoo values.
+| Field | SEC (L Brands combined) | Yahoo | Dolt (WRONG — BBBY) | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 13,237,000 | — | 12,028,797 | **13,237,000** |
+| Cost of Goods | 8,338,000 | — | 7,924,817 | **8,338,000** |
+| Gross Margin | 4,899,000 | — | 4,103,980 | **4,899,000** |
+| SGA | 3,563,000 | — | 3,681,210 | **3,563,000** |
+| Operating Profit | 1,237,000 | — | -87,135 | **1,237,000** |
+| Net Profit | 644,000 | — | -137,224 | **644,000** |
+| Inventory | 1,248,000 | — | 2,618,922 | **1,248,000** |
+| Current Assets | 3,260,000 | — | 3,909,972 | **3,260,000** |
+| Total Assets | 8,090,000 | — | 6,570,541 | **8,090,000** |
+| Current Liabilities | 1,986,000 | — | 2,077,632 | **1,986,000** |
+| Liabilities | 8,959,000 | — | 4,010,210 | **8,959,000** |
+| Total Shareholder Equity | -869,000 | — | 2,560,331 | **-869,000** |
+| TL&SE | 8,090,000 | — | 6,570,541 | **8,090,000** |
+| reportDate | 2019-02-02 | — | 2019-03-02 | **2019-02-02** |
 
----
-
-## Years 2018–2021: L Brands Era Data (Pre-Spinoff / Transition)
-
-[WARNING] Years 2018–2021 in Dolt contain L Brands combined company data, which included the Victoria's Secret segment before the August 2021 spinoff. Revenue figures ($7.9–$12B) and large inventory/SGA values reflect the combined entity. This data is not directly comparable to post-spinoff BBWI financials. No correction is possible without proper L Brands historical data.
-
-No Yahoo Finance data available for these years. No changes recommended.
-
-### Year 2018
-
-| Field | Dolt (current) | Yahoo | Recommended |
-|-------|---------------|-------|-------------|
-| reportDate | 2019-03-02 | N/A | 2019-03-02 |
-| Net Revenue | 12,028,797 | N/A | 12,028,797 |
-| Cost of Goods | 7,924,817 | N/A | 7,924,817 |
-| Gross Margin | 4,103,980 | N/A | 4,103,980 |
-| Gross Margin % | 34.1% | N/A | — |
-| SGA | 3,681,210 | N/A | 3,681,210 [WARNING: unverified; L Brands era] |
-| Operating Profit | -87,135 | N/A | -87,135 |
-| Net Profit | -137,224 | N/A | -137,224 |
-| Inventory | 2,618,922 | N/A | 2,618,922 |
-| Current Assets | 3,909,972 | N/A | 3,909,972 |
-| Total Assets | 6,570,541 | N/A | 6,570,541 |
-| Current Liabilities | 2,077,632 | N/A | 2,077,632 |
-| Liabilities | 4,010,210 | N/A | 4,010,210 |
-| TSE | 2,560,331 | N/A | 2,560,331 |
-| Total L+E | 6,570,541 | N/A | 6,570,541 |
-
-Balance sheet identity: 4,010,210 + 2,560,331 = 6,570,541 ✓
-
-**Action: No change.**
+### Reconciled Values
+All values from SEC 10-K (CIK 701985, L Brands combined). Balance sheet identity: 8,959,000 + (−869,000) = 8,090,000 ✓
 
 ---
 
-### Year 2019
+## FY2019
 
-| Field | Dolt (current) | Yahoo | Recommended |
-|-------|---------------|-------|-------------|
-| reportDate | 2020-02-29 | N/A | 2020-02-29 |
-| Net Revenue | 11,158,580 | N/A | 11,158,580 |
-| Cost of Goods | 7,616,920 | N/A | 7,616,920 |
-| Gross Margin | 3,541,660 | N/A | 3,541,660 |
-| Gross Margin % | 31.7% | N/A | — |
-| SGA | 3,732,498 | N/A | 3,732,498 [WARNING: unverified; L Brands era] |
-| Operating Profit | -700,064 | N/A | -700,064 |
-| Net Profit | -613,816 | N/A | -613,816 |
-| Inventory | 2,093,869 | N/A | 2,093,869 |
-| Current Assets | 3,826,285 | N/A | 3,826,285 |
-| Total Assets | 7,790,515 | N/A | 7,790,515 |
-| Current Liabilities | 2,466,526 | N/A | 2,466,526 |
-| Liabilities | 6,025,580 | N/A | 6,025,580 |
-| TSE | 1,764,935 | N/A | 1,764,935 |
-| Total L+E | 7,790,515 | N/A | 7,790,515 |
+**Sources:** SEC 10-K (CIK 701985, L Brands FY2019, period ending 2020-02-01) — **L Brands combined (B&BW + Victoria's Secret)**
 
-Balance sheet identity: 6,025,580 + 1,764,935 = 7,790,515 ✓
+### Anomaly Detection
+- `[WARNING]` This is **L Brands combined** data — includes both Bath & Body Works and Victoria's Secret segments.
+- `[ERROR]` Current Dolt row contains BBBY data (Revenue $11,158,580K, reportDate 2020-02-29). All fields replaced.
+- `[WARNING]` FY2019 includes a **$720,000K goodwill impairment** (Victoria's Secret brand write-down). This sharply reduces Operating Profit to 258,000K and drives Net Income to −366,000K. This is a one-time VS impairment, not a B&BW issue.
+- Gross margin: 4,450,000 / 12,914,000 = 34.5% — slightly below Specialty benchmark (VS declining drag) ✓
+- Balance sheet identity: 11,624,000 + (−1,499,000) = 10,125,000 ✓
 
-Note: Large jump in Total Assets from 2018 to 2019 reflects FASB ASC 842 adoption (ROU assets and lease liabilities added to balance sheet).
+### Side-by-Side
 
-**Action: No change.**
+| Field | SEC (L Brands combined) | Yahoo | Dolt (WRONG — BBBY) | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 12,914,000 | — | 11,158,580 | **12,914,000** |
+| Cost of Goods | 8,464,000 | — | 7,616,920 | **8,464,000** |
+| Gross Margin | 4,450,000 | — | 3,541,660 | **4,450,000** |
+| SGA | 3,472,000 | — | 3,732,498 | **3,472,000** |
+| Operating Profit | 258,000 | — | -700,064 | **258,000** |
+| Net Profit | -366,000 | — | -613,816 | **-366,000** |
+| Inventory | 1,287,000 | — | 2,093,869 | **1,287,000** |
+| Current Assets | 3,245,000 | — | 3,826,285 | **3,245,000** |
+| Total Assets | 10,125,000 | — | 7,790,515 | **10,125,000** |
+| Current Liabilities | 2,372,000 | — | 2,466,526 | **2,372,000** |
+| Liabilities | 11,624,000 | — | 6,025,580 | **11,624,000** |
+| Total Shareholder Equity | -1,499,000 | — | 1,764,935 | **-1,499,000** |
+| TL&SE | 10,125,000 | — | 7,790,515 | **10,125,000** |
+| reportDate | 2020-02-01 | — | 2020-02-29 | **2020-02-01** |
 
----
-
-### Year 2020
-
-| Field | Dolt (current) | Yahoo | Recommended |
-|-------|---------------|-------|-------------|
-| reportDate | 2021-02-27 | N/A | 2021-02-27 |
-| Net Revenue | 9,233,028 | N/A | 9,233,028 |
-| Cost of Goods | 6,114,947 | N/A | 6,114,947 |
-| Gross Margin | 3,118,081 | N/A | 3,118,081 |
-| Gross Margin % | 33.8% | N/A | — |
-| SGA | 3,224,363 | N/A | 3,224,363 [WARNING: unverified; L Brands era] |
-| Operating Profit | -336,887 | N/A | -336,887 |
-| Net Profit | -150,773 | N/A | -150,773 |
-| Inventory | 1,671,909 | N/A | 1,671,909 |
-| Current Assets | 3,620,045 | N/A | 3,620,045 |
-| Total Assets | 6,456,930 | N/A | 6,456,930 |
-| Current Liabilities | 2,294,921 | N/A | 2,294,921 |
-| Liabilities | 5,179,994 | N/A | 5,179,994 |
-| TSE | 1,276,936 | N/A | 1,276,936 |
-| Total L+E | 6,456,930 | N/A | 6,456,930 |
-
-Balance sheet identity: 5,179,994 + 1,276,936 = 6,456,930 ✓
-
-**Action: No change.**
+### Reconciled Values
+All values from SEC 10-K (CIK 701985, L Brands combined). Balance sheet identity: 11,624,000 + (−1,499,000) = 10,125,000 ✓
 
 ---
 
-### Year 2021
+## FY2020
 
-| Field | Dolt (current) | Yahoo | Recommended |
-|-------|---------------|-------|-------------|
-| reportDate | 2022-02-26 | N/A | 2022-02-26 |
-| Net Revenue | 7,867,778 | N/A | 7,867,778 |
-| Cost of Goods | 5,384,287 | N/A | 5,384,287 |
-| Gross Margin | 2,483,491 | N/A | 2,483,491 |
-| Gross Margin % | 31.6% | N/A | — |
-| SGA | 2,692,292 | N/A | 2,692,292 [WARNING: unverified; L Brands transition year] |
-| Operating Profit | -407,578 | N/A | -407,578 |
-| Net Profit | -559,623 | N/A | -559,623 |
-| Inventory | 1,725,410 | N/A | 1,725,410 |
-| Current Assets | 2,363,154 | N/A | 2,363,154 |
-| Total Assets | 5,130,572 | N/A | 5,130,572 |
-| Current Liabilities | 2,074,787 | N/A | 2,074,787 |
-| Liabilities | 4,956,427 | N/A | 4,956,427 |
-| TSE | 174,145 | N/A | 174,145 |
-| Total L+E | 5,130,572 | N/A | 5,130,572 |
+**Sources:** SEC 10-K (CIK 701985, L Brands FY2020, period ending 2021-01-30) — **L Brands combined (final pre-spinoff year)**
 
-Balance sheet identity: 4,956,427 + 174,145 = 5,130,572 ✓
+### Anomaly Detection
+- `[WARNING]` This is **L Brands combined** data — final year before Victoria's Secret was spun off (August 2021). Includes both B&BW and VS for the full fiscal year.
+- `[ERROR]` Current Dolt row contains BBBY data (Revenue $9,233,028K, reportDate 2021-02-27). All fields replaced.
+- Gross margin: 4,667,000 / 11,847,000 = 39.4% — within Specialty benchmark ✓ (B&BW's strong COVID year lifted margins)
+- Balance sheet identity: 12,233,000 + (−662,000) = 11,571,000 ✓
+- Note: Current Assets ($5,579,000K) are very high due to $3,903,000K in cash (L Brands built cash reserves during COVID)
 
-Note: Year 2021 covers the L Brands transition year including partial-year Victoria's Secret operations (spinoff completed Aug 2021). Negative operating and net profits include spinoff-related charges.
+### Side-by-Side
 
-**Action: No change.**
+| Field | SEC (L Brands combined) | Yahoo | Dolt (WRONG — BBBY) | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 11,847,000 | — | 9,233,028 | **11,847,000** |
+| Cost of Goods | 7,180,000 | — | 6,114,947 | **7,180,000** |
+| Gross Margin | 4,667,000 | — | 3,118,081 | **4,667,000** |
+| SGA | 3,087,000 | — | 3,224,363 | **3,087,000** |
+| Operating Profit | 1,580,000 | — | -336,887 | **1,580,000** |
+| Net Profit | 844,000 | — | -150,773 | **844,000** |
+| Inventory | 1,273,000 | — | 1,671,909 | **1,273,000** |
+| Current Assets | 5,579,000 | — | 3,620,045 | **5,579,000** |
+| Total Assets | 11,571,000 | — | 6,456,930 | **11,571,000** |
+| Current Liabilities | 2,826,000 | — | 2,294,921 | **2,826,000** |
+| Liabilities | 12,233,000 | — | 5,179,994 | **12,233,000** |
+| Total Shareholder Equity | -662,000 | — | 1,276,936 | **-662,000** |
+| TL&SE | 11,571,000 | — | 6,456,930 | **11,571,000** |
+| reportDate | 2021-01-30 | — | 2021-02-27 | **2021-01-30** |
 
----
-
-## Year 2022: Correction Required
-
-[ERROR] The existing Dolt year 2022 data is incorrect and must be replaced.
-
-**Problem:**
-- Dolt reportDate is 2023-02-25 — not a valid BBWI fiscal year-end date (FY2022 ended Jan 28, 2023)
-- Dolt Revenue = 5,344,685K vs Yahoo FY2022 = 7,560,000K — a ~2.2B discrepancy
-- Dolt Operating Profit = −2,775,639K vs Yahoo FY2022 = +1,376,000K — a ~4.2B discrepancy
-- Current Liabilities (2,495,884K) > Total Assets (2,225,217K) — structurally impossible
-- All fields appear to be from an incorrect source (possibly Victoria's Secret & Co VSCO data or transition-period L Brands data incorrectly mapped to this period)
-
-**Correct FY2022 values (BBWI standalone, from Yahoo column 2023-01-31):**
-
-| Field | Yahoo (2023-01-31) | Dolt (current — WRONG) | Recommended |
-|-------|-------------------|----------------------|-------------|
-| reportDate | 2023-01-31 | 2023-02-25* | **2023-01-31** |
-| Net Revenue | 7,560,000 | 5,344,685* | **7,560,000** |
-| Cost of Goods | 4,305,000 | 4,129,802* | **4,305,000** |
-| Gross Margin | 3,255,000 | 1,214,883* | **3,255,000** |
-| Gross Margin % | 43.1% | 22.7% | — |
-| SGA | 1,879,000 | 2,372,969* | **1,879,000** |
-| Operating Profit | 1,376,000 | −2,775,639* | **1,376,000** |
-| Net Profit | 800,000 | −3,498,801* | **800,000** |
-| Inventory | 709,000 | 817,553* | **709,000** |
-| Current Assets | 2,266,000 | 1,096,909* | **2,266,000** |
-| Total Assets | 5,494,000 | 2,225,217* | **5,494,000** |
-| Current Liabilities | 1,379,000 | 2,495,884* | **1,379,000** |
-| Liabilities | 7,700,000 | 5,025,225* | **7,700,000** |
-| TSE | −2,206,000 | −2,800,008* | **−2,206,000** |
-| Total L+E | 5,494,000 | 2,225,217 | **5,494,000** |
-
-*Asterisk = incorrect/incorrect source
-
-Gross Margin check: 7,560,000 − 4,305,000 = 3,255,000 ✓
-Balance sheet: 7,700,000 + (−2,206,000) = 5,494,000 ✓
-Gross margin %: 3,255,000/7,560,000 = 43.1% — within specialty range (35–55%) ✓
-[WARNING] TSE = −2,206,000K (negative equity). Valid — BBWI leveraged structure.
-
-TSE note: Using Common Stock Equity (−2,206,000K) consistent with Dolt year 2023 convention. Yahoo Total Equity Gross Minority Interest = −2,205,000K (difference of 1,000K = minority interest). Yahoo Total Liabilities = 7,699,000K; calculated Liabilities (5,494,000 − (−2,206,000)) = 7,700,000K; 1K diff from minority interest.
-
-**Action: Correction — all fields.**
+### Reconciled Values
+All values from SEC 10-K (CIK 701985, L Brands combined). Balance sheet identity: 12,233,000 + (−662,000) = 11,571,000 ✓
 
 ---
 
-## Year 2023: Yahoo vs Dolt Comparison
+## FY2021
 
-Yahoo 2024-01-31 → Dolt year 2023 (reportDate 2024-01-31).
+**Sources:** SEC 10-K (CIK 701985, FY2021, period ending 2022-01-29) — first BBWI standalone year
 
-| Field | Yahoo (2024-01-31) | Dolt (current) | Recommended |
-|-------|-------------------|---------------|-------------|
-| reportDate | 2024-01-31 | 2024-01-31 | 2024-01-31 |
-| Net Revenue | 7,429,000 | 7,429,000 | 7,429,000 |
-| Cost of Goods | 4,193,000 | 4,193,000 | 4,193,000 |
-| Gross Margin | 3,236,000 | 3,236,000 | 3,236,000 |
-| Gross Margin % | 43.6% | 43.6% | — |
-| SGA | 1,951,000 | 1,951,000 | 1,951,000 |
-| Operating Profit | 1,285,000 | 1,285,000 | 1,285,000 |
-| Net Profit | 878,000 | 878,000 | 878,000 |
-| Inventory | 710,000 | 710,000 | 710,000 |
-| Current Assets | 2,115,000 | 2,115,000 | 2,115,000 |
-| Total Assets | 5,463,000 | 5,463,000 | 5,463,000 |
-| Current Liabilities | 1,289,000 | 1,289,000 | 1,289,000 |
-| Liabilities | 7,090,000* | 7,090,000 | 7,090,000 |
-| TSE | −1,627,000 | −1,627,000 | −1,627,000 |
-| Total L+E | 5,463,000 | 5,463,000 | 5,463,000 |
+### Anomaly Detection
+- `[ERROR]` Current Dolt row contains BBBY data (Revenue 7,867,778K with BBBY reportDate 2022-02-26). All fields must be replaced.
+- `[WARNING]` Net Profit: FY2021 includes $258,000K from discontinued operations (Victoria's Secret spinoff gain). Total `us-gaap_NetIncomeLoss` = 1,333,000K; continuing operations only = 1,075,000K. Using total NetIncomeLoss per DB convention, but flag for awareness — the 258M is a one-time spinoff event.
+- Gross margin: 3,855,000 / 7,882,000 = 48.9% — within Specialty benchmark (35–55%) ✓
+- Balance sheet identity: 6,026,000 + (-1,518,000) = 4,508,000 ✗ — wait, this checks differently: Liabilities + TSE = TL&SE → 7,544,000 + (-1,518,000) = 6,026,000 ✓
+- Negative TSE (-1,518,000K) is expected — highly leveraged company.
+- Yahoo does not have FY2021 data (5-year window starts at FY2022).
 
-*Yahoo Total Liabilities shown as 7,089,000K; Dolt Liabilities = Total Assets − TSE = 5,463,000 − (−1,627,000) = 7,090,000K (1K diff from rounding only).
+### Side-by-Side
 
-All values match exactly.
+| Field | SEC | Yahoo | Dolt (WRONG — BBBY) | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 7,882,000 | — | 7,867,778 | **7,882,000** |
+| Cost of Goods | 4,027,000 | — | 5,384,287 | **4,027,000** |
+| Gross Margin | 3,855,000 | — | 2,483,491 | **3,855,000** |
+| SGA | 1,846,000 | — | 2,692,292 | **1,846,000** |
+| Operating Profit | 2,009,000 | — | -407,578 | **2,009,000** |
+| Net Profit | 1,333,000 | — | -559,623 | **1,333,000** |
+| Inventory | 709,000 | — | 1,725,410 | **709,000** |
+| Current Assets | 3,009,000 | — | 2,363,154 | **3,009,000** |
+| Total Assets | 6,026,000 | — | 5,130,572 | **6,026,000** |
+| Current Liabilities | 1,290,000 | — | 2,074,787 | **1,290,000** |
+| Liabilities | 7,544,000 | — | 4,956,427 | **7,544,000** |
+| Total Shareholder Equity | -1,518,000 | — | 174,145 | **-1,518,000** |
+| TL&SE | 6,026,000 | — | 5,130,572 | **6,026,000** |
+| reportDate | 2022-01-29 | — | 2022-02-26 | **2022-01-29** |
 
-Balance sheet identity: 7,090,000 + (−1,627,000) = 5,463,000 ✓
+### Reconciled Values
 
-**Action: No change.**
-
----
-
-## Year 2024: New Insert (Yahoo 2025-01-31)
-
-This year is not yet in the Dolt database.
-
-### Source Data (Yahoo 2025-01-31)
-
-**Income Statement:**
-| Item | Yahoo Raw | Value ($K) |
-|------|-----------|-----------|
-| Total Revenue | 7.307e+09 | 7,307,000 |
-| Cost Of Revenue | 4.073e+09 | 4,073,000 |
-| Gross Profit | 3.234e+09 | 3,234,000 |
-| Selling General And Administration | 1.968e+09 | 1,968,000 |
-| Operating Income | 1.266e+09 | 1,266,000 |
-| Total Operating Income As Reported | 1.266e+09 | 1,266,000 |
-| Net Income Common Stockholders | 7.98e+08 | 798,000 |
-
-Gross Margin check: 7,307,000 − 4,073,000 = 3,234,000 ✓
-Operating check: 3,234,000 − 1,968,000 = 1,266,000 ✓
-
-**Balance Sheet:**
-| Item | Yahoo Raw | Value ($K) |
-|------|-----------|-----------|
-| Inventory | 7.34e+08 | 734,000 |
-| Current Assets | 1.823e+09 | 1,823,000 |
-| Total Assets | 4.872e+09 | 4,872,000 |
-| Current Liabilities | 1.231e+09 | 1,231,000 |
-| Common Stock Equity | −1.385e+09 | −1,385,000 |
-| Total Equity Gross Minority Interest | −1.383e+09 | −1,383,000 |
-| Total Liabilities Net Minority Interest | 6.255e+09 | 6,255,000 |
-
-TSE = Common Stock Equity = −1,385,000K (consistent with Dolt convention)
-Liabilities = 4,872,000 − (−1,385,000) = 6,257,000K
-Yahoo Total Liabilities = 6,255,000K (2K diff from minority interest of 2,000K)
-
-Balance sheet: 6,257,000 + (−1,385,000) = 4,872,000 ✓
-
-### Anomaly Checks
-
-- **Gross margin:** 3,234,000/7,307,000 = **44.3%** — within specialty range (35–55%) ✓
-- **SGA rule 3:** Yahoo SGA 1,968,000K << Total Expenses ~6,041,000K ✓
-- **Operating Profit:** Operating Income = As Reported (1,266,000K) — consistent with BBWI convention ✓
-- **TSE:** Negative (−1,385,000K) — valid, consistent with BBWI post-spinoff structure ✓
-- **Balance sheet identity:** 6,257,000 + (−1,385,000) = 4,872,000 ✓
-- **Inventory:** 734,000K — positive, expected ✓
-
-### Reconciled Values for FY2024
-
-| Field | Recommended Value | Notes |
-|-------|------------------|-------|
-| reportDate | 2025-01-31 | Yahoo column header |
-| Net Revenue | 7,307,000 | Yahoo |
-| Cost of Goods | 4,073,000 | Yahoo |
-| Gross Margin | 3,234,000 | Calculated |
-| SGA | 1,968,000 | Yahoo |
-| Operating Profit | 1,266,000 | Yahoo Operating Income = As Reported |
-| Net Profit | 798,000 | Yahoo |
-| Inventory | 734,000 | Yahoo |
-| Current Assets | 1,823,000 | Yahoo |
-| Total Assets | 4,872,000 | Yahoo |
-| Current Liabilities | 1,231,000 | Yahoo |
-| Liabilities | 6,257,000 | Calculated (Total Assets − TSE) |
-| TSE | −1,385,000 | Yahoo Common Stock Equity |
-| Total L+E | 4,872,000 | Yahoo |
-
-**Action: New insert.**
+All values from SEC 10-K (CIK 701985). Balance sheet identity: 7,544,000 + (-1,518,000) = 6,026,000 ✓
 
 ---
 
-## Year 2025: New Insert (Yahoo 2026-01-31)
+## FY2022
 
-This year is not yet in the Dolt database.
+**Sources:** SEC 10-K (CIK 701985, FY2022, period ending 2023-01-28) + Yahoo Finance (column 2023-01-31)
 
-### Source Data (Yahoo 2026-01-31)
+### Anomaly Detection
+- `[ERROR]` Current Dolt row contains BBBY data (Revenue 5,344,685K with huge impairment charges — BBBY's bankruptcy year). All fields must be replaced.
+- Income statement confirmed: SEC = Yahoo for all fields ✓
+- Balance sheet confirmed: SEC = Yahoo (within 1K rounding on Liabilities) ✓
+- Gross margin: 3,255,000 / 7,560,000 = 43.1% — within Specialty benchmark ✓
+- Negative TSE (-2,206,000K) — normal for BBWI's capital structure.
+- Net Profit: $6,000K from discontinued operations included in total 800,000K; continuing ops = 794,000K. Using total.
+- Balance sheet identity: 7,700,000 + (-2,206,000) = 5,494,000 ✓
 
-**Income Statement:**
-| Item | Yahoo Raw | Value ($K) |
-|------|-----------|-----------|
-| Total Revenue | 7.291e+09 | 7,291,000 |
-| Cost Of Revenue | 4.102e+09 | 4,102,000 |
-| Gross Profit | 3.189e+09 | 3,189,000 |
-| Selling General And Administration | 2.063e+09 | 2,063,000 |
-| Operating Income | 1.126e+09 | 1,126,000 |
-| Total Operating Income As Reported | 1.126e+09 | 1,126,000 |
-| Net Income Common Stockholders | 6.49e+08 | 649,000 |
+### Side-by-Side
 
-Gross Margin check: 7,291,000 − 4,102,000 = 3,189,000 ✓
-Operating check: 3,189,000 − 2,063,000 = 1,126,000 ✓
+| Field | SEC | Yahoo | Dolt (WRONG — BBBY) | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 7,560,000 | 7,560,000 | 5,344,685 | **7,560,000** |
+| Cost of Goods | 4,305,000 | 4,305,000 | 4,129,802 | **4,305,000** |
+| Gross Margin | 3,255,000 | 3,255,000 | 1,214,883 | **3,255,000** |
+| SGA | 1,879,000 | 1,879,000 | 2,372,969 | **1,879,000** |
+| Operating Profit | 1,376,000 | 1,376,000 | -2,775,639 | **1,376,000** |
+| Net Profit | 800,000 | 800,000 | -3,498,801 | **800,000** |
+| Inventory | 709,000 | 709,000 | 817,553 | **709,000** |
+| Current Assets | 2,266,000 | 2,266,000 | 1,096,909 | **2,266,000** |
+| Total Assets | 5,494,000 | 5,494,000 | 2,225,217 | **5,494,000** |
+| Current Liabilities | 1,379,000 | 1,379,000 | 2,495,884 | **1,379,000** |
+| Liabilities | 7,700,000 | 7,699,000* | 5,025,225 | **7,700,000** |
+| Total Shareholder Equity | -2,206,000 | -2,206,000 | -2,800,008 | **-2,206,000** |
+| TL&SE | 5,494,000 | 5,494,000 | 2,225,217 | **5,494,000** |
+| reportDate | 2023-01-28 | (2023-01-31)* | 2023-02-25 | **2023-01-28** |
 
-**Balance Sheet:**
-| Item | Yahoo Raw | Value ($K) |
-|------|-----------|-----------|
-| Inventory | 6.99e+08 | 699,000 |
-| Current Assets | 2.019e+09 | 2,019,000 |
-| Total Assets | 5.069e+09 | 5,069,000 |
-| Current Liabilities | 1.591e+09 | 1,591,000 |
-| Common Stock Equity | −1.281e+09 | −1,281,000 |
-| Total Equity Gross Minority Interest | −1.279e+09 | −1,279,000 |
-| Total Liabilities Net Minority Interest | 6.348e+09 | 6,348,000 |
+*Yahoo rounds the fiscal period end to month-end (2023-01-31); actual end is 2023-01-28 per SEC. Liabilities 1K rounding difference.
 
-TSE = Common Stock Equity = −1,281,000K (consistent with Dolt convention)
-Liabilities = 5,069,000 − (−1,281,000) = 6,350,000K
-Yahoo Total Liabilities = 6,348,000K (2K diff from minority interest of 2,000K)
+### Reconciled Values
 
-Balance sheet: 6,350,000 + (−1,281,000) = 5,069,000 ✓
-
-### Anomaly Checks
-
-- **Gross margin:** 3,189,000/7,291,000 = **43.7%** — within specialty range (35–55%) ✓
-- **SGA rule 3:** Yahoo SGA 2,063,000K << Total Expenses ~6,165,000K ✓
-- **Operating Profit:** Operating Income = As Reported (1,126,000K) — consistent with BBWI convention ✓
-- **TSE:** Negative (−1,281,000K) — valid, consistent with BBWI post-spinoff structure ✓
-- **Balance sheet identity:** 6,350,000 + (−1,281,000) = 5,069,000 ✓
-- **Inventory:** 699,000K — positive, expected ✓
-
-### Reconciled Values for FY2025
-
-| Field | Recommended Value | Notes |
-|-------|------------------|-------|
-| reportDate | 2026-01-31 | Yahoo column header |
-| Net Revenue | 7,291,000 | Yahoo |
-| Cost of Goods | 4,102,000 | Yahoo |
-| Gross Margin | 3,189,000 | Calculated |
-| SGA | 2,063,000 | Yahoo |
-| Operating Profit | 1,126,000 | Yahoo Operating Income = As Reported |
-| Net Profit | 649,000 | Yahoo |
-| Inventory | 699,000 | Yahoo |
-| Current Assets | 2,019,000 | Yahoo |
-| Total Assets | 5,069,000 | Yahoo |
-| Current Liabilities | 1,591,000 | Yahoo |
-| Liabilities | 6,350,000 | Calculated (Total Assets − TSE) |
-| TSE | −1,281,000 | Yahoo Common Stock Equity |
-| Total L+E | 5,069,000 | Yahoo |
-
-**Action: New insert.**
+All values from SEC 10-K, confirmed by Yahoo. Balance sheet identity: 7,700,000 + (-2,206,000) = 5,494,000 ✓
 
 ---
 
-## Flags Summary
+## FY2023
 
-| Year | Flag | Severity | Description |
-|------|------|----------|-------------|
-| 2018–2021 | L Brands pre-spinoff data | [WARNING] | Data reflects combined L Brands entity (included Victoria's Secret). Not comparable to post-spinoff BBWI. Cannot correct without proper source data. |
-| 2018–2021 | SGA unverified | [WARNING] | No Yahoo data for these years; SGA may be incomplete per recurring convention |
-| 2022 | Incorrect Dolt data | [ERROR] | All fields wrong — Revenue 5.3B (Dolt) vs 7.56B (Yahoo), Op Profit −2.8B vs +1.4B. reportDate also inconsistent. Correcting to Yahoo FY2022 values. |
-| 2022–2025 | Negative TSE | [WARNING] | TSE is negative for all post-spinoff years. Valid — BBWI leveraged capital structure (long-term debt + accumulated losses). |
+**Sources:** SEC 10-K (CIK 701985, FY2023, period ending 2024-02-03) + Yahoo Finance (column 2024-01-31) + Dolt (existing row)
+
+### Anomaly Detection
+- `[WARNING]` reportDate discrepancy: Dolt has 2024-01-31 (Yahoo's approximation), SEC shows actual period end 2024-02-03. Correcting.
+- All income statement values confirmed: SEC = Yahoo = Dolt ✓
+- All balance sheet values confirmed: SEC = Dolt ✓
+- Gross margin: 3,236,000 / 7,429,000 = 43.6% — within Specialty benchmark ✓
+- Balance sheet identity: 7,090,000 + (-1,627,000) = 5,463,000 ✓
+
+### Side-by-Side
+
+| Field | SEC | Yahoo | Dolt | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 7,429,000 | 7,429,000 | 7,429,000 | 7,429,000 |
+| Cost of Goods | 4,193,000 | 4,193,000 | 4,193,000 | 4,193,000 |
+| Gross Margin | 3,236,000 | 3,236,000 | 3,236,000 | 3,236,000 |
+| SGA | 1,951,000 | 1,951,000 | 1,951,000 | 1,951,000 |
+| Operating Profit | 1,285,000 | 1,285,000 | 1,285,000 | 1,285,000 |
+| Net Profit | 878,000 | 878,000 | 878,000 | 878,000 |
+| Inventory | 710,000 | 710,000 | 710,000 | 710,000 |
+| Current Assets | 2,115,000 | 2,115,000 | 2,115,000 | 2,115,000 |
+| Total Assets | 5,463,000 | 5,463,000 | 5,463,000 | 5,463,000 |
+| Current Liabilities | 1,289,000 | 1,289,000 | 1,289,000 | 1,289,000 |
+| Liabilities | 7,090,000 | 7,089,000* | 7,090,000 | 7,090,000 |
+| Total Shareholder Equity | -1,627,000 | -1,627,000 | -1,627,000 | -1,627,000 |
+| TL&SE | 5,463,000 | 5,463,000 | 5,463,000 | 5,463,000 |
+| reportDate | **2024-02-03** | (2024-01-31)* | 2024-01-31* | **2024-02-03** |
+
+*1K rounding on Liabilities; Yahoo/Dolt reportDate approximation corrected to SEC actual.
+
+### Reconciled Values
+
+No financial value changes. Only correction: reportDate 2024-01-31 → **2024-02-03**.
 
 ---
 
-**Analysis complete.** Run `/insert-financials BBWI` to write all changed years to the database.
+## FY2024
 
-Years requiring changes: 2022 (correction), 2024 (new insert), 2025 (new insert). Years 2018–2021 and 2023 have no changes.
+**Sources:** SEC 10-K (CIK 701985, FY2024, period ending 2025-02-01) + Yahoo Finance (column 2025-01-31) — New insert
+
+### Anomaly Detection
+- No Dolt row exists for year 2024.
+- All income statement values confirmed: SEC = Yahoo ✓
+- All balance sheet values confirmed: SEC = Yahoo ✓
+- Gross margin: 3,234,000 / 7,307,000 = 44.3% — within Specialty benchmark ✓
+- Negative TSE (-1,385,000K) continues the BBWI pattern ✓
+- Balance sheet identity: 6,257,000 + (-1,385,000) = 4,872,000 ✓
+- Yahoo approximates reportDate as 2025-01-31; actual is 2025-02-01 per SEC.
+
+### Side-by-Side
+
+| Field | SEC | Yahoo | Dolt | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 7,307,000 | 7,307,000 | — | **7,307,000** |
+| Cost of Goods | 4,073,000 | 4,073,000 | — | **4,073,000** |
+| Gross Margin | 3,234,000 | 3,234,000 | — | **3,234,000** |
+| SGA | 1,968,000 | 1,968,000 | — | **1,968,000** |
+| Operating Profit | 1,266,000 | 1,266,000 | — | **1,266,000** |
+| Net Profit | 798,000 | 798,000 | — | **798,000** |
+| Inventory | 734,000 | 734,000 | — | **734,000** |
+| Current Assets | 1,823,000 | 1,823,000 | — | **1,823,000** |
+| Total Assets | 4,872,000 | 4,872,000 | — | **4,872,000** |
+| Current Liabilities | 1,231,000 | 1,231,000 | — | **1,231,000** |
+| Liabilities | 6,257,000 | 6,255,000* | — | **6,257,000** |
+| Total Shareholder Equity | -1,385,000 | -1,385,000 | — | **-1,385,000** |
+| TL&SE | 4,872,000 | 4,872,000 | — | **4,872,000** |
+| reportDate | 2025-02-01 | (2025-01-31)* | — | **2025-02-01** |
+
+*2K rounding on Liabilities; Yahoo reportDate approximation.
+
+### Reconciled Values
+
+New insert. Balance sheet identity: 6,257,000 + (-1,385,000) = 4,872,000 ✓
+
+---
+
+## FY2025
+
+**Sources:** SEC 10-K (CIK 701985, FY2025, period ending 2026-01-31) + Yahoo Finance (column 2026-01-31) — New insert
+
+### Anomaly Detection
+- No Dolt row exists for year 2025.
+- All income statement values confirmed: SEC = Yahoo ✓
+- All balance sheet values confirmed: SEC = Yahoo ✓
+- Gross margin: 3,189,000 / 7,291,000 = 43.7% — within Specialty benchmark ✓
+- Negative TSE (-1,281,000K) continues BBWI pattern ✓
+- Balance sheet identity: 6,350,000 + (-1,281,000) = 5,069,000 ✓
+- SGA increased to 2,063,000K (28.3% of revenue) — higher than prior years (~26%); worth monitoring but within acceptable range.
+
+### Side-by-Side
+
+| Field | SEC | Yahoo | Dolt | Recommended |
+|-------|-----|-------|------|-------------|
+| Net Revenue | 7,291,000 | 7,291,000 | — | **7,291,000** |
+| Cost of Goods | 4,102,000 | 4,102,000 | — | **4,102,000** |
+| Gross Margin | 3,189,000 | 3,189,000 | — | **3,189,000** |
+| SGA | 2,063,000 | 2,063,000 | — | **2,063,000** |
+| Operating Profit | 1,126,000 | 1,126,000 | — | **1,126,000** |
+| Net Profit | 649,000 | 649,000 | — | **649,000** |
+| Inventory | 699,000 | 699,000 | — | **699,000** |
+| Current Assets | 2,019,000 | 2,019,000 | — | **2,019,000** |
+| Total Assets | 5,069,000 | 5,069,000 | — | **5,069,000** |
+| Current Liabilities | 1,591,000 | 1,591,000 | — | **1,591,000** |
+| Liabilities | 6,350,000 | 6,348,000* | — | **6,350,000** |
+| Total Shareholder Equity | -1,281,000 | -1,281,000 | — | **-1,281,000** |
+| TL&SE | 5,069,000 | 5,069,000 | — | **5,069,000** |
+| reportDate | 2026-01-31 | 2026-01-31 | — | **2026-01-31** |
+
+*2K rounding on Liabilities.
+
+### Reconciled Values
+
+New insert. Balance sheet identity: 6,350,000 + (-1,281,000) = 5,069,000 ✓
+
+---
+
+## Unresolved Issues
+
+1. **company_info CIK must be corrected**: 886158 → 701985 (prerequisite — included in SQL file)
+2. **FY2018–FY2020 are L Brands combined** (not BBWI standalone): Revenue/balance sheet for those years includes Victoria's Secret. Revenue drops sharply from $11.8B (FY2020 L Brands) to $7.9B (FY2021 BBWI standalone), which reflects the VS spinoff — not a real revenue decline. Flag for users comparing across years.
+3. **FY2021 Net Profit warning**: $258M VS spinoff gain included in 1,333,000K total Net Income. Continuing ops = 1,075,000K. If comparability with FY2022+ is preferred, use 1,075,000K instead.
+
+---
+
+**Analysis complete.** Run `/insert-financials BBWI` to write all changed years (2021–2025) and the CIK fix to the database.
