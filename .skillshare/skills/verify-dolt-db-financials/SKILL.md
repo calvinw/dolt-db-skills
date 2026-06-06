@@ -115,10 +115,10 @@ For each field state:
 End with the appropriate message based on mode:
 
 **Single-year mode:**
-> **Analysis complete.** Run `/insert-financials {TICKER} {YEAR}` to write these values to the database.
+> **Analysis complete.** Run `/create-verified-dolt-db-financials-sql {TICKER} {YEAR}` to write these values to the database.
 
 **Multi-year mode** (after all years have been analyzed): emit a single combined message — do NOT repeat this per year:
-> **Analysis complete.** Run `/insert-financials {TICKER}` to write all changed years to the database.
+> **Analysis complete.** Run `/create-verified-dolt-db-financials-sql {TICKER}` to write all changed years to the database.
 
 List any unresolved flags for the user to review before inserting.
 
@@ -126,7 +126,7 @@ List any unresolved flags for the user to review before inserting.
 
 **Single-year mode:** write `reports/{TICKER}-{YEAR}.md` containing all content from Steps 4–7 for that year.
 
-**Multi-year mode:** after all years have been analyzed, write a single combined file `reports/{TICKER}-all-years.md`. This file is what `/insert-financials` reads when run later in a separate session, so it must include:
+**Multi-year mode:** after all years have been analyzed, write a single combined file `reports/{TICKER}-all-years.md`. This file is what `/create-verified-dolt-db-financials-sql` reads when run later in a separate session, so it must include:
 
 1. A per-year summary table near the top with columns: Year | reportDate | Action (values: "No change", "New insert", "Correction: [field]", etc.)
 2. The full per-year analysis sections (Steps 4–7 content) for every year, in ascending order.
