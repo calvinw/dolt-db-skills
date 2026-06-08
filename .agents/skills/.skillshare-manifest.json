@@ -1,9 +1,0 @@
-{
-  "managed": {
-    "create-new-company-sql": "symlink",
-    "download-new-year-data": "symlink",
-    "insert-financials": "symlink",
-    "verify-dolt-db-financials": "symlink"
-  },
-  "updated_at": "2026-06-05T15:10:57.924704028Z"
-}

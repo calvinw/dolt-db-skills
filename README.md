@@ -21,7 +21,7 @@ Skills are slash commands (e.g., `/verify-dolt-db-financials`) available through
 
 **Usage:** `/verify-dolt-db-financials TRR 2024`
 
-### `/insert-financials TICKER YEAR`
+### `/create-verified-dolt-db-financials-sql TICKER YEAR`
 
 **Purpose:** Generate a SQL `REPLACE INTO` file containing reconciled financial data from `/verify-dolt-db-financials`. This skill does NOT connect to or modify the database — it writes a `.sql` file that you apply manually.
 
@@ -31,9 +31,9 @@ Skills are slash commands (e.g., `/verify-dolt-db-financials`) available through
 3. Writes the SQL to `extract/2026/inserts/{TICKER}_{YEAR}_insert.sql`
 4. Provides instructions for applying the SQL to your local Dolt clone
 
-**Usage:** `/insert-financials TRR 2024` (after running `/verify-dolt-db-financials TRR 2024` in the same session)
+**Usage:** `/create-verified-dolt-db-financials-sql TRR 2024` (after running `/verify-dolt-db-financials TRR 2024` in the same session)
 
-**Workflow:** Always run `/verify-dolt-db-financials` first, review the analysis and reconciled values, then run `/insert-financials` to generate the insert file.
+**Workflow:** Always run `/verify-dolt-db-financials` first, review the analysis and reconciled values, then run `/create-verified-dolt-db-financials-sql` to generate the insert file.
 
 ## Starting Agents
 
