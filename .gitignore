@@ -5,3 +5,6 @@
 .gemini/skills/
 .github/skills/
 .opencode/skills/
+
+# Local Dolt database clone
+BusMgmtBenchmarks/
