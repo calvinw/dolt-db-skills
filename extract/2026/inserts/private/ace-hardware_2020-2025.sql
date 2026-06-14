@@ -6,7 +6,7 @@
 REPLACE INTO company_info
   (company, display_name, segment, subsegment, currency, units)
 VALUES
-  ('Ace Hardware', 'Ace Hardware Corporation', 'Wholesale', 'Home Improvement', 'USD', 'thousands');
+  ('Ace Hardware', 'Ace Hardware Corporation', 'Home Improvement', NULL, 'USD', 'thousands');
 
 -- FY2020 (ended Jan 2, 2021) — income only, balance sheet not available
 -- [WARNING] 7 balance sheet fields are NULL — balance sheet for FY2020 not included in PDF

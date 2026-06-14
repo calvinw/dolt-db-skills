@@ -134,7 +134,7 @@ Mark any `[WARNING]` fields and any `*` differences clearly. For each difference
 
 ## Step 6 — Generate SQL file
 
-Write a single SQL file to `extract/2026/inserts/{COMPANY_SLUG}_{FIRST_YEAR}-{LAST_YEAR}.sql`.
+Write a single SQL file to `extract/2026/inserts/private/{COMPANY_SLUG}_{FIRST_YEAR}-{LAST_YEAR}.sql`.
 
 - `COMPANY_SLUG` = company name lowercased with hyphens (e.g. `ace-hardware`)
 - `FIRST_YEAR` and `LAST_YEAR` = first and last year processed (e.g. `ace-hardware_2021-2025.sql`). If only one year, use `ace-hardware_2023.sql`.
@@ -171,7 +171,7 @@ Use `NULL` (without quotes) for any missing numeric fields.
 
 Tell the user:
 
-> SQL file saved to `extract/2026/inserts/{filename}.sql`.
+> SQL file saved to `extract/2026/inserts/private/{filename}.sql`.
 >
 > Review the file, then apply it manually to the database when ready.
 
