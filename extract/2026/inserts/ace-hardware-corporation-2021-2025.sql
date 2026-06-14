@@ -3,14 +3,13 @@
 -- Generated: 2026-06-14
 -- All values in thousands USD
 
-REPLACE INTO private_company_info
-  (company, display_name, segment, subsegment, currency, units, source_pdf)
+REPLACE INTO company_info
+  (company, display_name, segment, subsegment, currency, units)
 VALUES
-  ('Ace Hardware Corporation', 'Ace Hardware Corporation', 'Retail', 'Home Improvement', 'USD', 'thousands',
-   '2023_Financials_2023-2021.pdf, 2026 Financials2024-2022.pdf, 2025financialreportfinal.pdf');
+  ('Ace Hardware Corporation', 'Ace Hardware Corporation', 'Retail', 'Home Improvement', 'USD', 'thousands');
 
 -- FY2021 (year ended January 1, 2022)
-REPLACE INTO private_financials
+REPLACE INTO financials
   (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
    SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,
    `Current Liabilities`, Liabilities, `Total Shareholder Equity`,
@@ -22,7 +21,7 @@ VALUES
    '2023_Financials_2023-2021.pdf');
 
 -- FY2022 (year ended December 31, 2022) — verified against 2026 Financials2024-2022.pdf
-REPLACE INTO private_financials
+REPLACE INTO financials
   (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
    SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,
    `Current Liabilities`, Liabilities, `Total Shareholder Equity`,
@@ -34,7 +33,7 @@ VALUES
    '2023_Financials_2023-2021.pdf, 2026 Financials2024-2022.pdf (verified)');
 
 -- FY2023 (year ended December 30, 2023) — verified against 2025financialreportfinal.pdf
-REPLACE INTO private_financials
+REPLACE INTO financials
   (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
    SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,
    `Current Liabilities`, Liabilities, `Total Shareholder Equity`,
@@ -46,7 +45,7 @@ VALUES
    '2026 Financials2024-2022.pdf, 2025financialreportfinal.pdf (verified)');
 
 -- FY2024 (year ended December 28, 2024) — verified against 2025financialreportfinal.pdf
-REPLACE INTO private_financials
+REPLACE INTO financials
   (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
    SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,
    `Current Liabilities`, Liabilities, `Total Shareholder Equity`,
@@ -58,7 +57,7 @@ VALUES
    '2026 Financials2024-2022.pdf, 2025financialreportfinal.pdf (verified)');
 
 -- FY2025 (year ended January 3, 2026)
-REPLACE INTO private_financials
+REPLACE INTO financials
   (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
    SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,
    `Current Liabilities`, Liabilities, `Total Shareholder Equity`,

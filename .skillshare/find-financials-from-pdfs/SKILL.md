@@ -1,6 +1,6 @@
 ---
 name: find-financials-from-pdfs
-description: Extract financial data from PDF annual reports for private companies not listed on public exchanges, standardize the data to match the BusMgmtBenchmarks schema, and generate SQL files for insertion into private_company_info and private_financials tables. Use when adding a private company (e.g. ACE Hardware) from PDF sources. Triggered by "/find-financials-from-pdfs COMPANY NAME".
+description: Extract financial data from PDF annual reports for private companies not listed on public exchanges, standardize the data to match the BusMgmtBenchmarks schema, and generate SQL files for insertion into the company_info and financials tables. Use when adding a private company (e.g. ACE Hardware) from PDF sources. Triggered by "/find-financials-from-pdfs COMPANY NAME".
 ---
 
 # find-financials-from-pdfs
@@ -35,7 +35,7 @@ Wait for confirmation before proceeding.
 Query the Dolt database:
 
 ```sql
-SELECT * FROM private_company_info WHERE company = '{company_name}'
+SELECT * FROM company_info WHERE company = '{company_name}'
 ```
 
 Use `db_string: calvinw/BusMgmtBenchmarks/main`.
@@ -43,7 +43,7 @@ Use `db_string: calvinw/BusMgmtBenchmarks/main`.
 - **If the row exists** — note the existing metadata. Also fetch the existing financials rows for this company:
 
   ```sql
-  SELECT * FROM private_financials WHERE company_name = '{company_name}' ORDER BY year
+  SELECT * FROM financials WHERE company_name = '{company_name}' ORDER BY year
   ```
 
   Store these values — after extracting from PDFs in Step 3, you will compare them side by side in Step 5 and flag any differences. Skip to Step 3.
@@ -61,6 +61,8 @@ Read the first available PDF to infer the following fields:
 | `subsegment` | More specific category (e.g. "Home Improvement", "Grocery") |
 | `currency` | Currency used in the financials (e.g. "USD") |
 | `units` | Scale of numbers (e.g. "thousands", "millions") — convert to thousands for DB |
+
+Note: `CIK` and `ticker_symbol` are left as NULL for private companies — do not attempt to fill these.
 
 While reading the PDFs, scan the financial statement headers in **all PDFs** to identify the actual fiscal years covered inside each one. Build a complete mapping of PDF → actual years found.
 
@@ -92,7 +94,7 @@ Wait for confirmation or corrections before proceeding. Use the confirmed year l
 
 ## Step 3 — Read PDFs and extract financial data
 
-For each year confirmed in Step 0, read the corresponding PDF using the Read tool.
+For each year confirmed, read the corresponding PDF using the Read tool.
 
 Extract the following 13 fields per year. All values must be in **thousands of dollars** (convert if the PDF uses millions: multiply by 1,000).
 
@@ -153,7 +155,7 @@ Mark any `[WARNING]` fields and any `*` differences clearly. For each difference
 
 ## Step 6 — Generate SQL file
 
-Write a single SQL file to `extract/2026/inserts/private/{COMPANY_SLUG}-{YEARS}.sql`.
+Write a single SQL file to `extract/2026/inserts/{COMPANY_SLUG}-{YEARS}.sql`.
 
 - `COMPANY_SLUG` = company name lowercased with hyphens (e.g. `ace-hardware`)
 - `YEARS` = year range (e.g. `2021-2024` or single year `2023`)
@@ -163,16 +165,16 @@ The file should contain:
 **If company is new** (not found in Step 1):
 
 ```sql
-REPLACE INTO private_company_info
-  (company, display_name, segment, subsegment, currency, units, source_pdf)
+REPLACE INTO company_info
+  (company, display_name, segment, subsegment, currency, units)
 VALUES
-  ('{company}', '{display_name}', '{segment}', '{subsegment}', '{currency}', 'thousands', '{source_pdf}');
+  ('{company}', '{display_name}', '{segment}', '{subsegment}', '{currency}', 'thousands');
 ```
 
 **For each year:**
 
 ```sql
-REPLACE INTO private_financials
+REPLACE INTO financials
   (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
    SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,
    `Current Liabilities`, Liabilities, `Total Shareholder Equity`,
@@ -190,7 +192,7 @@ Use `NULL` (without quotes) for any missing numeric fields.
 
 Tell the user:
 
-> SQL file saved to `extract/2026/inserts/private/{filename}.sql`.
+> SQL file saved to `extract/2026/inserts/{filename}.sql`.
 >
 > Review the file, then apply it manually to the database when ready.
 
@@ -199,5 +201,6 @@ List any `[WARNING]` flags for the user to review before inserting.
 ## References
 
 - PDF files are stored in `.skillshare/find-financials-from-pdfs/references/`
-- Target tables: `private_company_info` and `private_financials` on `calvinw/BusMgmtBenchmarks/main`
+- Target tables: `company_info` and `financials` on `calvinw/BusMgmtBenchmarks/main`
 - All numeric values stored in **thousands**
+- Private companies: `CIK` and `ticker_symbol` are left as NULL
