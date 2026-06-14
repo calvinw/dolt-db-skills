@@ -8,19 +8,6 @@ REPLACE INTO company_info
 VALUES
   ('Ace Hardware', 'Ace Hardware Corporation', 'Home Improvement', NULL, 'USD', 'thousands');
 
--- FY2020 (ended Jan 2, 2021) — income only, balance sheet not available
--- [WARNING] 7 balance sheet fields are NULL — balance sheet for FY2020 not included in PDF
-REPLACE INTO financials
-  (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
-   SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,
-   `Current Liabilities`, Liabilities, `Total Shareholder Equity`,
-   `Total Liabilities and Shareholder Equity`, source_pdf)
-VALUES
-  ('Ace Hardware', 2020, '2021-01-02', 7762700, 6549200, 1213500,
-   880400, 333100, 316900, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL,
-   '2023_Financials_2023-2021.pdf');
-
 -- FY2021 (ended Jan 1, 2022)
 REPLACE INTO financials
   (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,
