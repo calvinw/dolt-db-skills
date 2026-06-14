@@ -13,23 +13,6 @@ Extract financial data from PDF annual reports for private companies and generat
 
 - `COMPANY NAME` — the full company name (e.g. `ACE Hardware`)
 
-## Step 0 — Locate PDFs and confirm years
-
-Scan the `references/` folder inside `.skillshare/find-financials-from-pdfs/references/` for all `.pdf` files.
-
-Display what was found:
-
-> Found {N} PDF file(s): file1.pdf, file2.pdf, …
-
-For each PDF, try to infer the fiscal year(s) it covers from the filename (e.g. `ace-hardware-2023.pdf` → 2023). If unclear, note it as "year unknown."
-
-Ask the user to confirm:
-
-> These PDFs appear to cover the following years: {year1}, {year2}, …
-> Is this correct, or would you like to specify which years to process?
-
-Wait for confirmation before proceeding.
-
 ## Step 1 — Check if company already exists
 
 Query the Dolt database:
@@ -50,9 +33,11 @@ Use `db_string: calvinw/BusMgmtBenchmarks/main`.
 
 - **If no row exists** — proceed to Step 2 to collect metadata.
 
-## Step 2 — Infer and confirm company metadata
+## Step 2 — Scan PDFs, infer metadata, and confirm years
 
-Read the first available PDF to infer the following fields:
+Scan the `references/` folder inside `.skillshare/find-financials-from-pdfs/references/` for all `.pdf` files. Read all PDFs to:
+
+1. Infer company metadata from the first PDF:
 
 | Field | What to look for |
 |---|---|
@@ -64,11 +49,11 @@ Read the first available PDF to infer the following fields:
 
 Note: `CIK` and `ticker_symbol` are left as NULL for private companies — do not attempt to fill these.
 
-While reading the PDFs, scan the financial statement headers in **all PDFs** to identify the actual fiscal years covered inside each one. Build a complete mapping of PDF → actual years found.
+2. Scan financial statement headers in **all PDFs** to identify the actual fiscal years covered. Build a complete mapping of PDF → actual years found.
 
-Then identify **all overlapping years** across all PDFs — not just between consecutive PDFs. For every year that appears in more than one PDF, the **earliest PDF is the primary source** and all others serve as **verification**.
+3. Identify **all overlapping years** across all PDFs. For every year that appears in more than one PDF, the **earliest PDF is the primary source** and all others serve as **verification**.
 
-Present your best guess to the user for confirmation:
+Present findings to the user for confirmation:
 
 > Based on the PDFs, here is what I found for **{Company Name}**:
 > - display_name: {value}
@@ -77,26 +62,20 @@ Present your best guess to the user for confirmation:
 > - currency: {value}
 > - units: {value} (will be stored as thousands)
 >
-> Here are the actual years found inside each PDF:
-> - `{pdf1}` → {year1}, {year2}, {year3}
-> - `{pdf2}` → {year1} *(overlap with pdf1 — verify)*, {year2}, {year3} *(overlap with pdf3 — verify)*
-> - `{pdf3}` → {year1}, {year2}
->
-> Overlap summary:
-> | Year | Primary | Verified by |
+> | Year | Primary Source | Verified by |
 > |---|---|---|
-> | {yearX} | {pdf1} | {pdf2} |
-> | {yearY} | {pdf2} | {pdf3} |
+> | FY{year1} | {pdf} | — |
+> | FY{year2} | {pdf} | {pdf} |
+> | FY{year3} | {pdf} | {pdf} |
+> | … | | |
 >
-> Combined unique years to process: {all unique years}. Are there any years you'd like to add or exclude before I proceed?
+> Are there any years you'd like to exclude before I proceed?
 
-Wait for confirmation or corrections before proceeding. Use the confirmed year list (not the Step 0 estimate) going forward.
+Wait for confirmation or corrections before proceeding.
 
-## Step 3 — Read PDFs and extract financial data
+## Step 3 — Extract financial data
 
-For each year confirmed, read the corresponding PDF using the Read tool.
-
-Extract the following 13 fields per year. All values must be in **thousands of dollars** (convert if the PDF uses millions: multiply by 1,000).
+For each confirmed year, read the corresponding PDF and extract the following 13 fields. All values must be in **thousands of dollars** (convert if the PDF uses millions: multiply by 1,000).
 
 | Field | Notes |
 |---|---|
@@ -155,10 +134,10 @@ Mark any `[WARNING]` fields and any `*` differences clearly. For each difference
 
 ## Step 6 — Generate SQL file
 
-Write a single SQL file to `extract/2026/inserts/{COMPANY_SLUG}-{YEARS}.sql`.
+Write a single SQL file to `extract/2026/inserts/{COMPANY_SLUG}_{FIRST_YEAR}-{LAST_YEAR}.sql`.
 
 - `COMPANY_SLUG` = company name lowercased with hyphens (e.g. `ace-hardware`)
-- `YEARS` = year range (e.g. `2021-2024` or single year `2023`)
+- `FIRST_YEAR` and `LAST_YEAR` = first and last year processed (e.g. `ace-hardware_2021-2025.sql`). If only one year, use `ace-hardware_2023.sql`.
 
 The file should contain:
 
