@@ -182,12 +182,15 @@ lines += [
     "        - text: Overview",
     "          href: skills/index.md",
 ]
+GITHUB_REPO = "https://github.com/calvinw/dolt-db-skills/blob/main"
+
 for src, copy in zip(skill_files, skill_copies):
     label = skill_title(src.parent.name)
+    github_url = f"{GITHUB_REPO}/.skillshare/skills/{src.parent.name}/SKILL.md"
     lines.append(f'        - text: "{label}"')
     lines.append(f"          href: {q(copy)}")
     lines.append(f'        - text: "(.md)"')
-    lines.append(f"          href: '#'")
+    lines.append(f"          href: {github_url}")
 
 lines += [
     "",
