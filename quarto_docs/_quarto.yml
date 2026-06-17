@@ -1,0 +1,82 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.md
+    - skills_sessions/index.md
+    - plan/index.md
+    - skills/index.md
+    - skills/find-financials-from-pdfs.md
+    - skills/create-new-company-sql.md
+    - skills/verify-dolt-db-financials.md
+    - skills/create-verified-dolt-db-financials-sql.md
+    - skills/download-new-year-data.md
+    - skills/insert-dolt-db-sql.md
+
+website:
+  title: "Dolt DB Skills"
+  navbar:
+    left:
+      - text: Home
+        href: index.md
+      - text: Sessions
+        href: skills_sessions/index.md
+      - text: Plans
+        href: plan/index.md
+      - text: Skills
+        href: skills/index.md
+
+  sidebar:
+    - id: sessions
+      title: "Sessions"
+      style: docked
+      contents:
+        - text: Overview
+          href: skills_sessions/index.md
+
+    - id: plans
+      title: "Plans"
+      style: docked
+      contents:
+        - text: Overview
+          href: plan/index.md
+
+    - id: skills
+      title: "Skills"
+      style: docked
+      contents:
+        - text: Overview
+          href: skills/index.md
+        - text: "Find Financials from PDFs"
+          href: skills/find-financials-from-pdfs.md
+        - text: "(.md)"
+          href: '#'
+        - text: "Create New Company SQL"
+          href: skills/create-new-company-sql.md
+        - text: "(.md)"
+          href: '#'
+        - text: "Verify Dolt DB Financials"
+          href: skills/verify-dolt-db-financials.md
+        - text: "(.md)"
+          href: '#'
+        - text: "Create Verified Dolt DB Financials SQL"
+          href: skills/create-verified-dolt-db-financials-sql.md
+        - text: "(.md)"
+          href: '#'
+        - text: "Download New Year Data"
+          href: skills/download-new-year-data.md
+        - text: "(.md)"
+          href: '#'
+        - text: "Insert Dolt DB SQL"
+          href: skills/insert-dolt-db-sql.md
+        - text: "(.md)"
+          href: '#'
+
+format:
+  html:
+    theme: cosmo
+    css: custom.css
+    toc: true
+    include-after-body: sidebar-tweaks.html
+    grid:
+      body-width: 2000px
