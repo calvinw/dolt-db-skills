@@ -1,20 +1,20 @@
 [
   {
-    "file": "verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md",
-    "command": "/verify-dolt-db-financials M",
-    "skill": "Verify Dolt DB Financials",
-    "caseStudy": "M",
-    "student": "Calvinw",
+    "file": "basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md",
+    "command": "/basic-financials WMT 2024 TGT 2024",
+    "skill": "Basic Financials",
+    "caseStudy": "Wmt 2024 Tgt 2024",
+    "student": "Elena",
     "model": "Sonnet 4.6",
     "version": "1.0",
     "n": 1
   },
   {
-    "file": "basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md",
-    "command": "/basic-financials WMT",
-    "skill": "Basic Financials",
-    "caseStudy": "Wmt",
-    "student": "Elena",
+    "file": "verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md",
+    "command": "/verify-dolt-db-financials M",
+    "skill": "Verify Dolt DB Financials",
+    "caseStudy": "M",
+    "student": "Calvinw",
     "model": "Sonnet 4.6",
     "version": "1.0",
     "n": 1

@@ -13,6 +13,7 @@ _WORD_MAP = {"sql": "SQL", "db": "DB", "pdfs": "PDFs"}
 _CONJUNCTIONS = {"and", "or", "of", "the", "a", "an", "in", "on", "at", "to", "from"}
 
 SKILL_ORDER = [
+    "basic-financials",
     "find-financials-from-pdfs",
     "create-new-company-sql",
     "verify-dolt-db-financials",
@@ -67,7 +68,7 @@ for md in sorted(here.glob('**/*.md')):
     if md.name == 'index.md':
         continue
     lines = md.read_text(encoding='utf-8').split('\n')
-    m = re.match(r'^#\s+/(\S+)(?:\s+(\S+))?', lines[0])
+    m = re.match(r'^#\s+/(\S+)(?:\s+(.+))?', lines[0])
     if not m:
         continue
     skill_slug = m.group(1)
