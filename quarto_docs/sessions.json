@@ -8,5 +8,15 @@
     "model": "Sonnet 4.6",
     "version": "1.0",
     "n": 1
+  },
+  {
+    "file": "basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md",
+    "command": "/basic-financials WMT",
+    "skill": "Basic Financials",
+    "caseStudy": "Wmt",
+    "student": "Elena",
+    "model": "Sonnet 4.6",
+    "version": "1.0",
+    "n": 1
   }
 ]

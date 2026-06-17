@@ -6,6 +6,7 @@ Skills are slash commands available through agent execution.
 
 ## Available Skills
 
+- `/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]` — Interactive financial comparison assistant for undergraduate business students. Each company gets its own fiscal year. Pulls side-by-side income statement, ratio, and balance sheet data from the BusMgmtBenchmarks Dolt database and stays open for student questions about what the numbers mean. Years default to the most recent available for each company if omitted.
 - `/create-new-company-sql TICKER [CIK]` — Fetches financial data from SEC 10-K filings and Yahoo Finance for a NEW company (2018 through current year), reconciles values, and generates SQL files to insert the company_info row and all financials rows. Writes to `extract/2026/create_company/` and `reports/`. Does NOT write to the database directly.
 - `/verify-dolt-db-financials TICKER YEAR` — Fetches financials from SEC, Yahoo Finance, and the Dolt DB, compares them side by side, detects anomalies, and produces reconciled DB-ready values. Saves a report to `reports/`.
 - `/create-verified-dolt-db-financials-sql TICKER YEAR` — Generates a `REPLACE INTO` SQL file from the reconciled values produced by `/verify-dolt-db-financials`. Writes to `extract/2026/inserts/`. Does NOT write to the database directly.
@@ -39,6 +40,7 @@ When a skill session is run and the user asks to save it, save the transcript in
 
 ```
 skills_sessions/
+  basic-financials/
   find-financials-from-pdfs/
   create-new-company-sql/
   verify-dolt-db-financials/
@@ -50,27 +52,28 @@ skills_sessions/
 The file itself follows this naming convention:
 
 ```
-skills_sessions/{skill-name}/{skill-name}-{ticker}-v{version}-{user}-{model}-session{n}.md
+skills_sessions/{skill-name}/{skill-name}-{args}-v{version}-{user}-{model}-session{n}.md
 ```
 
-For skills with no ticker argument, omit the `{ticker}` segment:
+For skills with no arguments, omit the `{args}` segment:
 
 ```
 skills_sessions/{skill-name}/{skill-name}-v{version}-{user}-{model}-session{n}.md
 ```
 
 **Examples:**
+- `skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-calvinw-sonnet-4-6-session1.md`
 - `skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md`
 - `skills_sessions/create-new-company-sql/create-new-company-sql-BOOT-v1.0-calvinw-sonnet-4-6-session1.md`
 - `skills_sessions/download-new-year-data/download-new-year-data-WMT-v1.0-calvinw-sonnet-4-6-session2.md`
 
 **Rules:**
 - `{skill-name}` — the kebab-case skill name exactly as it appears in the slash command (e.g. `verify-dolt-db-financials`, `create-new-company-sql`)
-- `{ticker}` — the ticker symbol passed to the skill (e.g. `M`, `WMT`, `BOOT`); omit for skills that take no argument
+- `{args}` — all arguments passed to the skill, joined with hyphens in the same order they were given (e.g. `WMT-2024-TGT-2024` for `/basic-financials WMT 2024 TGT 2024`, `M` for `/verify-dolt-db-financials M`, `BOOT` for `/create-new-company-sql BOOT`); omit entirely for skills that take no arguments
 - `{version}` — the skill version (e.g. `1.0`, `1.1`); use `1.0` if the SKILL.md has no explicit version field
 - `{user}` — the first name or username of the person who ran the session (e.g. `calvinw`)
 - `{model}` — the short model name of the AI running the skill (e.g. `sonnet-4-6`, `opus-4-8`)
-- `{n}` — a counter starting at 1; increment it when the same skill+ticker+version+user+model combination has already been saved
+- `{n}` — a counter starting at 1; increment it when the same skill+args+version+user+model combination has already been saved
 
 **File header format:**
 
