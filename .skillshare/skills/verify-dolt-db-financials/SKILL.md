@@ -1,6 +1,6 @@
 ---
 name: verify-dolt-db-financials
-version: 1.0
+version: 0.1
 description: Fetch financial statements from SEC 10-K filings and Yahoo Finance for a BusMgmtBenchmarks retail company, compare all sources side by side, detect anomalies (especially SGA composite line items, restatements, and balance sheet mismatches), and produce reconciled values ready for the Dolt database. Use when validating or adding financial data for any company tracked in the BusMgmtBenchmarks project. Triggered by commands like "/verify-dolt-db-financials TICKER YEAR" or "/verify-dolt-db-financials TICKER" (all years) or requests to fetch, check, or validate financials for a company in the project.
 ---
 

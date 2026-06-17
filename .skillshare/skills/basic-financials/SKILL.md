@@ -1,6 +1,6 @@
 ---
 name: basic-financials
-version: 1.0
+version: 0.1
 description: Interactive financial comparison assistant for undergraduate business students. Takes two company tickers each with their own year, pulls side-by-side income statement, ratio, and balance sheet data from the BusMgmtBenchmarks Dolt database, and stays open for student questions about what the numbers mean. Triggered by "/basic-financials TICKER1 YEAR1 TICKER2 YEAR2".
 ---
 
