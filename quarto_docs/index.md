@@ -9,3 +9,4 @@ Resources for managing the BusMgmtBenchmarks Dolt database — a financial data 
 ## Contributors
 
 - Calvin Williamson ([calvinw](https://github.com/calvinw))
+- Elena
