@@ -1,5 +1,6 @@
 ---
 name: create-verified-dolt-db-financials-sql
+version: 1.0
 description: Generate a SQL file containing REPLACE INTO statements for the BusMgmtBenchmarks Dolt database, based on reconciled values from /verify-dolt-db-financials report files saved in reports/. Does NOT connect to or write to any database — output is a .sql file only, which the user applies manually to their local Dolt clone. Run /verify-dolt-db-financials first to produce the report file. Triggered by "/create-verified-dolt-db-financials-sql TICKER YEAR" (single year) or "/create-verified-dolt-db-financials-sql TICKER" (all years from a multi-year analysis).
 ---
 

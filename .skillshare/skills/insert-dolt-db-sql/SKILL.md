@@ -1,5 +1,6 @@
 ---
 name: insert-dolt-db-sql
+version: 1.0
 description: Find SQL files in extract/2026/inserts/, clone the BusMgmtBenchmarks Dolt database, execute each SQL file against the local clone, show the diff, then commit and push. Triggered by "/insert-dolt-db-sql" (all files) or "/insert-dolt-db-sql FILE1 FILE2 ..." (specific files).
 ---
 

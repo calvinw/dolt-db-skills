@@ -1,5 +1,6 @@
 ---
 name: download-new-year-data
+version: 1.0
 description: Check a specific company in the BusMgmtBenchmarks Dolt database for newly available fiscal year data not yet in the database, validate it for consistency, and generate a SQL INSERT file. For American companies, cross-checks SEC and Yahoo Finance. For non-American companies, uses Yahoo Finance only. Triggered by "/download-new-year-data TICKER".
 ---
 

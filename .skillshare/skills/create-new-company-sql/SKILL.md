@@ -1,5 +1,6 @@
 ---
 name: create-new-company-sql
+version: 1.0
 description: Fetch financial data from SEC 10-K filings and Yahoo Finance for a NEW company (2018 through current year), reconcile values, and generate SQL files to insert the company_info row and all financials rows. Does NOT write to the database directly. Triggered by "/create-new-company-sql TICKER [CIK]".
 ---
 
