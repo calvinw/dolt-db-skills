@@ -1,0 +1,731 @@
+[
+  {
+    "objectID": "skills/insert-dolt-db-sql.html",
+    "href": "skills/insert-dolt-db-sql.html",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "Find SQL files in extract/2026/inserts/, clone the target Dolt database, execute each SQL file, show the diff, and commit+push to DoltHub.\nThis skill writes directly to the Dolt database. Use with caution.\n\n\n\nDolt CLI must be installed (dolt version)\nGit-style user config must be set (dolt config --global --add user.email and user.name)\nThe target repo must be public (clone-able without auth). For push access, DoltHub credentials must be configured.\n\n\n\n\n\n/insert-dolt-db-sql — find and apply all .sql files in extract/2026/inserts/\n/insert-dolt-db-sql FILE1 FILE2 ... — apply only the named files (paths relative to extract/2026/inserts/)\n\n\n\n\nList all .sql files under extract/2026/inserts/. If specific filenames were provided, filter to only those (error if any are not found).\nDisplay the list:\n\nFound {N} SQL file(s): file1.sql, file2.sql, …\n\nIf no files found, stop and tell the user: “No SQL files found in extract/2026/inserts/.”\n\n\n\nCreate a temporary directory and clone calvinw/BusMgmtBenchmarks into it:\nTMPDIR=$(mktemp -d)\ndolt clone calvinw/BusMgmtBenchmarks \"$TMPDIR\"\nConfirm clone succeeded. If it fails, stop with an error.\n\n\n\nFor each SQL file (in alphabetical order):\ndolt sql &lt; \"{SQL_FILE_PATH}\"\nShow the output of each execution. If any SQL file produces errors, display them but continue processing remaining files.\n\n\n\ncd \"$TMPDIR\"\ndolt diff\nDisplay the full diff to the user for review.\n\n\n\ncd \"$TMPDIR\"\ndolt add -A\ndolt commit -am \"Apply SQL inserts from extract/2026/inserts/\"\nShow the commit hash.\n\n\n\ncd \"$TMPDIR\"\ndolt push origin main\nIf push fails due to missing credentials, tell the user to push manually:\n\nPush requires DoltHub credentials. Run dolt push origin main from {TMPDIR} manually.\n\n\n\n\nRemove the temporary clone directory:\nrm -rf \"$TMPDIR\"\n\n\n\n\nApplied {N} SQL file(s) to calvinw/BusMgmtBenchmarks/main: - file1.sql - file2.sql - …\nCommit: {hash}\nDiff summary: {N} rows changed across {N} tables.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#prerequisites",
+    "href": "skills/insert-dolt-db-sql.html#prerequisites",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "Dolt CLI must be installed (dolt version)\nGit-style user config must be set (dolt config --global --add user.email and user.name)\nThe target repo must be public (clone-able without auth). For push access, DoltHub credentials must be configured.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#inputs",
+    "href": "skills/insert-dolt-db-sql.html#inputs",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "/insert-dolt-db-sql — find and apply all .sql files in extract/2026/inserts/\n/insert-dolt-db-sql FILE1 FILE2 ... — apply only the named files (paths relative to extract/2026/inserts/)",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-0-gather-sql-files",
+    "href": "skills/insert-dolt-db-sql.html#step-0-gather-sql-files",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "List all .sql files under extract/2026/inserts/. If specific filenames were provided, filter to only those (error if any are not found).\nDisplay the list:\n\nFound {N} SQL file(s): file1.sql, file2.sql, …\n\nIf no files found, stop and tell the user: “No SQL files found in extract/2026/inserts/.”",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-1-clone-the-target-database",
+    "href": "skills/insert-dolt-db-sql.html#step-1-clone-the-target-database",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "Create a temporary directory and clone calvinw/BusMgmtBenchmarks into it:\nTMPDIR=$(mktemp -d)\ndolt clone calvinw/BusMgmtBenchmarks \"$TMPDIR\"\nConfirm clone succeeded. If it fails, stop with an error.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-2-execute-each-sql-file",
+    "href": "skills/insert-dolt-db-sql.html#step-2-execute-each-sql-file",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "For each SQL file (in alphabetical order):\ndolt sql &lt; \"{SQL_FILE_PATH}\"\nShow the output of each execution. If any SQL file produces errors, display them but continue processing remaining files.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-3-show-the-diff",
+    "href": "skills/insert-dolt-db-sql.html#step-3-show-the-diff",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "cd \"$TMPDIR\"\ndolt diff\nDisplay the full diff to the user for review.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-4-commit",
+    "href": "skills/insert-dolt-db-sql.html#step-4-commit",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "cd \"$TMPDIR\"\ndolt add -A\ndolt commit -am \"Apply SQL inserts from extract/2026/inserts/\"\nShow the commit hash.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-5-push",
+    "href": "skills/insert-dolt-db-sql.html#step-5-push",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "cd \"$TMPDIR\"\ndolt push origin main\nIf push fails due to missing credentials, tell the user to push manually:\n\nPush requires DoltHub credentials. Run dolt push origin main from {TMPDIR} manually.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-6-cleanup",
+    "href": "skills/insert-dolt-db-sql.html#step-6-cleanup",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "Remove the temporary clone directory:\nrm -rf \"$TMPDIR\"",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/insert-dolt-db-sql.html#step-7-print-summary",
+    "href": "skills/insert-dolt-db-sql.html#step-7-print-summary",
+    "title": "insert-dolt-db-sql",
+    "section": "",
+    "text": "Applied {N} SQL file(s) to calvinw/BusMgmtBenchmarks/main: - file1.sql - file2.sql - …\nCommit: {hash}\nDiff summary: {N} rows changed across {N} tables.",
+    "crumbs": [
+      "Skills",
+      "Insert Dolt DB SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html",
+    "href": "skills/create-verified-dolt-db-financials-sql.html",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "Generate a SQL file for inserting or correcting reconciled financial data into the BusMgmtBenchmarks Dolt database. No database connection is made — this skill writes a file only.\nRun /verify-dolt-db-financials first to produce the report file that this skill reads from.\n\n\n\nSingle-year mode: /create-verified-dolt-db-financials-sql TICKER YEAR\nMulti-year mode: /create-verified-dolt-db-financials-sql TICKER (no year — reads all years from the saved report file)\n\n\n\n\nSingle-year mode (YEAR provided): - Look for reports/{TICKER}-{YEAR}.md. - If not found, stop and tell the user: “Please run /verify-dolt-db-financials {TICKER} {YEAR} first to generate the report.” - Skip to Step 1.\nMulti-year mode (YEAR omitted): - Look for reports/{TICKER}-all-years.md. - If not found, stop and tell the user: “Please run /verify-dolt-db-financials {TICKER} first to generate the report.” - Read the per-year summary table from the report (columns: Year | reportDate | Action). - Collect every year whose Action is NOT “No change” (i.e., any year marked as new insert, correction, or update). - If all years are “No change”, tell the user: “No changes needed — all years in Dolt already match the reconciled values.” - Display the list of years to be processed:\n\nProcessing {N} year(s) for {TICKER}: {year1}, {year2}, …\n\nThen run Steps 1–3 once per year (oldest first), accumulating all statements into a single SQL file.\n\n\n\nOpen the report file located in Step 0. Find the reconciled recommendations section for the target year. Extract the Recommended column values for all 13 fields + metadata.\nDo not use session memory or prior conversation output — use only what is in the report file.\n\n\n\nFrom the report file’s reconciled output for this year, collect:\n\n\n\n\n\n\n\nField\nNotes\n\n\n\n\ncompany_name\nExact string as stored in Dolt DB\n\n\nyear\nInteger (e.g. 2024)\n\n\nreportDate\nFiscal year-end date string (e.g. ‘2024-12-31’)\n\n\nNet Revenue\nThousands\n\n\nCost of Goods\nThousands, positive\n\n\nGross Margin\nNet Revenue − Cost of Goods\n\n\nSGA\nThousands\n\n\nOperating Profit\nThousands, can be negative\n\n\nNet Profit\nThousands, can be negative\n\n\nInventory\nThousands, or NULL for marketplace companies\n\n\nCurrent Assets\nThousands\n\n\nTotal Assets\nThousands\n\n\nCurrent Liabilities\nThousands\n\n\nLiabilities\nTotal Assets − Total SE\n\n\nTotal Shareholder Equity\nThousands, can be negative\n\n\nTotal Liabilities and Shareholder Equity\nThousands, must equal Total Assets\n\n\n\nIf any raw values from the filing were in full dollars (not thousands), divide by 1,000 before writing.\n\n\n\nUse REPLACE INTO so the statement works for both new rows and corrections to existing rows.\n-- TICKER FY YEAR — [action: new insert / correction / SGA update]\n-- Generated by /create-verified-dolt-db-financials-sql on YYYY-MM-DD\n-- Source: [SEC / Yahoo / notes from analysis]\n\nREPLACE INTO financials (\n  company_name, year, reportDate,\n  `Net Revenue`, `Cost of Goods`, `Gross Margin`, `SGA`,\n  `Operating Profit`, `Net Profit`, `Inventory`,\n  `Current Assets`, `Total Assets`, `Current Liabilities`,\n  `Liabilities`, `Total Shareholder Equity`,\n  `Total Liabilities and Shareholder Equity`\n) VALUES (\n  'Company Name', YEAR, 'YYYY-MM-DD',\n  NNNN, NNNN, NNNN, NNNN,\n  NNNN, NNNN, NNNN_OR_NULL,\n  NNNN, NNNN, NNNN,\n  NNNN, NNNN, NNNN\n);\nInclude a per-statement comment header with: ticker, year, action description, generation date, and primary source.\nIn multi-year mode, concatenate all per-year statements into one file separated by blank lines.\n\n\n\nCreate extract/2026/inserts/ directory if it does not exist.\nSingle-year mode: write to extract/2026/inserts/{TICKER}_{YEAR}_insert.sql\nMulti-year mode: write to extract/2026/inserts/{TICKER}_multi_insert.sql\nShow the full file contents to the user.\n\n\n\nAfter writing the file, print:\n\nSQL file written to: extract/2026/inserts/{FILENAME}\nThat’s it. The skill’s job is done once the file is written.",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html#inputs",
+    "href": "skills/create-verified-dolt-db-financials-sql.html#inputs",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "Single-year mode: /create-verified-dolt-db-financials-sql TICKER YEAR\nMulti-year mode: /create-verified-dolt-db-financials-sql TICKER (no year — reads all years from the saved report file)",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html#step-0-determine-mode-and-locate-report-file",
+    "href": "skills/create-verified-dolt-db-financials-sql.html#step-0-determine-mode-and-locate-report-file",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "Single-year mode (YEAR provided): - Look for reports/{TICKER}-{YEAR}.md. - If not found, stop and tell the user: “Please run /verify-dolt-db-financials {TICKER} {YEAR} first to generate the report.” - Skip to Step 1.\nMulti-year mode (YEAR omitted): - Look for reports/{TICKER}-all-years.md. - If not found, stop and tell the user: “Please run /verify-dolt-db-financials {TICKER} first to generate the report.” - Read the per-year summary table from the report (columns: Year | reportDate | Action). - Collect every year whose Action is NOT “No change” (i.e., any year marked as new insert, correction, or update). - If all years are “No change”, tell the user: “No changes needed — all years in Dolt already match the reconciled values.” - Display the list of years to be processed:\n\nProcessing {N} year(s) for {TICKER}: {year1}, {year2}, …\n\nThen run Steps 1–3 once per year (oldest first), accumulating all statements into a single SQL file.",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html#step-1-read-reconciled-values-from-report-file",
+    "href": "skills/create-verified-dolt-db-financials-sql.html#step-1-read-reconciled-values-from-report-file",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "Open the report file located in Step 0. Find the reconciled recommendations section for the target year. Extract the Recommended column values for all 13 fields + metadata.\nDo not use session memory or prior conversation output — use only what is in the report file.",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html#step-2-collect-the-13-fields-metadata-per-year",
+    "href": "skills/create-verified-dolt-db-financials-sql.html#step-2-collect-the-13-fields-metadata-per-year",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "From the report file’s reconciled output for this year, collect:\n\n\n\n\n\n\n\nField\nNotes\n\n\n\n\ncompany_name\nExact string as stored in Dolt DB\n\n\nyear\nInteger (e.g. 2024)\n\n\nreportDate\nFiscal year-end date string (e.g. ‘2024-12-31’)\n\n\nNet Revenue\nThousands\n\n\nCost of Goods\nThousands, positive\n\n\nGross Margin\nNet Revenue − Cost of Goods\n\n\nSGA\nThousands\n\n\nOperating Profit\nThousands, can be negative\n\n\nNet Profit\nThousands, can be negative\n\n\nInventory\nThousands, or NULL for marketplace companies\n\n\nCurrent Assets\nThousands\n\n\nTotal Assets\nThousands\n\n\nCurrent Liabilities\nThousands\n\n\nLiabilities\nTotal Assets − Total SE\n\n\nTotal Shareholder Equity\nThousands, can be negative\n\n\nTotal Liabilities and Shareholder Equity\nThousands, must equal Total Assets\n\n\n\nIf any raw values from the filing were in full dollars (not thousands), divide by 1,000 before writing.",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html#step-3-build-the-sql-statement-per-year",
+    "href": "skills/create-verified-dolt-db-financials-sql.html#step-3-build-the-sql-statement-per-year",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "Use REPLACE INTO so the statement works for both new rows and corrections to existing rows.\n-- TICKER FY YEAR — [action: new insert / correction / SGA update]\n-- Generated by /create-verified-dolt-db-financials-sql on YYYY-MM-DD\n-- Source: [SEC / Yahoo / notes from analysis]\n\nREPLACE INTO financials (\n  company_name, year, reportDate,\n  `Net Revenue`, `Cost of Goods`, `Gross Margin`, `SGA`,\n  `Operating Profit`, `Net Profit`, `Inventory`,\n  `Current Assets`, `Total Assets`, `Current Liabilities`,\n  `Liabilities`, `Total Shareholder Equity`,\n  `Total Liabilities and Shareholder Equity`\n) VALUES (\n  'Company Name', YEAR, 'YYYY-MM-DD',\n  NNNN, NNNN, NNNN, NNNN,\n  NNNN, NNNN, NNNN_OR_NULL,\n  NNNN, NNNN, NNNN,\n  NNNN, NNNN, NNNN\n);\nInclude a per-statement comment header with: ticker, year, action description, generation date, and primary source.\nIn multi-year mode, concatenate all per-year statements into one file separated by blank lines.",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html#step-4-write-the-sql-file",
+    "href": "skills/create-verified-dolt-db-financials-sql.html#step-4-write-the-sql-file",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "Create extract/2026/inserts/ directory if it does not exist.\nSingle-year mode: write to extract/2026/inserts/{TICKER}_{YEAR}_insert.sql\nMulti-year mode: write to extract/2026/inserts/{TICKER}_multi_insert.sql\nShow the full file contents to the user.",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-verified-dolt-db-financials-sql.html#step-5-print-summary",
+    "href": "skills/create-verified-dolt-db-financials-sql.html#step-5-print-summary",
+    "title": "create-verified-dolt-db-financials-sql",
+    "section": "",
+    "text": "After writing the file, print:\n\nSQL file written to: extract/2026/inserts/{FILENAME}\nThat’s it. The skill’s job is done once the file is written.",
+    "crumbs": [
+      "Skills",
+      "Create Verified Dolt DB Financials SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html",
+    "href": "skills/create-new-company-sql.html",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "Generate SQL files to add a new company to the BusMgmtBenchmarks Dolt database, spanning 2018 through the current year. No database connection is made for writes — this skill writes files only.\nUse this for brand-new companies not yet in the Dolt DB. If the company already exists, use /verify-dolt-db-financials instead.\n\n\n/create-new-company-sql TICKER [CIK]\n\nTICKER — stock ticker symbol (e.g. WSM, BBW, GPS)\nCIK — (optional) SEC Central Index Key number. If omitted, the skill will look it up from Yahoo or prompt the user.\n\n\n\n\nQuery the Dolt database to check if this company already exists:\nSELECT company, ticker_symbol FROM company_info WHERE ticker_symbol = '{TICKER}'\nIf a row is returned, stop and tell the user: &gt; {display_name} ({TICKER}) already exists in the Dolt database. Use /verify-dolt-db-financials {TICKER} to update or verify its data.\nIf no row is returned, proceed.\n\n\n\nIf CIK was provided: - Use it directly. - Fetch the company name via SEC: mcp__mcp-sec-10ks__process_financial_data_from_sec(company_name='Company', year=2024, cik=CIK) — the response will contain the legal company name. Extract it.\nIf CIK was NOT provided: - Fetch Yahoo Finance data to get company metadata: mcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name='Company', ticker_symbol=TICKER) The response headers usually contain the company name. Extract display_name from the results. - Search the web for the company’s CIK number: \"{display_name} SEC CIK number\" or use \"{display_name} CIK sec.gov\". - If CIK cannot be found, set CIK = NULL (non-US company or no SEC filing) and skip Step 3 (SEC fetches). Use Yahoo as the sole source.\n\n\n\nCollect or confirm these fields. Prompt the user for any that cannot be auto-detected:\n\n\n\n\n\n\n\nField\nHow to determine\n\n\n\n\ncompany\nThe company name used as the company_name key in financials. Use the legal name from SEC/Yahoo, shortened if needed (e.g. “Williams-Sonoma” not “Williams-Sonoma, Inc.”).\n\n\ndisplay_name\nFull display name (e.g. “Williams-Sonoma”)\n\n\nCIK\nFrom Step 2 (or NULL)\n\n\nticker_symbol\nFrom user input\n\n\nsegment\nRetail segment from the list: Online, Specialty, Grocery, Warehouse Clubs, Off Price, Department Store, Discount Store, Fast Fashion, Home Improvement, Health & Pharmacy, Resale. Look up the company’s business description if unsure. Prompt the user.\n\n\nsubsegment\nOptional subsegment (e.g. Apparel, Category Killer, Accessories and Shoes, Beauty, Home). Can be NULL. Prompt the user.\n\n\ncurrency\nReporting currency (e.g. USD, EUR, GBP). Usually USD for US SEC filers.\n\n\nunits\nAlways thousands for BusMgmtBenchmarks (all values stored in thousands).\n\n\n\nShow the user the proposed metadata and ask for confirmation before proceeding.\n\n\n\n4a. Determine the year range. Current year is 2026. The range is 2018 through 2026 inclusive.\n4b. Fetch Yahoo Finance data (one call covers all years):\nmcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name=display_name, ticker_symbol=TICKER)\nInspect the column headers to identify which fiscal years Yahoo provides data for. Note any years in the 2018–2026 range that Yahoo is missing.\n4c. Fetch SEC data (one call per year, if CIK is available). For each year from 2018 to 2026:\nmcp__mcp-sec-10ks__process_financial_data_from_sec(company_name=display_name, year=YEAR, cik=CIK)\nNote any years where SEC data is unavailable (e.g. company wasn’t public yet).\n4d. Display the coverage summary: &gt; Data coverage for {display_name} ({TICKER}): &gt; | Year | SEC | Yahoo | &gt; |——|—–|——-| &gt; | 2018 | ✓ | ✓ | &gt; | … | | | &gt; | 2026 | ✓ | ✓ |\n\n\n\nFor each available year, process independently (oldest first):\n5a. Extract the 13 standard fields from each source.\nAll values in thousands of dollars:\n\n\n\n\n\n\n\nField\nNotes\n\n\n\n\nNet Revenue\n\n\n\nCost of Goods\nPositive value\n\n\nGross Margin\nRevenue − COGS (calculate; don’t trust source directly)\n\n\nSGA\nMost error-prone — see anomaly rules in references\n\n\nOperating Profit\nCan be negative\n\n\nNet Profit\nCan be negative\n\n\nInventory\nNULL for pure marketplace companies\n\n\nCurrent Assets\n\n\n\nTotal Assets\n\n\n\nCurrent Liabilities\n\n\n\nLiabilities\nTotal Assets − Total SE (calculate)\n\n\nTotal Shareholder Equity\nCan be negative\n\n\nTotal Liabilities and Shareholder Equity\nMust equal Total Assets\n\n\n\nAlso extract reportDate (fiscal year-end date, e.g. 2024-12-31).\n5b. Apply anomaly detection rules.\nRead the anomaly-rules.md file from the verify-dolt-db-financials references: - references/anomaly-rules.md (accessible via the existing skill’s references) - Apply all SGA composite rules (Rules 1–4) - Apply balance sheet identity check - Apply gross margin sanity check - Apply inventory rules\nIf the company has no SEC data (CIK is NULL), use Yahoo values directly but flag a [WARNING] that SEC data was unavailable.\n5c. For each year, determine the action:\n\nIf this year has data (from SEC, Yahoo, or both): mark as New insert\nIf no data source has this year: mark as No data — skip\n\n\n\n\n6a. Create the extract/2026/create_company/ directory if it does not exist.\n6b. Build a single SQL file: extract/2026/create_company/{TICKER}_create.sql\nThe file contains two sections, in order:\nSection A — Company info:\n-- ============================================================\n-- {TICKER} — New company setup\n-- Generated by /create-new-company-sql on YYYY-MM-DD\n-- ============================================================\n\nINSERT INTO company_info (\n  company, CIK, display_name, ticker_symbol,\n  segment, subsegment, currency, units\n) VALUES (\n  '{company}', {CIK_OR_NULL}, '{display_name}', '{TICKER}',\n  '{segment}', {subsegment_OR_NULL}, '{currency}', 'thousands'\n);\nSection B — Financials (one REPLACE INTO per year, oldest first):\n-- ============================================================\n-- Financials: {display_name} ({TICKER}) — FY2018 to FY{current_year}\n-- ============================================================\n\n-- {display_name} FY{year} — New insert\nREPLACE INTO financials (\n  company_name, year, reportDate,\n  `Net Revenue`, `Cost of Goods`, `Gross Margin`, `SGA`,\n  `Operating Profit`, `Net Profit`, `Inventory`,\n  `Current Assets`, `Total Assets`, `Current Liabilities`,\n  `Liabilities`, `Total Shareholder Equity`,\n  `Total Liabilities and Shareholder Equity`\n) VALUES (\n  '{company}', {year}, '{reportDate}',\n  {Net_Revenue}, {Cost_of_Goods}, {Gross_Margin}, {SGA},\n  {Operating_Profit}, {Net_Profit}, {Inventory_OR_NULL},\n  {Current_Assets}, {Total_Assets}, {Current_Liabilities},\n  {Liabilities}, {Total_SE},\n  {Total_LSE}\n);\n6c. Show the full SQL file contents to the user.\n\n\n\nWrite a report to reports/{TICKER}-create.md summarizing:\n\nCompany metadata (what was inserted into company_info)\nPer-year data coverage table (which years had SEC, Yahoo, or both)\nPer-year reconciled values table\nAny anomalies or warnings found\nA note that no existing Dolt data was overwritten (new company)\n\nStart the report with:\n# {display_name} ({TICKER}) — New Company Data (FY2018–FY{current_year})\n\n**Generated:** {today's date}\n**Source:** /create-new-company-sql skill\n**Action:** New company setup\n\n---\n\n\n\nAfter writing the files, display:\n\nFiles written:\n\n\n\nFile\nPath\n\n\n\n\nSQL\nextract/2026/create_company/{TICKER}_create.sql\n\n\nReport\nreports/{TICKER}-create.md\n\n\n\nSQL covers: - company_info — 1 INSERT - financials — {N} REPLACE statements (years: {year_list})\nTo apply this to your local Dolt database clone:\n# 1. Navigate to your local Dolt repo\ncd /path/to/your/dolt/BusMgmtBenchmarks\n\n# 2. Run the SQL\ndolt sql &lt; /path/to/BusMgmtBenchmarks/extract/2026/create_company/{TICKER}_create.sql\n\n# 3. Review what changed\ndolt diff\n\n# 4. Commit locally when satisfied\ndolt commit -am \"Add {display_name} ({TICKER}) — new company (FY2018–FY{current_year})\"\n\n# 5. Push to DoltHub when ready\ndolt push\n\nThat’s it. The skill’s job is done once the files are written.",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#inputs",
+    "href": "skills/create-new-company-sql.html#inputs",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "/create-new-company-sql TICKER [CIK]\n\nTICKER — stock ticker symbol (e.g. WSM, BBW, GPS)\nCIK — (optional) SEC Central Index Key number. If omitted, the skill will look it up from Yahoo or prompt the user.",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-1-verify-company-does-not-already-exist",
+    "href": "skills/create-new-company-sql.html#step-1-verify-company-does-not-already-exist",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "Query the Dolt database to check if this company already exists:\nSELECT company, ticker_symbol FROM company_info WHERE ticker_symbol = '{TICKER}'\nIf a row is returned, stop and tell the user: &gt; {display_name} ({TICKER}) already exists in the Dolt database. Use /verify-dolt-db-financials {TICKER} to update or verify its data.\nIf no row is returned, proceed.",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-2-determine-cik-and-company-name",
+    "href": "skills/create-new-company-sql.html#step-2-determine-cik-and-company-name",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "If CIK was provided: - Use it directly. - Fetch the company name via SEC: mcp__mcp-sec-10ks__process_financial_data_from_sec(company_name='Company', year=2024, cik=CIK) — the response will contain the legal company name. Extract it.\nIf CIK was NOT provided: - Fetch Yahoo Finance data to get company metadata: mcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name='Company', ticker_symbol=TICKER) The response headers usually contain the company name. Extract display_name from the results. - Search the web for the company’s CIK number: \"{display_name} SEC CIK number\" or use \"{display_name} CIK sec.gov\". - If CIK cannot be found, set CIK = NULL (non-US company or no SEC filing) and skip Step 3 (SEC fetches). Use Yahoo as the sole source.",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-3-gather-company-metadata",
+    "href": "skills/create-new-company-sql.html#step-3-gather-company-metadata",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "Collect or confirm these fields. Prompt the user for any that cannot be auto-detected:\n\n\n\n\n\n\n\nField\nHow to determine\n\n\n\n\ncompany\nThe company name used as the company_name key in financials. Use the legal name from SEC/Yahoo, shortened if needed (e.g. “Williams-Sonoma” not “Williams-Sonoma, Inc.”).\n\n\ndisplay_name\nFull display name (e.g. “Williams-Sonoma”)\n\n\nCIK\nFrom Step 2 (or NULL)\n\n\nticker_symbol\nFrom user input\n\n\nsegment\nRetail segment from the list: Online, Specialty, Grocery, Warehouse Clubs, Off Price, Department Store, Discount Store, Fast Fashion, Home Improvement, Health & Pharmacy, Resale. Look up the company’s business description if unsure. Prompt the user.\n\n\nsubsegment\nOptional subsegment (e.g. Apparel, Category Killer, Accessories and Shoes, Beauty, Home). Can be NULL. Prompt the user.\n\n\ncurrency\nReporting currency (e.g. USD, EUR, GBP). Usually USD for US SEC filers.\n\n\nunits\nAlways thousands for BusMgmtBenchmarks (all values stored in thousands).\n\n\n\nShow the user the proposed metadata and ask for confirmation before proceeding.",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-4-fetch-all-data-sources",
+    "href": "skills/create-new-company-sql.html#step-4-fetch-all-data-sources",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "4a. Determine the year range. Current year is 2026. The range is 2018 through 2026 inclusive.\n4b. Fetch Yahoo Finance data (one call covers all years):\nmcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name=display_name, ticker_symbol=TICKER)\nInspect the column headers to identify which fiscal years Yahoo provides data for. Note any years in the 2018–2026 range that Yahoo is missing.\n4c. Fetch SEC data (one call per year, if CIK is available). For each year from 2018 to 2026:\nmcp__mcp-sec-10ks__process_financial_data_from_sec(company_name=display_name, year=YEAR, cik=CIK)\nNote any years where SEC data is unavailable (e.g. company wasn’t public yet).\n4d. Display the coverage summary: &gt; Data coverage for {display_name} ({TICKER}): &gt; | Year | SEC | Yahoo | &gt; |——|—–|——-| &gt; | 2018 | ✓ | ✓ | &gt; | … | | | &gt; | 2026 | ✓ | ✓ |",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-5-extract-and-reconcile-values-per-year-2018-current",
+    "href": "skills/create-new-company-sql.html#step-5-extract-and-reconcile-values-per-year-2018-current",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "For each available year, process independently (oldest first):\n5a. Extract the 13 standard fields from each source.\nAll values in thousands of dollars:\n\n\n\n\n\n\n\nField\nNotes\n\n\n\n\nNet Revenue\n\n\n\nCost of Goods\nPositive value\n\n\nGross Margin\nRevenue − COGS (calculate; don’t trust source directly)\n\n\nSGA\nMost error-prone — see anomaly rules in references\n\n\nOperating Profit\nCan be negative\n\n\nNet Profit\nCan be negative\n\n\nInventory\nNULL for pure marketplace companies\n\n\nCurrent Assets\n\n\n\nTotal Assets\n\n\n\nCurrent Liabilities\n\n\n\nLiabilities\nTotal Assets − Total SE (calculate)\n\n\nTotal Shareholder Equity\nCan be negative\n\n\nTotal Liabilities and Shareholder Equity\nMust equal Total Assets\n\n\n\nAlso extract reportDate (fiscal year-end date, e.g. 2024-12-31).\n5b. Apply anomaly detection rules.\nRead the anomaly-rules.md file from the verify-dolt-db-financials references: - references/anomaly-rules.md (accessible via the existing skill’s references) - Apply all SGA composite rules (Rules 1–4) - Apply balance sheet identity check - Apply gross margin sanity check - Apply inventory rules\nIf the company has no SEC data (CIK is NULL), use Yahoo values directly but flag a [WARNING] that SEC data was unavailable.\n5c. For each year, determine the action:\n\nIf this year has data (from SEC, Yahoo, or both): mark as New insert\nIf no data source has this year: mark as No data — skip",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-6-build-the-sql-file",
+    "href": "skills/create-new-company-sql.html#step-6-build-the-sql-file",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "6a. Create the extract/2026/create_company/ directory if it does not exist.\n6b. Build a single SQL file: extract/2026/create_company/{TICKER}_create.sql\nThe file contains two sections, in order:\nSection A — Company info:\n-- ============================================================\n-- {TICKER} — New company setup\n-- Generated by /create-new-company-sql on YYYY-MM-DD\n-- ============================================================\n\nINSERT INTO company_info (\n  company, CIK, display_name, ticker_symbol,\n  segment, subsegment, currency, units\n) VALUES (\n  '{company}', {CIK_OR_NULL}, '{display_name}', '{TICKER}',\n  '{segment}', {subsegment_OR_NULL}, '{currency}', 'thousands'\n);\nSection B — Financials (one REPLACE INTO per year, oldest first):\n-- ============================================================\n-- Financials: {display_name} ({TICKER}) — FY2018 to FY{current_year}\n-- ============================================================\n\n-- {display_name} FY{year} — New insert\nREPLACE INTO financials (\n  company_name, year, reportDate,\n  `Net Revenue`, `Cost of Goods`, `Gross Margin`, `SGA`,\n  `Operating Profit`, `Net Profit`, `Inventory`,\n  `Current Assets`, `Total Assets`, `Current Liabilities`,\n  `Liabilities`, `Total Shareholder Equity`,\n  `Total Liabilities and Shareholder Equity`\n) VALUES (\n  '{company}', {year}, '{reportDate}',\n  {Net_Revenue}, {Cost_of_Goods}, {Gross_Margin}, {SGA},\n  {Operating_Profit}, {Net_Profit}, {Inventory_OR_NULL},\n  {Current_Assets}, {Total_Assets}, {Current_Liabilities},\n  {Liabilities}, {Total_SE},\n  {Total_LSE}\n);\n6c. Show the full SQL file contents to the user.",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-7-write-the-report-file",
+    "href": "skills/create-new-company-sql.html#step-7-write-the-report-file",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "Write a report to reports/{TICKER}-create.md summarizing:\n\nCompany metadata (what was inserted into company_info)\nPer-year data coverage table (which years had SEC, Yahoo, or both)\nPer-year reconciled values table\nAny anomalies or warnings found\nA note that no existing Dolt data was overwritten (new company)\n\nStart the report with:\n# {display_name} ({TICKER}) — New Company Data (FY2018–FY{current_year})\n\n**Generated:** {today's date}\n**Source:** /create-new-company-sql skill\n**Action:** New company setup\n\n---",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/create-new-company-sql.html#step-8-print-summary-and-apply-instructions",
+    "href": "skills/create-new-company-sql.html#step-8-print-summary-and-apply-instructions",
+    "title": "create-new-company-sql",
+    "section": "",
+    "text": "After writing the files, display:\n\nFiles written:\n\n\n\nFile\nPath\n\n\n\n\nSQL\nextract/2026/create_company/{TICKER}_create.sql\n\n\nReport\nreports/{TICKER}-create.md\n\n\n\nSQL covers: - company_info — 1 INSERT - financials — {N} REPLACE statements (years: {year_list})\nTo apply this to your local Dolt database clone:\n# 1. Navigate to your local Dolt repo\ncd /path/to/your/dolt/BusMgmtBenchmarks\n\n# 2. Run the SQL\ndolt sql &lt; /path/to/BusMgmtBenchmarks/extract/2026/create_company/{TICKER}_create.sql\n\n# 3. Review what changed\ndolt diff\n\n# 4. Commit locally when satisfied\ndolt commit -am \"Add {display_name} ({TICKER}) — new company (FY2018–FY{current_year})\"\n\n# 5. Push to DoltHub when ready\ndolt push\n\nThat’s it. The skill’s job is done once the files are written.",
+    "crumbs": [
+      "Skills",
+      "Create New Company SQL"
+    ]
+  },
+  {
+    "objectID": "skills/index.html",
+    "href": "skills/index.html",
+    "title": "Skills",
+    "section": "",
+    "text": "Skills\nDolt DB management skills for the BusMgmtBenchmarks database. Browse by skill in the sidebar on the left.",
+    "crumbs": [
+      "Skills",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "skills_sessions/index.html",
+    "href": "skills_sessions/index.html",
+    "title": "Sessions",
+    "section": "",
+    "text": "Sessions\nAI-guided conversations using each Dolt DB skill.\nSessions are organised by skill in the sidebar on the left.",
+    "crumbs": [
+      "Sessions",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Dolt DB Skills",
+    "section": "",
+    "text": "Resources for managing the BusMgmtBenchmarks Dolt database — a financial data project tracking retail company financials from SEC 10-K filings and Yahoo Finance.\n\nSessions — AI-guided conversations using each skill\nPlans — Project and planning documents\nSkills — AI skill definitions for database management tasks\n\n\n\n\nCalvin Williamson (calvinw)"
+  },
+  {
+    "objectID": "index.html#contributors",
+    "href": "index.html#contributors",
+    "title": "Dolt DB Skills",
+    "section": "",
+    "text": "Calvin Williamson (calvinw)"
+  },
+  {
+    "objectID": "plan/index.html",
+    "href": "plan/index.html",
+    "title": "Plans",
+    "section": "",
+    "text": "Plans\nProject and planning documents for the BusMgmtBenchmarks database.",
+    "crumbs": [
+      "Plans",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html",
+    "href": "skills/find-financials-from-pdfs.html",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "Extract financial data from PDF annual reports for private companies and generate SQL files ready for insertion into the BusMgmtBenchmarks Dolt database.\n\n\n/find-financials-from-pdfs COMPANY NAME\n\nCOMPANY NAME — the full company name (e.g. ACE Hardware)\n\n\n\n\nQuery the Dolt database:\nSELECT * FROM company_info WHERE company = '{company_name}'\nUse db_string: calvinw/BusMgmtBenchmarks/main.\n\nIf the row exists — note the existing metadata. Also fetch the existing financials rows for this company:\nSELECT * FROM financials WHERE company_name = '{company_name}' ORDER BY year\nStore these values — after extracting from PDFs in Step 3, you will compare them side by side in Step 5 and flag any differences. Skip to Step 3.\nIf no row exists — proceed to Step 2 to collect metadata.\n\n\n\n\nScan the references/ folder inside .skillshare/find-financials-from-pdfs/references/ for all .pdf files. Read all PDFs to:\n\nInfer company metadata from the first PDF:\n\n\n\n\n\n\n\n\nField\nWhat to look for\n\n\n\n\ndisplay_name\nThe company’s full name as it appears in the document\n\n\nsegment\nBroad category (e.g. “Retail”, “Wholesale”)\n\n\nsubsegment\nMore specific category (e.g. “Home Improvement”, “Grocery”)\n\n\ncurrency\nCurrency used in the financials (e.g. “USD”)\n\n\nunits\nScale of numbers (e.g. “thousands”, “millions”) — convert to thousands for DB\n\n\n\nNote: CIK and ticker_symbol are left as NULL for private companies — do not attempt to fill these.\n\nScan financial statement headers in all PDFs to identify the actual fiscal years covered. Build a complete mapping of PDF → actual years found.\nIdentify all overlapping years across all PDFs. For every year that appears in more than one PDF, the earliest PDF is the primary source and all others serve as verification.\n\nPresent findings to the user for confirmation:\n\nBased on the PDFs, here is what I found for {Company Name}: - display_name: {value} - segment: {value} - subsegment: {value} - currency: {value} - units: {value} (will be stored as thousands)\n\n\n\nYear\nPrimary Source\nVerified by\n\n\n\n\nFY{year1}\n{pdf}\n—\n\n\nFY{year2}\n{pdf}\n{pdf}\n\n\nFY{year3}\n{pdf}\n{pdf}\n\n\n…\n\n\n\n\n\nAre there any years you’d like to exclude before I proceed?\n\nWait for confirmation or corrections before proceeding.\n\n\n\nFor each confirmed year, read the corresponding PDF and extract the following 13 fields. All values must be in thousands of dollars (convert if the PDF uses millions: multiply by 1,000).\n\n\n\nField\nNotes\n\n\n\n\nNet Revenue\nTotal sales / revenue\n\n\nCost of Goods\nCOGS — positive value\n\n\nGross Margin\nNet Revenue − Cost of Goods\n\n\nSGA\nSelling, General & Administrative expenses\n\n\nOperating Profit\nCan be negative\n\n\nNet Profit\nCan be negative\n\n\nInventory\nUse NULL if not applicable\n\n\nCurrent Assets\n\n\n\nTotal Assets\n\n\n\nCurrent Liabilities\n\n\n\nLiabilities\nTotal Assets − Total Shareholder Equity\n\n\nTotal Shareholder Equity\nCan be negative\n\n\nTotal Liabilities and Shareholder Equity\nMust equal Total Assets\n\n\n\nAlso extract reportDate — the fiscal year-end date (e.g. 2023-12-31).\nIf a field cannot be found in the PDF, set it to NULL. Never guess or estimate values.\nTrack which PDF filename each year’s data came from — this will be stored in source_pdf.\nFor overlapping years, extract values from both PDFs and compare: - If values match → use the primary PDF value, set source_pdf to \"{pdf1}, {pdf2} (verified)\" - If values differ → flag [WARNING] overlap mismatch: {pdf1} shows {value}, {pdf2} shows {value} and ask the user which to use before generating SQL\n\n\n\nRun these basic checks for each year:\n\nBalance sheet check: Total Assets = Total Liabilities and Shareholder Equity → if not, flag [WARNING]\nGross margin check: Gross Margin = Net Revenue − Cost of Goods → if not, flag [WARNING]\nNULL check: If more than 5 of the 13 fields are NULL, flag [WARNING] — many fields missing, verify PDF quality\n\nDo not block SQL generation for warnings — just display them so the user can review.\n\n\n\nShow a table of extracted values per year. If the company already existed in the DB (Step 1), add a column for the current DB value and mark differences with *:\n\n\n\nField\nPDF ({Year})\nDB (current)\n\n\n\n\nNet Revenue\n\n\n\n\n…\n\n\n\n\n\nIf the company is new, just show the PDF values:\n\n\n\nField\n{Year1}\n{Year2}\n…\n\n\n\n\nNet Revenue\n\n\n\n\n\n…\n\n\n\n\n\n\nMark any [WARNING] fields and any * differences clearly. For each difference, note: &gt; [DIFF] {Field}: DB has {old value}, PDF has {new value} — will be overwritten by REPLACE INTO.\n\n\n\nWrite a single SQL file to extract/2026/inserts/private/{COMPANY_SLUG}_{FIRST_YEAR}-{LAST_YEAR}.sql.\n\nCOMPANY_SLUG = company name lowercased with hyphens (e.g. ace-hardware)\nFIRST_YEAR and LAST_YEAR = first and last year processed (e.g. ace-hardware_2021-2025.sql). If only one year, use ace-hardware_2023.sql.\n\nThe file should contain:\nIf company is new (not found in Step 1):\nREPLACE INTO company_info\n  (company, display_name, segment, subsegment, currency, units)\nVALUES\n  ('{company}', '{display_name}', '{segment}', '{subsegment}', '{currency}', 'thousands');\nFor each year:\nREPLACE INTO financials\n  (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,\n   SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,\n   `Current Liabilities`, Liabilities, `Total Shareholder Equity`,\n   `Total Liabilities and Shareholder Equity`, source_pdf)\nVALUES\n  ('{company}', {year}, '{reportDate}', {Net Revenue}, {Cost of Goods}, {Gross Margin},\n   {SGA}, {Operating Profit}, {Net Profit}, {Inventory}, {Current Assets}, {Total Assets},\n   {Current Liabilities}, {Liabilities}, {Total Shareholder Equity},\n   {Total Liabilities and Shareholder Equity}, '{source_pdf}');\nUse NULL (without quotes) for any missing numeric fields.\n\n\n\nTell the user:\n\nSQL file saved to extract/2026/inserts/private/{filename}.sql.\nReview the file, then apply it manually to the database when ready.\n\nList any [WARNING] flags for the user to review before inserting.\n\n\n\n\nPDF files are stored in .skillshare/find-financials-from-pdfs/references/\nTarget tables: company_info and financials on calvinw/BusMgmtBenchmarks/main\nAll numeric values stored in thousands\nPrivate companies: CIK and ticker_symbol are left as NULL",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#inputs",
+    "href": "skills/find-financials-from-pdfs.html#inputs",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "/find-financials-from-pdfs COMPANY NAME\n\nCOMPANY NAME — the full company name (e.g. ACE Hardware)",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#step-1-check-if-company-already-exists",
+    "href": "skills/find-financials-from-pdfs.html#step-1-check-if-company-already-exists",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "Query the Dolt database:\nSELECT * FROM company_info WHERE company = '{company_name}'\nUse db_string: calvinw/BusMgmtBenchmarks/main.\n\nIf the row exists — note the existing metadata. Also fetch the existing financials rows for this company:\nSELECT * FROM financials WHERE company_name = '{company_name}' ORDER BY year\nStore these values — after extracting from PDFs in Step 3, you will compare them side by side in Step 5 and flag any differences. Skip to Step 3.\nIf no row exists — proceed to Step 2 to collect metadata.",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#step-2-scan-pdfs-infer-metadata-and-confirm-years",
+    "href": "skills/find-financials-from-pdfs.html#step-2-scan-pdfs-infer-metadata-and-confirm-years",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "Scan the references/ folder inside .skillshare/find-financials-from-pdfs/references/ for all .pdf files. Read all PDFs to:\n\nInfer company metadata from the first PDF:\n\n\n\n\n\n\n\n\nField\nWhat to look for\n\n\n\n\ndisplay_name\nThe company’s full name as it appears in the document\n\n\nsegment\nBroad category (e.g. “Retail”, “Wholesale”)\n\n\nsubsegment\nMore specific category (e.g. “Home Improvement”, “Grocery”)\n\n\ncurrency\nCurrency used in the financials (e.g. “USD”)\n\n\nunits\nScale of numbers (e.g. “thousands”, “millions”) — convert to thousands for DB\n\n\n\nNote: CIK and ticker_symbol are left as NULL for private companies — do not attempt to fill these.\n\nScan financial statement headers in all PDFs to identify the actual fiscal years covered. Build a complete mapping of PDF → actual years found.\nIdentify all overlapping years across all PDFs. For every year that appears in more than one PDF, the earliest PDF is the primary source and all others serve as verification.\n\nPresent findings to the user for confirmation:\n\nBased on the PDFs, here is what I found for {Company Name}: - display_name: {value} - segment: {value} - subsegment: {value} - currency: {value} - units: {value} (will be stored as thousands)\n\n\n\nYear\nPrimary Source\nVerified by\n\n\n\n\nFY{year1}\n{pdf}\n—\n\n\nFY{year2}\n{pdf}\n{pdf}\n\n\nFY{year3}\n{pdf}\n{pdf}\n\n\n…\n\n\n\n\n\nAre there any years you’d like to exclude before I proceed?\n\nWait for confirmation or corrections before proceeding.",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#step-3-extract-financial-data",
+    "href": "skills/find-financials-from-pdfs.html#step-3-extract-financial-data",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "For each confirmed year, read the corresponding PDF and extract the following 13 fields. All values must be in thousands of dollars (convert if the PDF uses millions: multiply by 1,000).\n\n\n\nField\nNotes\n\n\n\n\nNet Revenue\nTotal sales / revenue\n\n\nCost of Goods\nCOGS — positive value\n\n\nGross Margin\nNet Revenue − Cost of Goods\n\n\nSGA\nSelling, General & Administrative expenses\n\n\nOperating Profit\nCan be negative\n\n\nNet Profit\nCan be negative\n\n\nInventory\nUse NULL if not applicable\n\n\nCurrent Assets\n\n\n\nTotal Assets\n\n\n\nCurrent Liabilities\n\n\n\nLiabilities\nTotal Assets − Total Shareholder Equity\n\n\nTotal Shareholder Equity\nCan be negative\n\n\nTotal Liabilities and Shareholder Equity\nMust equal Total Assets\n\n\n\nAlso extract reportDate — the fiscal year-end date (e.g. 2023-12-31).\nIf a field cannot be found in the PDF, set it to NULL. Never guess or estimate values.\nTrack which PDF filename each year’s data came from — this will be stored in source_pdf.\nFor overlapping years, extract values from both PDFs and compare: - If values match → use the primary PDF value, set source_pdf to \"{pdf1}, {pdf2} (verified)\" - If values differ → flag [WARNING] overlap mismatch: {pdf1} shows {value}, {pdf2} shows {value} and ask the user which to use before generating SQL",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#step-4-validate-the-extracted-data",
+    "href": "skills/find-financials-from-pdfs.html#step-4-validate-the-extracted-data",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "Run these basic checks for each year:\n\nBalance sheet check: Total Assets = Total Liabilities and Shareholder Equity → if not, flag [WARNING]\nGross margin check: Gross Margin = Net Revenue − Cost of Goods → if not, flag [WARNING]\nNULL check: If more than 5 of the 13 fields are NULL, flag [WARNING] — many fields missing, verify PDF quality\n\nDo not block SQL generation for warnings — just display them so the user can review.",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#step-5-display-side-by-side-summary",
+    "href": "skills/find-financials-from-pdfs.html#step-5-display-side-by-side-summary",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "Show a table of extracted values per year. If the company already existed in the DB (Step 1), add a column for the current DB value and mark differences with *:\n\n\n\nField\nPDF ({Year})\nDB (current)\n\n\n\n\nNet Revenue\n\n\n\n\n…\n\n\n\n\n\nIf the company is new, just show the PDF values:\n\n\n\nField\n{Year1}\n{Year2}\n…\n\n\n\n\nNet Revenue\n\n\n\n\n\n…\n\n\n\n\n\n\nMark any [WARNING] fields and any * differences clearly. For each difference, note: &gt; [DIFF] {Field}: DB has {old value}, PDF has {new value} — will be overwritten by REPLACE INTO.",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#step-6-generate-sql-file",
+    "href": "skills/find-financials-from-pdfs.html#step-6-generate-sql-file",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "Write a single SQL file to extract/2026/inserts/private/{COMPANY_SLUG}_{FIRST_YEAR}-{LAST_YEAR}.sql.\n\nCOMPANY_SLUG = company name lowercased with hyphens (e.g. ace-hardware)\nFIRST_YEAR and LAST_YEAR = first and last year processed (e.g. ace-hardware_2021-2025.sql). If only one year, use ace-hardware_2023.sql.\n\nThe file should contain:\nIf company is new (not found in Step 1):\nREPLACE INTO company_info\n  (company, display_name, segment, subsegment, currency, units)\nVALUES\n  ('{company}', '{display_name}', '{segment}', '{subsegment}', '{currency}', 'thousands');\nFor each year:\nREPLACE INTO financials\n  (company_name, year, reportDate, `Net Revenue`, `Cost of Goods`, `Gross Margin`,\n   SGA, `Operating Profit`, `Net Profit`, Inventory, `Current Assets`, `Total Assets`,\n   `Current Liabilities`, Liabilities, `Total Shareholder Equity`,\n   `Total Liabilities and Shareholder Equity`, source_pdf)\nVALUES\n  ('{company}', {year}, '{reportDate}', {Net Revenue}, {Cost of Goods}, {Gross Margin},\n   {SGA}, {Operating Profit}, {Net Profit}, {Inventory}, {Current Assets}, {Total Assets},\n   {Current Liabilities}, {Liabilities}, {Total Shareholder Equity},\n   {Total Liabilities and Shareholder Equity}, '{source_pdf}');\nUse NULL (without quotes) for any missing numeric fields.",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#step-7-signal-completion",
+    "href": "skills/find-financials-from-pdfs.html#step-7-signal-completion",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "Tell the user:\n\nSQL file saved to extract/2026/inserts/private/{filename}.sql.\nReview the file, then apply it manually to the database when ready.\n\nList any [WARNING] flags for the user to review before inserting.",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/find-financials-from-pdfs.html#references",
+    "href": "skills/find-financials-from-pdfs.html#references",
+    "title": "find-financials-from-pdfs",
+    "section": "",
+    "text": "PDF files are stored in .skillshare/find-financials-from-pdfs/references/\nTarget tables: company_info and financials on calvinw/BusMgmtBenchmarks/main\nAll numeric values stored in thousands\nPrivate companies: CIK and ticker_symbol are left as NULL",
+    "crumbs": [
+      "Skills",
+      "Find Financials from PDFs"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html",
+    "href": "skills/verify-dolt-db-financials.html",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "Fetch, compare, and reconcile financial data for a BusMgmtBenchmarks retail company across multiple sources, then produce DB-ready reconciled values.\n\n\n/verify-dolt-db-financials TICKER [YEAR]\n\nTICKER — stock ticker (e.g. TRR, WMT, M)\nYEAR — fiscal year (e.g. 2024). Optional. If omitted, analyze all available years for the company (see Step 0).\n\n\n\n\nIf no YEAR was provided, discover all available years before proceeding:\n0a. Query the Dolt DB for years already on record for this company:\nSELECT DISTINCT year FROM financials WHERE company_name = '{company}' ORDER BY year\n0b. Fetch Yahoo Finance data (one call covers ~4–5 years):\nmcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name, ticker)\nInspect the column headers of the returned income statement to identify all available fiscal year periods.\n0c. Take the union of years found in Dolt and years found in Yahoo. These are the years to analyze.\n0d. Display a summary to the user:\n\nAnalyzing all available years for {display_name} ({TICKER}): {year1}, {year2}, …\n\nThen run Steps 1–8 once for each year, in ascending order (oldest first). Each year is a fully independent analysis producing its own report file.\n\n\n\nQuery the Dolt database to get company metadata by ticker symbol:\nSELECT company, CIK, display_name, ticker_symbol\nFROM company_info\nWHERE ticker_symbol = '{TICKER}'\nUse db_string: calvinw/BusMgmtBenchmarks/main.\nFrom the result, use: - company — the exact company_name as stored in the DB (needed for financials query) - CIK — needed for the SEC fetch - display_name — for display in the report header\nIf no row is returned, ask the user to confirm the ticker. If CIK is NULL, the company has no SEC filing (non-US company) — skip the SEC fetch and use Yahoo only.\n\n\n\nRun these three fetches simultaneously:\n\n\n\n\n\n\n\nSource\nTool\n\n\n\n\nSEC 10-K\nmcp__mcp-sec-10ks__process_financial_data_from_sec(company_name, YEAR, cik)\n\n\nYahoo Finance\nmcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name, ticker)\n\n\nDolt DB (existing row)\nmcp__claude_ai_Dolt_Database_MCP__read_query → SELECT * FROM financials WHERE company_name = '...' AND year = YEAR on calvinw/BusMgmtBenchmarks/main\n\n\n\n\n\n\nAll values in thousands of dollars. Extract from each source:\n\n\n\nField\nNotes\n\n\n\n\nNet Revenue\n\n\n\nCost of Goods\nPositive value\n\n\nGross Margin\nRevenue − COGS\n\n\nSGA\nMost error-prone — see anomaly rules\n\n\nOperating Profit\nCan be negative\n\n\nNet Profit\nCan be negative\n\n\nInventory\nNULL for pure marketplace companies\n\n\nCurrent Assets\n\n\n\nTotal Assets\n\n\n\nCurrent Liabilities\n\n\n\nLiabilities\nTotal Assets − Total SE\n\n\nTotal Shareholder Equity\nCan be negative\n\n\nTotal Liabilities and Shareholder Equity\nMust equal Total Assets\n\n\n\nAlso extract reportDate (fiscal year-end date, e.g. 2024-12-31).\n\n\n\nRead references/anomaly-rules.md now. Apply all rules. Read references/company-notes.md and check for any entry matching this company.\nFlag every issue as [WARNING] (investigate) or [ERROR] (must resolve before inserting).\n\n\n\nPresent a table with columns: SEC | Yahoo | Dolt (current) | Recommended. Mark cells where sources disagree with *.\n\n\n\nFor each field state: - Recommended value and which source it comes from - Any adjustment made (especially SGA composite construction) - Whether the current Dolt value differs and would be overwritten\n\n\n\nEnd with the appropriate message based on mode:\nSingle-year mode: &gt; Analysis complete. Run /create-verified-dolt-db-financials-sql {TICKER} {YEAR} to write these values to the database.\nMulti-year mode (after all years have been analyzed): emit a single combined message — do NOT repeat this per year: &gt; Analysis complete. Run /create-verified-dolt-db-financials-sql {TICKER} to write all changed years to the database.\nList any unresolved flags for the user to review before inserting.\n\n\n\nSingle-year mode: write reports/{TICKER}-{YEAR}.md containing all content from Steps 4–7 for that year.\nMulti-year mode: after all years have been analyzed, write a single combined file reports/{TICKER}-all-years.md. This file is what /create-verified-dolt-db-financials-sql reads when run later in a separate session, so it must include:\n\nA per-year summary table near the top with columns: Year | reportDate | Action (values: “No change”, “New insert”, “Correction: [field]”, etc.)\nThe full per-year analysis sections (Steps 4–7 content) for every year, in ascending order.\n\nThe file must start with:\n# {Company Name} ({TICKER}) — FY{YEAR_RANGE} Financial Analysis\n\n**Generated:** {today's date}\n**Source:** /verify-dolt-db-financials skill\n\n---\nAfter writing the file(s), tell the user: &gt; Report saved to reports/{TICKER}-{YEAR}.md. (single-year) &gt; Report saved to reports/{TICKER}-all-years.md. (multi-year)\n\n\n\n\nreferences/anomaly-rules.md — SGA composite rules, balance sheet checks, gross margin benchmarks, restatement logic. Read in Step 4.\nreferences/company-notes.md — Per-company quirks. Check in Step 4 for the company being analyzed.",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#inputs",
+    "href": "skills/verify-dolt-db-financials.html#inputs",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "/verify-dolt-db-financials TICKER [YEAR]\n\nTICKER — stock ticker (e.g. TRR, WMT, M)\nYEAR — fiscal year (e.g. 2024). Optional. If omitted, analyze all available years for the company (see Step 0).",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-0-determine-years-to-analyze-only-when-year-is-omitted",
+    "href": "skills/verify-dolt-db-financials.html#step-0-determine-years-to-analyze-only-when-year-is-omitted",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "If no YEAR was provided, discover all available years before proceeding:\n0a. Query the Dolt DB for years already on record for this company:\nSELECT DISTINCT year FROM financials WHERE company_name = '{company}' ORDER BY year\n0b. Fetch Yahoo Finance data (one call covers ~4–5 years):\nmcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name, ticker)\nInspect the column headers of the returned income statement to identify all available fiscal year periods.\n0c. Take the union of years found in Dolt and years found in Yahoo. These are the years to analyze.\n0d. Display a summary to the user:\n\nAnalyzing all available years for {display_name} ({TICKER}): {year1}, {year2}, …\n\nThen run Steps 1–8 once for each year, in ascending order (oldest first). Each year is a fully independent analysis producing its own report file.",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-1-look-up-company-metadata",
+    "href": "skills/verify-dolt-db-financials.html#step-1-look-up-company-metadata",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "Query the Dolt database to get company metadata by ticker symbol:\nSELECT company, CIK, display_name, ticker_symbol\nFROM company_info\nWHERE ticker_symbol = '{TICKER}'\nUse db_string: calvinw/BusMgmtBenchmarks/main.\nFrom the result, use: - company — the exact company_name as stored in the DB (needed for financials query) - CIK — needed for the SEC fetch - display_name — for display in the report header\nIf no row is returned, ask the user to confirm the ticker. If CIK is NULL, the company has no SEC filing (non-US company) — skip the SEC fetch and use Yahoo only.",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-2-fetch-all-sources-in-parallel",
+    "href": "skills/verify-dolt-db-financials.html#step-2-fetch-all-sources-in-parallel",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "Run these three fetches simultaneously:\n\n\n\n\n\n\n\nSource\nTool\n\n\n\n\nSEC 10-K\nmcp__mcp-sec-10ks__process_financial_data_from_sec(company_name, YEAR, cik)\n\n\nYahoo Finance\nmcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name, ticker)\n\n\nDolt DB (existing row)\nmcp__claude_ai_Dolt_Database_MCP__read_query → SELECT * FROM financials WHERE company_name = '...' AND year = YEAR on calvinw/BusMgmtBenchmarks/main",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-3-extract-the-13-standard-fields",
+    "href": "skills/verify-dolt-db-financials.html#step-3-extract-the-13-standard-fields",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "All values in thousands of dollars. Extract from each source:\n\n\n\nField\nNotes\n\n\n\n\nNet Revenue\n\n\n\nCost of Goods\nPositive value\n\n\nGross Margin\nRevenue − COGS\n\n\nSGA\nMost error-prone — see anomaly rules\n\n\nOperating Profit\nCan be negative\n\n\nNet Profit\nCan be negative\n\n\nInventory\nNULL for pure marketplace companies\n\n\nCurrent Assets\n\n\n\nTotal Assets\n\n\n\nCurrent Liabilities\n\n\n\nLiabilities\nTotal Assets − Total SE\n\n\nTotal Shareholder Equity\nCan be negative\n\n\nTotal Liabilities and Shareholder Equity\nMust equal Total Assets\n\n\n\nAlso extract reportDate (fiscal year-end date, e.g. 2024-12-31).",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-4-run-anomaly-detection",
+    "href": "skills/verify-dolt-db-financials.html#step-4-run-anomaly-detection",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "Read references/anomaly-rules.md now. Apply all rules. Read references/company-notes.md and check for any entry matching this company.\nFlag every issue as [WARNING] (investigate) or [ERROR] (must resolve before inserting).",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-5-side-by-side-comparison-table",
+    "href": "skills/verify-dolt-db-financials.html#step-5-side-by-side-comparison-table",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "Present a table with columns: SEC | Yahoo | Dolt (current) | Recommended. Mark cells where sources disagree with *.",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-6-reconciled-recommendation",
+    "href": "skills/verify-dolt-db-financials.html#step-6-reconciled-recommendation",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "For each field state: - Recommended value and which source it comes from - Any adjustment made (especially SGA composite construction) - Whether the current Dolt value differs and would be overwritten",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-7-signal-readiness",
+    "href": "skills/verify-dolt-db-financials.html#step-7-signal-readiness",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "End with the appropriate message based on mode:\nSingle-year mode: &gt; Analysis complete. Run /create-verified-dolt-db-financials-sql {TICKER} {YEAR} to write these values to the database.\nMulti-year mode (after all years have been analyzed): emit a single combined message — do NOT repeat this per year: &gt; Analysis complete. Run /create-verified-dolt-db-financials-sql {TICKER} to write all changed years to the database.\nList any unresolved flags for the user to review before inserting.",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#step-8-save-report-to-file",
+    "href": "skills/verify-dolt-db-financials.html#step-8-save-report-to-file",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "Single-year mode: write reports/{TICKER}-{YEAR}.md containing all content from Steps 4–7 for that year.\nMulti-year mode: after all years have been analyzed, write a single combined file reports/{TICKER}-all-years.md. This file is what /create-verified-dolt-db-financials-sql reads when run later in a separate session, so it must include:\n\nA per-year summary table near the top with columns: Year | reportDate | Action (values: “No change”, “New insert”, “Correction: [field]”, etc.)\nThe full per-year analysis sections (Steps 4–7 content) for every year, in ascending order.\n\nThe file must start with:\n# {Company Name} ({TICKER}) — FY{YEAR_RANGE} Financial Analysis\n\n**Generated:** {today's date}\n**Source:** /verify-dolt-db-financials skill\n\n---\nAfter writing the file(s), tell the user: &gt; Report saved to reports/{TICKER}-{YEAR}.md. (single-year) &gt; Report saved to reports/{TICKER}-all-years.md. (multi-year)",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/verify-dolt-db-financials.html#references",
+    "href": "skills/verify-dolt-db-financials.html#references",
+    "title": "verify-dolt-db-financials",
+    "section": "",
+    "text": "references/anomaly-rules.md — SGA composite rules, balance sheet checks, gross margin benchmarks, restatement logic. Read in Step 4.\nreferences/company-notes.md — Per-company quirks. Check in Step 4 for the company being analyzed.",
+    "crumbs": [
+      "Skills",
+      "Verify Dolt DB Financials"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html",
+    "href": "skills/download-new-year-data.html",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "Scan for new fiscal year data not yet in the BusMgmtBenchmarks Dolt database for a specific company, validate it, and generate a SQL INSERT statement. No database writes — this skill writes a SQL file only.\n\n\n/download-new-year-data TICKER\n\nTICKER — (required) stock ticker symbol (e.g. WMT, ADS.DE).\n\nIf TICKER is missing, stop and tell the user: &gt; Please provide a ticker symbol. Usage: /download-new-year-data TICKER\n\n\n\n\n1a. Query company_info for the specified company:\nSELECT company, display_name, ticker_symbol, CIK, currency\nFROM company_info\nWHERE ticker_symbol = '{TICKER}'\nUse db_string: calvinw/BusMgmtBenchmarks/main.\nIf no row is returned, stop and tell the user: &gt; {TICKER} not found in company_info. Check the ticker or add the company first with /create-new-company-sql.\n1b. Query the latest fiscal year on record for this company:\nSELECT MAX(year) AS latest_year\nFROM financials\nWHERE company_name = '{company}'\n1c. Display a status line to the user:\n\n{display_name} ({TICKER}) — Latest year in DB: {latest_year} | American: {yes/no} | Currency: {currency}\n\n\namerican = true when CIK is not NULL; american = false when CIK is NULL.\n\n\n\n\n\nFetch external data to identify any fiscal year more recent than latest_year.\nNon-American company (CIK is NULL):\nFetch Yahoo Finance:\nmcp__yfinance-10ks__process_financial_data_from_yahoo(company_name=display_name, ticker_symbol=TICKER)\nInspect the column headers of the returned income statement. Each header is a fiscal year-end date (e.g. 2025-12-31). Derive the DB year label: - Calendar year of the fiscal year-end date → DB year (e.g. 2025-12-31 → 2025). - Exception: if the fiscal year end falls in January or February, the DB year label is the prior calendar year (e.g. 2025-02-01 → 2024). This matches how US retailers’ fiscal years are labeled in the database.\nIdentify any derived year label &gt; latest_year. Those are candidate new years.\nAmerican company (CIK is not NULL):\nFetch Yahoo Finance (same call as above) and fetch SEC for each candidate year (latest_year + 1, and +2 if that also looks available):\nmcp__sec-10ks__process_financial_data_from_sec(company_name=display_name, year=CANDIDATE_YEAR, cik=CIK)\nRun Yahoo and SEC fetches in parallel where possible. A candidate year is confirmed available if SEC returns data for it.\n\n\n\n\nTell the user which new years were identified:\n\n{display_name} ({TICKER}) — Latest in DB: {latest_year} | New years found: {list or “none”}\n\n\nIf no new year is found: &gt; {display_name} ({TICKER}) is up to date. No new fiscal year data available.\nThen stop.\nIf one or more new years are found, list them and proceed. Process each new year independently, oldest first.\n\n\n\n\n\nFor each new year, compare SEC and Yahoo values for the 13 standard fields:\n\n\n\nField\nSEC\nYahoo\nMatch?\n\n\n\n\nNet Revenue\n…\n…\n✓ / ✗\n\n\nCost of Goods\n…\n…\n✓ / ✗\n\n\nGross Margin\n…\n…\n✓ / ✗\n\n\nSGA\n…\n…\n✓ / ✗\n\n\nOperating Profit\n…\n…\n✓ / ✗\n\n\nNet Profit\n…\n…\n✓ / ✗\n\n\nInventory\n…\n…\n✓ / ✗\n\n\nCurrent Assets\n…\n…\n✓ / ✗\n\n\nTotal Assets\n…\n…\n✓ / ✗\n\n\nCurrent Liabilities\n…\n…\n✓ / ✗\n\n\nLiabilities\n…\n…\n✓ / ✗\n\n\nTotal Shareholder Equity\n…\n…\n✓ / ✗\n\n\nTotal Liab. & SE\n…\n…\n✓ / ✗\n\n\n\nTolerance for “match”: within 1% for revenue/assets; exact or within rounding for derived fields.\nApply the anomaly detection rules from .skillshare/skills/verify-dolt-db-financials/references/anomaly-rules.md: - SGA composite rules (Rules 1–4) - Balance sheet identity check - Gross margin sanity check\nAlso check .skillshare/skills/verify-dolt-db-financials/references/company-notes.md for any per-company quirks.\nFlag issues as [WARNING] (investigate) or [ERROR] (must resolve before inserting).\nIf SEC and Yahoo disagree on a field (&gt;1% difference): - Prefer SEC as the authoritative source for that field. - Flag [WARNING] Yahoo vs SEC discrepancy on {field}: SEC={x}, Yahoo={y}.\nFor non-American companies: skip this step. Use Yahoo values directly and flag: &gt; [WARNING] No SEC cross-check available — Yahoo Finance only.\n\n\n\n\nPull all prior years from Dolt for this company:\nSELECT year, `Net Revenue`, `Gross Margin`, `SGA`, `Operating Profit`, `Net Profit`,\n       `Total Assets`, `Total Shareholder Equity`\nFROM financials\nWHERE company_name = '{company}'\nORDER BY year\nCompute trailing averages from the 3 most recent prior years: - Gross margin % = Gross Margin / Net Revenue - SGA % = SGA / Net Revenue - Revenue YoY change (from the prior 2 periods)\nCheck the new year’s candidate values against these benchmarks:\n\n\n\n\n\n\n\n\nCheck\nFlag level\nCondition\n\n\n\n\nRevenue YoY change\n[WARNING]\n&gt; +50% or &lt; −50% vs prior year\n\n\nGross margin %\n[WARNING]\nMore than 5 pp outside the 3-year trailing average\n\n\nSGA % of revenue\n[WARNING]\nMore than 5 pp outside the 3-year trailing average\n\n\nNet profit direction\n[WARNING]\nFlips from consistently positive to deeply negative (&gt; −20% of revenue), or vice versa, without a known reason\n\n\nBalance sheet identity\n[ERROR]\nTotal Assets ≠ Total Liabilities + Total SE\n\n\n\nDisplay a trend table showing all prior years plus the new year:\n\n\n\nYear\nRevenue\nGross%\nSGA%\nOp.Profit\nNet Profit\n\n\n\n\n2022\n…\n…\n…\n…\n…\n\n\n2023\n…\n…\n…\n…\n…\n\n\n2024\n…\n…\n…\n…\n…\n\n\n2025 (new)\n…\n…\n…\n…\n…\n\n\n\nIf an [ERROR] is raised, do not generate a SQL INSERT for that year — tell the user to resolve it manually before inserting.\n\n\n\n\nFor each new year that passed Steps 4–5 without [ERROR], build a REPLACE INTO statement.\nDetermine the value for each field: - American company: prefer SEC; use Yahoo as fallback for any field SEC didn’t return. - Non-American company: use Yahoo values. - Apply any SGA construction adjustments identified in Step 4. - Always compute: Gross Margin = Net Revenue − Cost of Goods and Liabilities = Total Assets − Total Shareholder Equity.\n-- {TICKER} FY{YEAR} — new insert\n-- Generated by /download-new-year-data on {today's date}\n-- Source: {SEC + Yahoo / Yahoo only}\n-- currency: {currency}, units: thousands\n\nREPLACE INTO financials (\n  company_name, year, reportDate,\n  `Net Revenue`, `Cost of Goods`, `Gross Margin`, `SGA`,\n  `Operating Profit`, `Net Profit`, `Inventory`,\n  `Current Assets`, `Total Assets`, `Current Liabilities`,\n  `Liabilities`, `Total Shareholder Equity`,\n  `Total Liabilities and Shareholder Equity`\n) VALUES (\n  '{company}', {year}, '{reportDate}',\n  {Net_Revenue}, {Cost_of_Goods}, {Gross_Margin}, {SGA},\n  {Operating_Profit}, {Net_Profit}, {Inventory_OR_NULL},\n  {Current_Assets}, {Total_Assets}, {Current_Liabilities},\n  {Liabilities}, {Total_SE}, {Total_LSE}\n);\nIf multiple new years were found, concatenate all statements in one file, oldest year first.\n\n\n\n\nWrite to: extract/2026/inserts/new-year-data/new_year_{TICKER}_{today's date}.sql\nExample: extract/2026/inserts/new-year-data/new_year_WMT_2026-06-05.sql\nShow the full file contents to the user.\n\n\n\n\nAfter writing the file, display:\n\nDownload-new-year-data complete — {display_name} ({TICKER})\n\n\n\nNew Year(s) Inserted\nWarnings\nSkipped (errors)\n\n\n\n\n{year list}\n{N}\n{year list or —}\n\n\n\nSQL file written to: extract/2026/inserts/new-year-data/{FILENAME}\nTo apply this to your local Dolt database clone:\n# 1. Navigate to your local Dolt repo\ncd /path/to/your/dolt/BusMgmtBenchmarks\n\n# 2. Run the SQL\ndolt sql &lt; /path/to/BusMgmtBenchmarks/extract/2026/inserts/new-year-data/{FILENAME}\n\n# 3. Review what changed\ndolt diff\n\n# 4. Commit locally when satisfied\ndolt commit -am \"Add {display_name} ({TICKER}) FY{year_list}\"\n\n# 5. Push to DoltHub when ready\ndolt push\n\n\n\n\n\nanomaly-rules.md — SGA composite rules, balance sheet checks, gross margin benchmarks. Read in Step 4.\ncompany-notes.md — Per-company quirks. Check in Step 4.\n\nBoth files live at .skillshare/skills/verify-dolt-db-financials/references/.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#inputs",
+    "href": "skills/download-new-year-data.html#inputs",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "/download-new-year-data TICKER\n\nTICKER — (required) stock ticker symbol (e.g. WMT, ADS.DE).\n\nIf TICKER is missing, stop and tell the user: &gt; Please provide a ticker symbol. Usage: /download-new-year-data TICKER",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-1-get-company-info-and-latest-year-from-dolt",
+    "href": "skills/download-new-year-data.html#step-1-get-company-info-and-latest-year-from-dolt",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "1a. Query company_info for the specified company:\nSELECT company, display_name, ticker_symbol, CIK, currency\nFROM company_info\nWHERE ticker_symbol = '{TICKER}'\nUse db_string: calvinw/BusMgmtBenchmarks/main.\nIf no row is returned, stop and tell the user: &gt; {TICKER} not found in company_info. Check the ticker or add the company first with /create-new-company-sql.\n1b. Query the latest fiscal year on record for this company:\nSELECT MAX(year) AS latest_year\nFROM financials\nWHERE company_name = '{company}'\n1c. Display a status line to the user:\n\n{display_name} ({TICKER}) — Latest year in DB: {latest_year} | American: {yes/no} | Currency: {currency}\n\n\namerican = true when CIK is not NULL; american = false when CIK is NULL.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-2-fetch-data-sources-to-find-new-years",
+    "href": "skills/download-new-year-data.html#step-2-fetch-data-sources-to-find-new-years",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "Fetch external data to identify any fiscal year more recent than latest_year.\nNon-American company (CIK is NULL):\nFetch Yahoo Finance:\nmcp__yfinance-10ks__process_financial_data_from_yahoo(company_name=display_name, ticker_symbol=TICKER)\nInspect the column headers of the returned income statement. Each header is a fiscal year-end date (e.g. 2025-12-31). Derive the DB year label: - Calendar year of the fiscal year-end date → DB year (e.g. 2025-12-31 → 2025). - Exception: if the fiscal year end falls in January or February, the DB year label is the prior calendar year (e.g. 2025-02-01 → 2024). This matches how US retailers’ fiscal years are labeled in the database.\nIdentify any derived year label &gt; latest_year. Those are candidate new years.\nAmerican company (CIK is not NULL):\nFetch Yahoo Finance (same call as above) and fetch SEC for each candidate year (latest_year + 1, and +2 if that also looks available):\nmcp__sec-10ks__process_financial_data_from_sec(company_name=display_name, year=CANDIDATE_YEAR, cik=CIK)\nRun Yahoo and SEC fetches in parallel where possible. A candidate year is confirmed available if SEC returns data for it.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-3-report-what-was-found",
+    "href": "skills/download-new-year-data.html#step-3-report-what-was-found",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "Tell the user which new years were identified:\n\n{display_name} ({TICKER}) — Latest in DB: {latest_year} | New years found: {list or “none”}\n\n\nIf no new year is found: &gt; {display_name} ({TICKER}) is up to date. No new fiscal year data available.\nThen stop.\nIf one or more new years are found, list them and proceed. Process each new year independently, oldest first.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-4-cross-check-sec-vs-yahoo-american-companies-only",
+    "href": "skills/download-new-year-data.html#step-4-cross-check-sec-vs-yahoo-american-companies-only",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "For each new year, compare SEC and Yahoo values for the 13 standard fields:\n\n\n\nField\nSEC\nYahoo\nMatch?\n\n\n\n\nNet Revenue\n…\n…\n✓ / ✗\n\n\nCost of Goods\n…\n…\n✓ / ✗\n\n\nGross Margin\n…\n…\n✓ / ✗\n\n\nSGA\n…\n…\n✓ / ✗\n\n\nOperating Profit\n…\n…\n✓ / ✗\n\n\nNet Profit\n…\n…\n✓ / ✗\n\n\nInventory\n…\n…\n✓ / ✗\n\n\nCurrent Assets\n…\n…\n✓ / ✗\n\n\nTotal Assets\n…\n…\n✓ / ✗\n\n\nCurrent Liabilities\n…\n…\n✓ / ✗\n\n\nLiabilities\n…\n…\n✓ / ✗\n\n\nTotal Shareholder Equity\n…\n…\n✓ / ✗\n\n\nTotal Liab. & SE\n…\n…\n✓ / ✗\n\n\n\nTolerance for “match”: within 1% for revenue/assets; exact or within rounding for derived fields.\nApply the anomaly detection rules from .skillshare/skills/verify-dolt-db-financials/references/anomaly-rules.md: - SGA composite rules (Rules 1–4) - Balance sheet identity check - Gross margin sanity check\nAlso check .skillshare/skills/verify-dolt-db-financials/references/company-notes.md for any per-company quirks.\nFlag issues as [WARNING] (investigate) or [ERROR] (must resolve before inserting).\nIf SEC and Yahoo disagree on a field (&gt;1% difference): - Prefer SEC as the authoritative source for that field. - Flag [WARNING] Yahoo vs SEC discrepancy on {field}: SEC={x}, Yahoo={y}.\nFor non-American companies: skip this step. Use Yahoo values directly and flag: &gt; [WARNING] No SEC cross-check available — Yahoo Finance only.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-5-trend-consistency-check",
+    "href": "skills/download-new-year-data.html#step-5-trend-consistency-check",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "Pull all prior years from Dolt for this company:\nSELECT year, `Net Revenue`, `Gross Margin`, `SGA`, `Operating Profit`, `Net Profit`,\n       `Total Assets`, `Total Shareholder Equity`\nFROM financials\nWHERE company_name = '{company}'\nORDER BY year\nCompute trailing averages from the 3 most recent prior years: - Gross margin % = Gross Margin / Net Revenue - SGA % = SGA / Net Revenue - Revenue YoY change (from the prior 2 periods)\nCheck the new year’s candidate values against these benchmarks:\n\n\n\n\n\n\n\n\nCheck\nFlag level\nCondition\n\n\n\n\nRevenue YoY change\n[WARNING]\n&gt; +50% or &lt; −50% vs prior year\n\n\nGross margin %\n[WARNING]\nMore than 5 pp outside the 3-year trailing average\n\n\nSGA % of revenue\n[WARNING]\nMore than 5 pp outside the 3-year trailing average\n\n\nNet profit direction\n[WARNING]\nFlips from consistently positive to deeply negative (&gt; −20% of revenue), or vice versa, without a known reason\n\n\nBalance sheet identity\n[ERROR]\nTotal Assets ≠ Total Liabilities + Total SE\n\n\n\nDisplay a trend table showing all prior years plus the new year:\n\n\n\nYear\nRevenue\nGross%\nSGA%\nOp.Profit\nNet Profit\n\n\n\n\n2022\n…\n…\n…\n…\n…\n\n\n2023\n…\n…\n…\n…\n…\n\n\n2024\n…\n…\n…\n…\n…\n\n\n2025 (new)\n…\n…\n…\n…\n…\n\n\n\nIf an [ERROR] is raised, do not generate a SQL INSERT for that year — tell the user to resolve it manually before inserting.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-6-build-the-sql-insert",
+    "href": "skills/download-new-year-data.html#step-6-build-the-sql-insert",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "For each new year that passed Steps 4–5 without [ERROR], build a REPLACE INTO statement.\nDetermine the value for each field: - American company: prefer SEC; use Yahoo as fallback for any field SEC didn’t return. - Non-American company: use Yahoo values. - Apply any SGA construction adjustments identified in Step 4. - Always compute: Gross Margin = Net Revenue − Cost of Goods and Liabilities = Total Assets − Total Shareholder Equity.\n-- {TICKER} FY{YEAR} — new insert\n-- Generated by /download-new-year-data on {today's date}\n-- Source: {SEC + Yahoo / Yahoo only}\n-- currency: {currency}, units: thousands\n\nREPLACE INTO financials (\n  company_name, year, reportDate,\n  `Net Revenue`, `Cost of Goods`, `Gross Margin`, `SGA`,\n  `Operating Profit`, `Net Profit`, `Inventory`,\n  `Current Assets`, `Total Assets`, `Current Liabilities`,\n  `Liabilities`, `Total Shareholder Equity`,\n  `Total Liabilities and Shareholder Equity`\n) VALUES (\n  '{company}', {year}, '{reportDate}',\n  {Net_Revenue}, {Cost_of_Goods}, {Gross_Margin}, {SGA},\n  {Operating_Profit}, {Net_Profit}, {Inventory_OR_NULL},\n  {Current_Assets}, {Total_Assets}, {Current_Liabilities},\n  {Liabilities}, {Total_SE}, {Total_LSE}\n);\nIf multiple new years were found, concatenate all statements in one file, oldest year first.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-7-write-the-sql-file",
+    "href": "skills/download-new-year-data.html#step-7-write-the-sql-file",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "Write to: extract/2026/inserts/new-year-data/new_year_{TICKER}_{today's date}.sql\nExample: extract/2026/inserts/new-year-data/new_year_WMT_2026-06-05.sql\nShow the full file contents to the user.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#step-8-print-summary-and-apply-instructions",
+    "href": "skills/download-new-year-data.html#step-8-print-summary-and-apply-instructions",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "After writing the file, display:\n\nDownload-new-year-data complete — {display_name} ({TICKER})\n\n\n\nNew Year(s) Inserted\nWarnings\nSkipped (errors)\n\n\n\n\n{year list}\n{N}\n{year list or —}\n\n\n\nSQL file written to: extract/2026/inserts/new-year-data/{FILENAME}\nTo apply this to your local Dolt database clone:\n# 1. Navigate to your local Dolt repo\ncd /path/to/your/dolt/BusMgmtBenchmarks\n\n# 2. Run the SQL\ndolt sql &lt; /path/to/BusMgmtBenchmarks/extract/2026/inserts/new-year-data/{FILENAME}\n\n# 3. Review what changed\ndolt diff\n\n# 4. Commit locally when satisfied\ndolt commit -am \"Add {display_name} ({TICKER}) FY{year_list}\"\n\n# 5. Push to DoltHub when ready\ndolt push",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  },
+  {
+    "objectID": "skills/download-new-year-data.html#references",
+    "href": "skills/download-new-year-data.html#references",
+    "title": "download-new-year-data",
+    "section": "",
+    "text": "anomaly-rules.md — SGA composite rules, balance sheet checks, gross margin benchmarks. Read in Step 4.\ncompany-notes.md — Per-company quirks. Check in Step 4.\n\nBoth files live at .skillshare/skills/verify-dolt-db-financials/references/.",
+    "crumbs": [
+      "Skills",
+      "Download New Year Data"
+    ]
+  }
+]
