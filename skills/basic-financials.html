@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Fetch financial data from SEC 10-K filings and Yahoo Finance for a NEW company (2018 through current year), reconcile values, and generate SQL files to insert the company_info row and all financials rows. Does NOT write to the database directly. Triggered by “/create-new-company-sql TICKER [CIK]”.">
+<meta name="description" content="Interactive financial comparison assistant for undergraduate business students. Takes two company tickers each with their own year, pulls side-by-side income statement, ratio, and balance sheet data from the BusMgmtBenchmarks Dolt database, and stays open for student questions about what the numbers mean. Triggered by “/basic-financials TICKER1 YEAR1 TICKER2 YEAR2”.">
 
-<title>create-new-company-sql – Dolt DB Skills</title>
+<title>basic-financials – Dolt DB Skills</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skills/create-new-company-sql.html">Create New Company SQL</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skills/basic-financials.html">Basic Financials</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../skills/create-new-company-sql.html" class="sidebar-item-text sidebar-link active">
+  <a href="../skills/create-new-company-sql.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Create New Company SQL</span></a>
   </div>
 </li>
@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../skills/basic-financials.html" class="sidebar-item-text sidebar-link">
+  <a href="../skills/basic-financials.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Basic Financials</span></a>
   </div>
 </li>
@@ -267,17 +267,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#create-new-company-sql" id="toc-create-new-company-sql" class="nav-link active" data-scroll-target="#create-new-company-sql">create-new-company-sql</a>
+  <li><a href="#basic-financials" id="toc-basic-financials" class="nav-link active" data-scroll-target="#basic-financials">basic-financials</a>
   <ul class="collapse">
   <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs">Inputs</a></li>
-  <li><a href="#step-1-verify-company-does-not-already-exist" id="toc-step-1-verify-company-does-not-already-exist" class="nav-link" data-scroll-target="#step-1-verify-company-does-not-already-exist">Step 1 — Verify company does not already exist</a></li>
-  <li><a href="#step-2-determine-cik-and-company-name" id="toc-step-2-determine-cik-and-company-name" class="nav-link" data-scroll-target="#step-2-determine-cik-and-company-name">Step 2 — Determine CIK and company name</a></li>
-  <li><a href="#step-3-gather-company-metadata" id="toc-step-3-gather-company-metadata" class="nav-link" data-scroll-target="#step-3-gather-company-metadata">Step 3 — Gather company metadata</a></li>
-  <li><a href="#step-4-fetch-all-data-sources" id="toc-step-4-fetch-all-data-sources" class="nav-link" data-scroll-target="#step-4-fetch-all-data-sources">Step 4 — Fetch all data sources</a></li>
-  <li><a href="#step-5-extract-and-reconcile-values-per-year-2018-current" id="toc-step-5-extract-and-reconcile-values-per-year-2018-current" class="nav-link" data-scroll-target="#step-5-extract-and-reconcile-values-per-year-2018-current">Step 5 — Extract and reconcile values (per year, 2018 → current)</a></li>
-  <li><a href="#step-6-build-the-sql-file" id="toc-step-6-build-the-sql-file" class="nav-link" data-scroll-target="#step-6-build-the-sql-file">Step 6 — Build the SQL file</a></li>
-  <li><a href="#step-7-write-the-report-file" id="toc-step-7-write-the-report-file" class="nav-link" data-scroll-target="#step-7-write-the-report-file">Step 7 — Write the report file</a></li>
-  <li><a href="#step-8-print-summary-and-apply-instructions" id="toc-step-8-print-summary-and-apply-instructions" class="nav-link" data-scroll-target="#step-8-print-summary-and-apply-instructions">Step 8 — Print summary and apply instructions</a></li>
+  <li><a href="#step-1-look-up-both-companies" id="toc-step-1-look-up-both-companies" class="nav-link" data-scroll-target="#step-1-look-up-both-companies">Step 1 — Look up both companies</a></li>
+  <li><a href="#step-2-determine-each-companys-year" id="toc-step-2-determine-each-companys-year" class="nav-link" data-scroll-target="#step-2-determine-each-companys-year">Step 2 — Determine each company’s year</a></li>
+  <li><a href="#step-3-fetch-the-financial-data" id="toc-step-3-fetch-the-financial-data" class="nav-link" data-scroll-target="#step-3-fetch-the-financial-data">Step 3 — Fetch the financial data</a></li>
+  <li><a href="#step-4-present-the-side-by-side-comparison" id="toc-step-4-present-the-side-by-side-comparison" class="nav-link" data-scroll-target="#step-4-present-the-side-by-side-comparison">Step 4 — Present the side-by-side comparison</a>
+  <ul class="collapse">
+  <li><a href="#income-statement" id="toc-income-statement" class="nav-link" data-scroll-target="#income-statement">Income Statement</a></li>
+  <li><a href="#key-ratios" id="toc-key-ratios" class="nav-link" data-scroll-target="#key-ratios">Key Ratios</a></li>
+  <li><a href="#balance-sheet" id="toc-balance-sheet" class="nav-link" data-scroll-target="#balance-sheet">Balance Sheet</a></li>
+  </ul></li>
+  <li><a href="#step-5-interactive-mode-student-questions" id="toc-step-5-interactive-mode-student-questions" class="nav-link" data-scroll-target="#step-5-interactive-mode-student-questions">Step 5 — Interactive mode (student questions)</a></li>
+  <li><a href="#communication-style" id="toc-communication-style" class="nav-link" data-scroll-target="#communication-style">Communication Style</a></li>
+  <li><a href="#the-income-statement-flow" id="toc-the-income-statement-flow" class="nav-link" data-scroll-target="#the-income-statement-flow">The Income Statement Flow</a></li>
+  <li><a href="#key-formulas" id="toc-key-formulas" class="nav-link" data-scroll-target="#key-formulas">Key Formulas</a></li>
+  <li><a href="#industry-context" id="toc-industry-context" class="nav-link" data-scroll-target="#industry-context">Industry Context</a></li>
+  <li><a href="#database-reference" id="toc-database-reference" class="nav-link" data-scroll-target="#database-reference">Database Reference</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -288,274 +295,395 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="create-new-company-sql" class="level1">
-<h1>create-new-company-sql</h1>
-<p>Generate SQL files to add a new company to the BusMgmtBenchmarks Dolt database, spanning 2018 through the current year. <strong>No database connection is made for writes — this skill writes files only.</strong></p>
-<p>Use this for brand-new companies not yet in the Dolt DB. If the company already exists, use <code>/verify-dolt-db-financials</code> instead.</p>
+<section id="basic-financials" class="level1">
+<h1>basic-financials</h1>
+<p>An interactive financial literacy assistant for undergraduate business students. Compares two retail companies — each from their own chosen fiscal year — side by side using data from the BusMgmtBenchmarks Dolt database, then stays open for student questions.</p>
 <section id="inputs" class="level2">
 <h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
-<p><code>/create-new-company-sql TICKER [CIK]</code></p>
+<p><code>/basic-financials TICKER1 YEAR1 TICKER2 YEAR2</code></p>
 <ul>
-<li><code>TICKER</code> — stock ticker symbol (e.g.&nbsp;WSM, BBW, GPS)</li>
-<li><code>CIK</code> — (optional) SEC Central Index Key number. If omitted, the skill will look it up from Yahoo or prompt the user.</li>
+<li><code>TICKER1</code> — first company ticker (e.g.&nbsp;<code>WMT</code>, <code>TGT</code>)</li>
+<li><code>YEAR1</code> — fiscal year for the first company (e.g.&nbsp;<code>2024</code>). Optional — defaults to the most recent year available for that company.</li>
+<li><code>TICKER2</code> — second company ticker (e.g.&nbsp;<code>COST</code>, <code>KR</code>)</li>
+<li><code>YEAR2</code> — fiscal year for the second company (e.g.&nbsp;<code>2023</code>). Optional — defaults to the most recent year available for that company.</li>
 </ul>
+<p><strong>Argument parsing:</strong> - 4 args: <code>TICKER1 YEAR1 TICKER2 YEAR2</code> — explicit years for both - 3 args: <code>TICKER1 YEAR1 TICKER2</code> — explicit year for company 1, default year for company 2 - 2 args: <code>TICKER1 TICKER2</code> — both default to their most recent available year</p>
+<p>A value is a YEAR if it is a 4-digit number (e.g.&nbsp;<code>2024</code>); otherwise it is a TICKER.</p>
+<p>If TICKER1 or TICKER2 is missing, stop and tell the user: &gt; Please provide at least two ticker symbols. Usage: <code>/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]</code></p>
+<hr>
 </section>
-<section id="step-1-verify-company-does-not-already-exist" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-verify-company-does-not-already-exist">Step 1 — Verify company does not already exist</h2>
-<p>Query the Dolt database to check if this company already exists:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> company, ticker_symbol <span class="kw">FROM</span> company_info <span class="kw">WHERE</span> ticker_symbol <span class="op">=</span> <span class="st">'{TICKER}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If a row is returned, stop and tell the user: &gt; <strong>{display_name} ({TICKER}) already exists in the Dolt database. Use <code>/verify-dolt-db-financials {TICKER}</code> to update or verify its data.</strong></p>
-<p>If no row is returned, proceed.</p>
+<section id="step-1-look-up-both-companies" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-look-up-both-companies">Step 1 — Look up both companies</h2>
+<p>Query <code>company_info</code> for both tickers in a single query:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> company, display_name, ticker_symbol, <span class="kw">segment</span>, subsegment</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> company_info</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> ticker_symbol <span class="kw">IN</span> (<span class="st">'{TICKER1}'</span>, <span class="st">'{TICKER2}'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use <code>db_string: calvinw/BusMgmtBenchmarks/main</code>.</p>
+<p>If a ticker is not found: &gt; <strong>{TICKER} not found in the database.</strong> Check the ticker symbol — use the ticker as it appears on the exchange (e.g.&nbsp;<code>WMT</code>, not <code>Walmart</code>).</p>
+<p>Store <code>company</code> (the internal DB name), <code>display_name</code>, <code>segment</code>, and <code>subsegment</code> for each company.</p>
+<hr>
 </section>
-<section id="step-2-determine-cik-and-company-name" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-determine-cik-and-company-name">Step 2 — Determine CIK and company name</h2>
-<p><strong>If CIK was provided:</strong> - Use it directly. - Fetch the company name via SEC: <code>mcp__mcp-sec-10ks__process_financial_data_from_sec(company_name='Company', year=2024, cik=CIK)</code> — the response will contain the legal company name. Extract it.</p>
-<p><strong>If CIK was NOT provided:</strong> - Fetch Yahoo Finance data to get company metadata: <code>mcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name='Company', ticker_symbol=TICKER)</code> The response headers usually contain the company name. Extract <code>display_name</code> from the results. - Search the web for the company’s CIK number: <code>"{display_name} SEC CIK number"</code> or use <code>"{display_name} CIK sec.gov"</code>. - If CIK cannot be found, set <code>CIK = NULL</code> (non-US company or no SEC filing) and skip <strong>Step 3</strong> (SEC fetches). Use Yahoo as the sole source.</p>
+<section id="step-2-determine-each-companys-year" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-determine-each-companys-year">Step 2 — Determine each company’s year</h2>
+<p>For each company independently:</p>
+<p><strong>If YEAR was provided for that company:</strong> use it directly.</p>
+<p><strong>If YEAR was omitted for that company:</strong> find the most recent year with data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">MAX</span>(<span class="dt">year</span>) <span class="kw">AS</span> latest_year</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> financials</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> company_name <span class="op">=</span> <span class="st">'{company}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Confirm with the user before proceeding: &gt; Comparing <strong>{display_name1} FY{YEAR1}</strong> vs.&nbsp;<strong>{display_name2} FY{YEAR2}</strong>.</p>
+<p>YEAR1 and YEAR2 may be the same or different — both are valid.</p>
+<hr>
 </section>
-<section id="step-3-gather-company-metadata" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-gather-company-metadata">Step 3 — Gather company metadata</h2>
-<p>Collect or confirm these fields. Prompt the user for any that cannot be auto-detected:</p>
+<section id="step-3-fetch-the-financial-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-fetch-the-financial-data">Step 3 — Fetch the financial data</h2>
+<p>Fetch each company’s data independently using its own year. For each company, first try the pre-built comparison view:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> company_comparison_{YEARn}_view</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> company_name <span class="op">=</span> <span class="st">'{companyn}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the view does not exist or returns no data for that company, fall back to direct table queries:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> f.company_name, f.<span class="dt">year</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       f.`Net Revenue`, f.`Cost <span class="kw">of</span> Goods`, f.`Gross Margin`,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       f.`SGA`, f.`Operating Profit`, f.`Net Profit`,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       f.`Inventory`, f.`Current Assets`, f.`Total Assets`,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       f.`Current Liabilities`, f.`Liabilities`,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       f.`Total Shareholder Equity`, f.`Total Liabilities <span class="kw">and</span> Shareholder Equity`,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>       m.`Gross Margin %`, m.`SGA %`, m.`Operating Profit Margin %`, m.`Net Profit Margin %`</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> financials f</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> financial_metrics m <span class="kw">ON</span> f.company_name <span class="op">=</span> m.company_name <span class="kw">AND</span> f.<span class="dt">year</span> <span class="op">=</span> m.<span class="dt">year</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> f.company_name <span class="op">=</span> <span class="st">'{companyn}'</span> <span class="kw">AND</span> f.<span class="dt">year</span> <span class="op">=</span> {YEARn}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="step-4-present-the-side-by-side-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-present-the-side-by-side-comparison">Step 4 — Present the side-by-side comparison</h2>
+<p>Display three formatted tables. Column headers include each company’s name <strong>and</strong> year so the student always knows which year they’re looking at. All dollar amounts are in thousands — remind the student of this upfront.</p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> All dollar amounts below are in thousands. For example, $23,866,000 means approximately $23.9 billion in actual dollars.</p>
+</blockquote>
+<section id="income-statement" class="level3">
+<h3 class="anchored" data-anchor-id="income-statement">Income Statement</h3>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 29%">
-<col style="width: 70%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Field</th>
-<th>How to determine</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>company</code></td>
-<td>The company name used as the <code>company_name</code> key in <code>financials</code>. Use the legal name from SEC/Yahoo, shortened if needed (e.g.&nbsp;“Williams-Sonoma” not “Williams-Sonoma, Inc.”).</td>
-</tr>
-<tr class="even">
-<td><code>display_name</code></td>
-<td>Full display name (e.g.&nbsp;“Williams-Sonoma”)</td>
-</tr>
-<tr class="odd">
-<td><code>CIK</code></td>
-<td>From Step 2 (or NULL)</td>
-</tr>
-<tr class="even">
-<td><code>ticker_symbol</code></td>
-<td>From user input</td>
-</tr>
-<tr class="odd">
-<td><code>segment</code></td>
-<td>Retail segment from the list: Online, Specialty, Grocery, Warehouse Clubs, Off Price, Department Store, Discount Store, Fast Fashion, Home Improvement, Health &amp; Pharmacy, Resale. Look up the company’s business description if unsure. <strong>Prompt the user.</strong></td>
-</tr>
-<tr class="even">
-<td><code>subsegment</code></td>
-<td>Optional subsegment (e.g.&nbsp;Apparel, Category Killer, Accessories and Shoes, Beauty, Home). Can be NULL. <strong>Prompt the user.</strong></td>
-</tr>
-<tr class="odd">
-<td><code>currency</code></td>
-<td>Reporting currency (e.g.&nbsp;USD, EUR, GBP). Usually USD for US SEC filers.</td>
-</tr>
-<tr class="even">
-<td><code>units</code></td>
-<td>Always <code>thousands</code> for BusMgmtBenchmarks (all values stored in thousands).</td>
-</tr>
-</tbody>
-</table>
-<p>Show the user the proposed metadata and ask for confirmation before proceeding.</p>
-</section>
-<section id="step-4-fetch-all-data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-fetch-all-data-sources">Step 4 — Fetch all data sources</h2>
-<p><strong>4a. Determine the year range.</strong> Current year is 2026. The range is 2018 through 2026 inclusive.</p>
-<p><strong>4b. Fetch Yahoo Finance data (one call covers all years):</strong></p>
-<pre><code>mcp__mcp-yfinance-10ks__process_financial_data_from_yahoo(company_name=display_name, ticker_symbol=TICKER)</code></pre>
-<p>Inspect the column headers to identify which fiscal years Yahoo provides data for. Note any years in the 2018–2026 range that Yahoo is missing.</p>
-<p><strong>4c. Fetch SEC data (one call per year, if CIK is available).</strong> For each year from 2018 to 2026:</p>
-<pre><code>mcp__mcp-sec-10ks__process_financial_data_from_sec(company_name=display_name, year=YEAR, cik=CIK)</code></pre>
-<p>Note any years where SEC data is unavailable (e.g.&nbsp;company wasn’t public yet).</p>
-<p><strong>4d. Display the coverage summary:</strong> &gt; Data coverage for {display_name} ({TICKER}): &gt; | Year | SEC | Yahoo | &gt; |——|—–|——-| &gt; | 2018 | ✓ | ✓ | &gt; | … | | | &gt; | 2026 | ✓ | ✓ |</p>
-</section>
-<section id="step-5-extract-and-reconcile-values-per-year-2018-current" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-extract-and-reconcile-values-per-year-2018-current">Step 5 — Extract and reconcile values (per year, 2018 → current)</h2>
-<p>For each available year, process independently (oldest first):</p>
-<p><strong>5a. Extract the 13 standard fields from each source.</strong></p>
-<p>All values in <strong>thousands of dollars</strong>:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Notes</th>
+<th></th>
+<th><strong>{display_name1} (FY{YEAR1})</strong></th>
+<th><strong>{display_name2} (FY{YEAR2})</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Net Revenue</td>
-<td></td>
+<td>${rev1}</td>
+<td>${rev2}</td>
 </tr>
 <tr class="even">
-<td>Cost of Goods</td>
-<td>Positive value</td>
+<td>Cost of Goods (COGS)</td>
+<td>${cogs1}</td>
+<td>${cogs2}</td>
 </tr>
 <tr class="odd">
-<td>Gross Margin</td>
-<td>Revenue − COGS (calculate; don’t trust source directly)</td>
+<td><strong>Gross Margin</strong></td>
+<td><strong>${gm1}</strong></td>
+<td><strong>${gm2}</strong></td>
 </tr>
 <tr class="even">
-<td>SGA</td>
-<td>Most error-prone — see anomaly rules in references</td>
+<td>SG&amp;A</td>
+<td>${sga1}</td>
+<td>${sga2}</td>
 </tr>
 <tr class="odd">
-<td>Operating Profit</td>
-<td>Can be negative</td>
+<td><strong>Operating Profit</strong></td>
+<td><strong>${op1}</strong></td>
+<td><strong>${op2}</strong></td>
 </tr>
 <tr class="even">
 <td>Net Profit</td>
-<td>Can be negative</td>
-</tr>
-<tr class="odd">
-<td>Inventory</td>
-<td>NULL for pure marketplace companies</td>
-</tr>
-<tr class="even">
-<td>Current Assets</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Total Assets</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Current Liabilities</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Liabilities</td>
-<td>Total Assets − Total SE (calculate)</td>
-</tr>
-<tr class="even">
-<td>Total Shareholder Equity</td>
-<td>Can be negative</td>
-</tr>
-<tr class="odd">
-<td>Total Liabilities and Shareholder Equity</td>
-<td>Must equal Total Assets</td>
+<td>${np1}</td>
+<td>${np2}</td>
 </tr>
 </tbody>
 </table>
-<p>Also extract <code>reportDate</code> (fiscal year-end date, e.g.&nbsp;<code>2024-12-31</code>).</p>
-<p><strong>5b. Apply anomaly detection rules.</strong></p>
-<p>Read the <strong>anomaly-rules.md</strong> file from the verify-dolt-db-financials references: - <code>references/anomaly-rules.md</code> (accessible via the existing skill’s references) - Apply all SGA composite rules (Rules 1–4) - Apply balance sheet identity check - Apply gross margin sanity check - Apply inventory rules</p>
-<p>If the company has no SEC data (CIK is NULL), use Yahoo values directly but flag a <code>[WARNING] that SEC data was unavailable</code>.</p>
-<p><strong>5c. For each year, determine the action:</strong></p>
-<ul>
-<li>If this year has data (from SEC, Yahoo, or both): mark as <strong>New insert</strong></li>
-<li>If no data source has this year: mark as <strong>No data — skip</strong></li>
-</ul>
 </section>
-<section id="step-6-build-the-sql-file" class="level2">
-<h2 class="anchored" data-anchor-id="step-6-build-the-sql-file">Step 6 — Build the SQL file</h2>
-<p><strong>6a. Create the <code>extract/2026/create_company/</code> directory if it does not exist.</strong></p>
-<p><strong>6b. Build a single SQL file:</strong> <code>extract/2026/create_company/{TICKER}_create.sql</code></p>
-<p>The file contains two sections, in order:</p>
-<p><strong>Section A — Company info:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- {TICKER} — New company setup</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Generated by /create-new-company-sql on YYYY-MM-DD</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> company_info (</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  company, CIK, display_name, ticker_symbol,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">segment</span>, subsegment, currency, units</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>) <span class="kw">VALUES</span> (</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">'{company}'</span>, {CIK_OR_NULL}, <span class="st">'{display_name}'</span>, <span class="st">'{TICKER}'</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'{segment}'</span>, {subsegment_OR_NULL}, <span class="st">'{currency}'</span>, <span class="st">'thousands'</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Section B — Financials (one REPLACE INTO per year, oldest first):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Financials: {display_name} ({TICKER}) — FY2018 to FY{current_year}</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- {display_name} FY{year} — New insert</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">REPLACE</span> <span class="kw">INTO</span> financials (</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  company_name, <span class="dt">year</span>, reportDate,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  `Net Revenue`, `Cost <span class="kw">of</span> Goods`, `Gross Margin`, `SGA`,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  `Operating Profit`, `Net Profit`, `Inventory`,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  `Current Assets`, `Total Assets`, `Current Liabilities`,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  `Liabilities`, `Total Shareholder Equity`,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  `Total Liabilities <span class="kw">and</span> Shareholder Equity`</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>) <span class="kw">VALUES</span> (</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">'{company}'</span>, {<span class="dt">year</span>}, <span class="st">'{reportDate}'</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  {Net_Revenue}, {Cost_of_Goods}, {Gross_Margin}, {SGA},</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  {Operating_Profit}, {Net_Profit}, {Inventory_OR_NULL},</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  {Current_Assets}, {Total_Assets}, {Current_Liabilities},</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  {Liabilities}, {Total_SE},</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  {Total_LSE}</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>6c. Show the full SQL file contents to the user.</strong></p>
-</section>
-<section id="step-7-write-the-report-file" class="level2">
-<h2 class="anchored" data-anchor-id="step-7-write-the-report-file">Step 7 — Write the report file</h2>
-<p>Write a report to <code>reports/{TICKER}-create.md</code> summarizing:</p>
-<ol type="1">
-<li>Company metadata (what was inserted into <code>company_info</code>)</li>
-<li>Per-year data coverage table (which years had SEC, Yahoo, or both)</li>
-<li>Per-year reconciled values table</li>
-<li>Any anomalies or warnings found</li>
-<li>A note that no existing Dolt data was overwritten (new company)</li>
-</ol>
-<p>Start the report with:</p>
-<pre><code># {display_name} ({TICKER}) — New Company Data (FY2018–FY{current_year})
-
-**Generated:** {today's date}
-**Source:** /create-new-company-sql skill
-**Action:** New company setup
-
----</code></pre>
-</section>
-<section id="step-8-print-summary-and-apply-instructions" class="level2">
-<h2 class="anchored" data-anchor-id="step-8-print-summary-and-apply-instructions">Step 8 — Print summary and apply instructions</h2>
-<p>After writing the files, display:</p>
-<hr>
-<p><strong>Files written:</strong></p>
+<section id="key-ratios" class="level3">
+<h3 class="anchored" data-anchor-id="key-ratios">Key Ratios</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>File</th>
-<th>Path</th>
+<th></th>
+<th><strong>{display_name1} (FY{YEAR1})</strong></th>
+<th><strong>{display_name2} (FY{YEAR2})</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>SQL</td>
-<td><code>extract/2026/create_company/{TICKER}_create.sql</code></td>
+<td>Gross Margin %</td>
+<td>{gm_pct1}%</td>
+<td>{gm_pct2}%</td>
 </tr>
 <tr class="even">
-<td>Report</td>
-<td><code>reports/{TICKER}-create.md</code></td>
+<td>SG&amp;A % of Revenue</td>
+<td>{sga_pct1}%</td>
+<td>{sga_pct2}%</td>
+</tr>
+<tr class="odd">
+<td>Operating Margin %</td>
+<td>{op_pct1}%</td>
+<td>{op_pct2}%</td>
+</tr>
+<tr class="even">
+<td>Net Profit Margin %</td>
+<td>{np_pct1}%</td>
+<td>{np_pct2}%</td>
 </tr>
 </tbody>
 </table>
-<p><strong>SQL covers:</strong> - <code>company_info</code> — 1 INSERT - <code>financials</code> — {N} REPLACE statements (years: {year_list})</p>
-<p>To apply this to your local Dolt database clone:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Navigate to your local Dolt repo</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/your/dolt/BusMgmtBenchmarks</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Run the SQL</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> sql <span class="op">&lt;</span> /path/to/BusMgmtBenchmarks/extract/2026/create_company/{TICKER}_create.sql</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Review what changed</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> diff</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Commit locally when satisfied</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> commit <span class="at">-am</span> <span class="st">"Add {display_name} ({TICKER}) — new company (FY2018–FY{current_year})"</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Push to DoltHub when ready</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="balance-sheet" class="level3">
+<h3 class="anchored" data-anchor-id="balance-sheet">Balance Sheet</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>{display_name1} (FY{YEAR1})</strong></th>
+<th><strong>{display_name2} (FY{YEAR2})</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inventory</td>
+<td>${inv1}</td>
+<td>${inv2}</td>
+</tr>
+<tr class="even">
+<td>Current Assets</td>
+<td>${ca1}</td>
+<td>${ca2}</td>
+</tr>
+<tr class="odd">
+<td>Total Assets</td>
+<td>${assets1}</td>
+<td>${assets2}</td>
+</tr>
+<tr class="even">
+<td>Current Liabilities</td>
+<td>${cl1}</td>
+<td>${cl2}</td>
+</tr>
+<tr class="odd">
+<td>Total Liabilities</td>
+<td>${liab1}</td>
+<td>${liab2}</td>
+</tr>
+<tr class="even">
+<td>Total Equity</td>
+<td>${equity1}</td>
+<td>${equity2}</td>
+</tr>
+</tbody>
+</table>
+<p>After the tables, invite questions:</p>
+<blockquote class="blockquote">
+<p>I’ve pulled up <strong>{display_name1} FY{YEAR1}</strong> ({segment1}) vs.&nbsp;<strong>{display_name2} FY{YEAR2}</strong> ({segment2}). What would you like to understand about these numbers? You can ask about any line item, what the ratios mean, how the companies compare, or what these businesses look like financially.</p>
+</blockquote>
 <hr>
-<p>That’s it. The skill’s job is done once the files are written.</p>
+</section>
+</section>
+<section id="step-5-interactive-mode-student-questions" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-interactive-mode-student-questions">Step 5 — Interactive mode (student questions)</h2>
+<p>Stay open and answer student questions. For each response:</p>
+<ol type="1">
+<li><strong>Define terms first</strong> — never assume the student knows financial vocabulary</li>
+<li><strong>Use the actual numbers</strong> — always reference the specific values from the comparison</li>
+<li><strong>Walk step by step</strong> — explain each piece of the income statement flow before jumping to ratios</li>
+<li><strong>Use plain-language framing</strong> — “for every dollar of sales, {company} keeps {X} cents as gross profit”</li>
+<li><strong>Encourage connections</strong> — celebrate when a student links concepts (“exactly — that’s why their inventory turnover is higher”)</li>
+</ol>
+<p><strong>For questions needing additional context</strong>, query the Dolt database:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Need</th>
+<th>Query pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Industry benchmarks</td>
+<td><code>SELECT * FROM `segment benchmarks {YEAR}` WHERE segment = '{segment}'</code></td>
+</tr>
+<tr class="even">
+<td>Historical trend for one company</td>
+<td><code>SELECT year, \</code>Net Revenue`, `Gross Margin`, `SGA`, `Operating Profit` FROM financials WHERE company_name = ‘{company}’ ORDER BY year<code>| | How peers compare |</code>SELECT * FROM company_comparison_{YEAR}_view WHERE segment = ‘{segment}’ ORDER BY `Net Revenue` DESC<code>| | Precise metric values |</code>SELECT * FROM financial_metrics WHERE company_name = ‘{company}’ AND year = {YEAR}`</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>db_string: calvinw/BusMgmtBenchmarks/main</code> for all queries.</p>
+<hr>
+</section>
+<section id="communication-style" class="level2">
+<h2 class="anchored" data-anchor-id="communication-style">Communication Style</h2>
+<ul>
+<li><strong>Warm and encouraging</strong> — assume the student is seeing financial statements for the first time</li>
+<li><strong>Define every term</strong> before using it (“Gross Margin, which is the money left over after paying for the products the company sold…”)</li>
+<li><strong>Use analogies</strong> — “Think of COGS like a restaurant’s food costs. Before they pay rent, staff, or marketing, they first have to pay for the ingredients.”</li>
+<li><strong>One concept at a time</strong> — don’t stack multiple explanations in one response</li>
+<li><strong>Avoid jargon</strong> unless you’ve just defined it</li>
+<li><strong>Celebrate progress</strong> — when a student makes a connection, acknowledge it warmly before building on it</li>
+</ul>
+<hr>
+</section>
+<section id="the-income-statement-flow" class="level2">
+<h2 class="anchored" data-anchor-id="the-income-statement-flow">The Income Statement Flow</h2>
+<p>This is the most important teaching framework. Walk students through it with actual numbers:</p>
+<pre><code>Net Revenue           (total money customers paid)
+ − Cost of Goods      (what the company paid to buy/make those products)
+ = Gross Margin       (profit after paying for the products)
+ − SG&amp;A               (rent, employees, marketing, IT, etc.)
+ = Operating Profit   (profit from running the core business)
+ − Interest &amp; Taxes
+ = Net Profit         (the bottom line — what's left for shareholders)</code></pre>
+<p><strong>Gross Margin %</strong> tells a student: “For every dollar of sales, how many cents are left after paying for the product?”</p>
+<hr>
+</section>
+<section id="key-formulas" class="level2">
+<h2 class="anchored" data-anchor-id="key-formulas">Key Formulas</h2>
+<ul>
+<li>Gross Margin % = (Gross Margin ÷ Net Revenue) × 100</li>
+<li>SG&amp;A % = (SG&amp;A ÷ Net Revenue) × 100</li>
+<li>Operating Margin % = (Operating Profit ÷ Net Revenue) × 100</li>
+<li>Net Profit Margin % = (Net Profit ÷ Net Revenue) × 100</li>
+</ul>
+<hr>
+</section>
+<section id="industry-context" class="level2">
+<h2 class="anchored" data-anchor-id="industry-context">Industry Context</h2>
+<p>The BusMgmtBenchmarks database covers 59 retail and specialty companies across 11 segments. Use this table to give students context about why metrics differ between business types:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 31%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Segment</th>
+<th>Key Companies</th>
+<th>Typical Characteristic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Department Store</td>
+<td>Macy’s, Nordstrom, Kohl’s, Dillard’s</td>
+<td>Higher margins, slower turnover</td>
+</tr>
+<tr class="even">
+<td>Discount Store</td>
+<td>Walmart, Target, Dollar General</td>
+<td>Low prices, high volume</td>
+</tr>
+<tr class="odd">
+<td>Fast Fashion</td>
+<td>H&amp;M, Inditex/Zara</td>
+<td>Quick inventory turns</td>
+</tr>
+<tr class="even">
+<td>Grocery</td>
+<td>Kroger, Albertsons, Ahold Delhaize</td>
+<td>Very low margins (1–3%), very high turnover</td>
+</tr>
+<tr class="odd">
+<td>Health &amp; Pharmacy</td>
+<td>CVS, Walgreens, Rite Aid</td>
+<td>Mixed retail + pharmacy economics</td>
+</tr>
+<tr class="even">
+<td>Home Improvement</td>
+<td>Home Depot, Lowe’s, Tractor Supply</td>
+<td>Strong margins; pro + DIY customers</td>
+</tr>
+<tr class="odd">
+<td>Off-Price</td>
+<td>TJ Maxx, Ross, Burlington</td>
+<td>Opportunistic buying; good margins</td>
+</tr>
+<tr class="even">
+<td>Online</td>
+<td>Amazon, Wayfair, Chewy, ASOS</td>
+<td>No stores; lower SG&amp;A but high shipping</td>
+</tr>
+<tr class="odd">
+<td>Resale</td>
+<td>eBay, Etsy, Alibaba, The RealReal</td>
+<td>Marketplace/platform model</td>
+</tr>
+<tr class="even">
+<td>Specialty</td>
+<td>Nike, Lululemon, Boot Barn, Best Buy, Bath &amp; Body Works, and more</td>
+<td>Wide variation by category</td>
+</tr>
+<tr class="odd">
+<td>Warehouse Clubs</td>
+<td>Costco, BJ’s</td>
+<td>Membership-based; lowest margins (~12%), highest turnover</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="database-reference" class="level2">
+<h2 class="anchored" data-anchor-id="database-reference">Database Reference</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 60%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Table / View</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>company_info</code></td>
+<td>company, display_name, ticker_symbol, segment, subsegment</td>
+</tr>
+<tr class="even">
+<td><code>financials</code></td>
+<td>All 13 standard fields (Net Revenue through Total Liabilities and SE), in thousands</td>
+</tr>
+<tr class="odd">
+<td><code>financial_metrics</code></td>
+<td>Calculated ratios: margin %, inventory turnover, asset turnover, ROA, etc.</td>
+</tr>
+<tr class="even">
+<td><code>segment_metrics</code></td>
+<td>Industry segment benchmark averages</td>
+</tr>
+<tr class="odd">
+<td><code>subsegment_metrics</code></td>
+<td>Subsegment benchmark averages</td>
+</tr>
+<tr class="even">
+<td><code>company_comparison_{YEAR}_view</code></td>
+<td>All data for companies in a given year</td>
+</tr>
+<tr class="odd">
+<td><code>`segment benchmarks {YEAR}`</code></td>
+<td>Segment average metrics for a given year</td>
+</tr>
+<tr class="even">
+<td><code>`subsegment benchmarks {YEAR}`</code></td>
+<td>Subsegment average metrics for a given year</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>list_views</code> and <code>describe_view</code> to discover all available views.</p>
 
 
 </section>

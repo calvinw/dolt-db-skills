@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Find SQL files in extract/2026/inserts/, clone the BusMgmtBenchmarks Dolt database, execute each SQL file against the local clone, show the diff, then commit and push. Triggered by “/insert-dolt-db-sql” (all files) or “/insert-dolt-db-sql FILE1 FILE2 …” (specific files).">
 
-<title>insert-dolt-db-sql – Dolt DB Skills</title>
+<title>basic-financials-wmt-2024-tgt-2024-v1.0-elena-sonnet-4-6-session1 – Dolt DB Skills</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,61 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9e2e28d2b37064d6e675679c7da39b07.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9e2e28d2b37064d6e675679c7da39b07.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../custom.css">
+<link rel="stylesheet" href="../../custom.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed quarto-light">
@@ -118,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Dolt DB Skills</span>
     </a>
   </div>
@@ -129,19 +93,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../skills_sessions/index.html"> 
+    <a class="nav-link active" href="../../skills_sessions/index.html" aria-current="page"> 
 <span class="menu-text">Sessions</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../plan/index.html"> 
+    <a class="nav-link" href="../../plan/index.html"> 
 <span class="menu-text">Plans</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../skills/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../skills/index.html"> 
 <span class="menu-text">Skills</span></a>
   </li>  
 </ul>
@@ -155,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skills/insert-dolt-db-sql.html">Insert Dolt DB SQL</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html">Basic Financials</a></li><li class="breadcrumb-item"><a href="../../skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html">WMT-2024-TGT-2024 v1.0 session1</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -169,94 +133,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../skills/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../skills_sessions/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/find-financials-from-pdfs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Find Financials from PDFs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../#" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/create-new-company-sql.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Create New Company SQL</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../#" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/verify-dolt-db-financials.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Verify Dolt DB Financials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">M v1.0 session1</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../#" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/create-verified-dolt-db-financials-sql.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Create Verified Dolt DB Financials SQL</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../#" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/download-new-year-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Download New Year Data</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../#" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/insert-dolt-db-sql.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Insert Dolt DB SQL</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../#" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/basic-financials.html" class="sidebar-item-text sidebar-link">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Basic Financials</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../#" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
+  <a href="../../skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">WMT-2024-TGT-2024 v1.0 session1</span></a>
   </div>
 </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -267,102 +181,168 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#insert-dolt-db-sql" id="toc-insert-dolt-db-sql" class="nav-link active" data-scroll-target="#insert-dolt-db-sql">insert-dolt-db-sql</a>
+  <li><a href="#basic-financials-wmt-2024-tgt-2024" id="toc-basic-financials-wmt-2024-tgt-2024" class="nav-link active" data-scroll-target="#basic-financials-wmt-2024-tgt-2024">/basic-financials WMT 2024 TGT 2024</a>
   <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs">Inputs</a></li>
-  <li><a href="#step-0-gather-sql-files" id="toc-step-0-gather-sql-files" class="nav-link" data-scroll-target="#step-0-gather-sql-files">Step 0 — Gather SQL files</a></li>
-  <li><a href="#step-1-clone-the-target-database" id="toc-step-1-clone-the-target-database" class="nav-link" data-scroll-target="#step-1-clone-the-target-database">Step 1 — Clone the target database</a></li>
-  <li><a href="#step-2-execute-each-sql-file" id="toc-step-2-execute-each-sql-file" class="nav-link" data-scroll-target="#step-2-execute-each-sql-file">Step 2 — Execute each SQL file</a></li>
-  <li><a href="#step-3-show-the-diff" id="toc-step-3-show-the-diff" class="nav-link" data-scroll-target="#step-3-show-the-diff">Step 3 — Show the diff</a></li>
-  <li><a href="#step-4-commit" id="toc-step-4-commit" class="nav-link" data-scroll-target="#step-4-commit">Step 4 — Commit</a></li>
-  <li><a href="#step-5-push" id="toc-step-5-push" class="nav-link" data-scroll-target="#step-5-push">Step 5 — Push</a></li>
-  <li><a href="#step-6-cleanup" id="toc-step-6-cleanup" class="nav-link" data-scroll-target="#step-6-cleanup">Step 6 — Cleanup</a></li>
-  <li><a href="#step-7-print-summary" id="toc-step-7-print-summary" class="nav-link" data-scroll-target="#step-7-print-summary">Step 7 — Print summary</a></li>
+  <li><a href="#income-statement" id="toc-income-statement" class="nav-link" data-scroll-target="#income-statement">Income Statement</a></li>
+  <li><a href="#key-ratios" id="toc-key-ratios" class="nav-link" data-scroll-target="#key-ratios">Key Ratios</a></li>
+  <li><a href="#balance-sheet" id="toc-balance-sheet" class="nav-link" data-scroll-target="#balance-sheet">Balance Sheet</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html">Basic Financials</a></li><li class="breadcrumb-item"><a href="../../skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html">WMT-2024-TGT-2024 v1.0 session1</a></li></ol></nav></header>
 
 
 
 
-<section id="insert-dolt-db-sql" class="level1">
-<h1>insert-dolt-db-sql</h1>
-<p>Find SQL files in <code>extract/2026/inserts/</code>, clone the target Dolt database, execute each SQL file, show the diff, and commit+push to DoltHub.</p>
-<p><strong>This skill writes directly to the Dolt database. Use with caution.</strong></p>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<ul>
-<li>Dolt CLI must be installed (<code>dolt version</code>)</li>
-<li>Git-style user config must be set (<code>dolt config --global --add user.email</code> and <code>user.name</code>)</li>
-<li>The target repo must be public (clone-able without auth). For push access, DoltHub credentials must be configured.</li>
-</ul>
-</section>
-<section id="inputs" class="level2">
-<h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
-<ul>
-<li><code>/insert-dolt-db-sql</code> — find and apply all <code>.sql</code> files in <code>extract/2026/inserts/</code></li>
-<li><code>/insert-dolt-db-sql FILE1 FILE2 ...</code> — apply only the named files (paths relative to <code>extract/2026/inserts/</code>)</li>
-</ul>
-</section>
-<section id="step-0-gather-sql-files" class="level2">
-<h2 class="anchored" data-anchor-id="step-0-gather-sql-files">Step 0 — Gather SQL files</h2>
-<p>List all <code>.sql</code> files under <code>extract/2026/inserts/</code>. If specific filenames were provided, filter to only those (error if any are not found).</p>
-<p>Display the list:</p>
+<section id="basic-financials-wmt-2024-tgt-2024" class="level1">
+<h1>/basic-financials WMT 2024 TGT 2024</h1>
+<p><strong>Skill_Version:</strong> 1.0 <strong>Student:</strong> elena <strong>Model:</strong> sonnet-4-6 <strong>Date:</strong> 2026-06-17</p>
+<p><strong>AI:</strong> Comparing <strong>Walmart FY2024</strong> vs.&nbsp;<strong>Target FY2024</strong>.</p>
 <blockquote class="blockquote">
-<p>Found {N} SQL file(s): file1.sql, file2.sql, …</p>
+<p><strong>Note:</strong> All dollar amounts are in thousands. For example, $106,566,000 means approximately $106.6 billion in actual dollars.</p>
 </blockquote>
-<p>If no files found, stop and tell the user: “No SQL files found in <code>extract/2026/inserts/</code>.”</p>
-</section>
-<section id="step-1-clone-the-target-database" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-clone-the-target-database">Step 1 — Clone the target database</h2>
-<p>Create a temporary directory and clone <code>calvinw/BusMgmtBenchmarks</code> into it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">TMPDIR</span><span class="op">=</span><span class="va">$(</span><span class="fu">mktemp</span> <span class="at">-d</span><span class="va">)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> clone calvinw/BusMgmtBenchmarks <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Confirm clone succeeded. If it fails, stop with an error.</p>
-</section>
-<section id="step-2-execute-each-sql-file" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-execute-each-sql-file">Step 2 — Execute each SQL file</h2>
-<p>For each SQL file (in alphabetical order):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> sql <span class="op">&lt;</span> <span class="st">"{SQL_FILE_PATH}"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Show the output of each execution. If any SQL file produces errors, display them but continue processing remaining files.</p>
-</section>
-<section id="step-3-show-the-diff" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-show-the-diff">Step 3 — Show the diff</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> diff</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Display the full diff to the user for review.</p>
-</section>
-<section id="step-4-commit" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-commit">Step 4 — Commit</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> add <span class="at">-A</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> commit <span class="at">-am</span> <span class="st">"Apply SQL inserts from extract/2026/inserts/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Show the commit hash.</p>
-</section>
-<section id="step-5-push" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-push">Step 5 — Push</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If push fails due to missing credentials, tell the user to push manually:</p>
-<blockquote class="blockquote">
-<p>Push requires DoltHub credentials. Run <code>dolt push origin main</code> from <code>{TMPDIR}</code> manually.</p>
-</blockquote>
-</section>
-<section id="step-6-cleanup" class="level2">
-<h2 class="anchored" data-anchor-id="step-6-cleanup">Step 6 — Cleanup</h2>
-<p>Remove the temporary clone directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="step-7-print-summary" class="level2">
-<h2 class="anchored" data-anchor-id="step-7-print-summary">Step 7 — Print summary</h2>
 <hr>
-<p><strong>Applied {N} SQL file(s) to calvinw/BusMgmtBenchmarks/main:</strong> - file1.sql - file2.sql - …</p>
-<p><strong>Commit:</strong> {hash}</p>
-<p><strong>Diff summary:</strong> {N} rows changed across {N} tables.</p>
+<section id="income-statement" class="level3">
+<h3 class="anchored" data-anchor-id="income-statement">Income Statement</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Walmart (FY2024)</strong></th>
+<th><strong>Target (FY2024)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Net Revenue</td>
+<td>$680,985,000</td>
+<td>$106,566,000</td>
+</tr>
+<tr class="even">
+<td>Cost of Goods (COGS)</td>
+<td>$511,753,000</td>
+<td>$76,502,000</td>
+</tr>
+<tr class="odd">
+<td><strong>Gross Margin</strong></td>
+<td><strong>$169,232,000</strong></td>
+<td><strong>$30,064,000</strong></td>
+</tr>
+<tr class="even">
+<td>SG&amp;A</td>
+<td>$139,884,000</td>
+<td>$21,969,000</td>
+</tr>
+<tr class="odd">
+<td><strong>Operating Profit</strong></td>
+<td><strong>$29,348,000</strong></td>
+<td><strong>$5,566,000</strong></td>
+</tr>
+<tr class="even">
+<td>Net Profit</td>
+<td>$19,436,000</td>
+<td>$4,091,000</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="key-ratios" class="level3">
+<h3 class="anchored" data-anchor-id="key-ratios">Key Ratios</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Walmart (FY2024)</strong></th>
+<th><strong>Target (FY2024)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gross Margin %</td>
+<td>24.9%</td>
+<td>28.2%</td>
+</tr>
+<tr class="even">
+<td>SG&amp;A % of Revenue</td>
+<td>20.5%</td>
+<td>20.6%</td>
+</tr>
+<tr class="odd">
+<td>Operating Margin %</td>
+<td>4.3%</td>
+<td>5.2%</td>
+</tr>
+<tr class="even">
+<td>Net Profit Margin %</td>
+<td>2.9%</td>
+<td>3.8%</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="balance-sheet" class="level3">
+<h3 class="anchored" data-anchor-id="balance-sheet">Balance Sheet</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Walmart (FY2024)</strong></th>
+<th><strong>Target (FY2024)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inventory</td>
+<td>$56,435,000</td>
+<td>$12,740,000</td>
+</tr>
+<tr class="even">
+<td>Current Assets</td>
+<td>$79,458,000</td>
+<td>$19,454,000</td>
+</tr>
+<tr class="odd">
+<td>Total Assets</td>
+<td>$260,823,000</td>
+<td>$57,769,000</td>
+</tr>
+<tr class="even">
+<td>Current Liabilities</td>
+<td>$96,584,000</td>
+<td>$20,799,000</td>
+</tr>
+<tr class="odd">
+<td>Total Liabilities</td>
+<td>$169,810,000</td>
+<td>$43,103,000</td>
+</tr>
+<tr class="even">
+<td>Total Equity</td>
+<td>$91,013,000</td>
+<td>$14,666,000</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>I’ve pulled up <strong>Walmart FY2024</strong> (Discount Store) vs.&nbsp;<strong>Target FY2024</strong> (Discount Store). What would you like to understand about these numbers? You can ask about any line item, what the ratios mean, how the two companies compare, or what these businesses look like financially.</p>
+<p><strong>User:</strong> can you explain the gross margin % to me</p>
+<p><strong>AI:</strong> Great question — Gross Margin % is one of the most important numbers on an income statement!</p>
+<p>Here’s the idea. When a company sells something, it first has to pay for the product itself — what it costs to buy or make the merchandise. <strong>Gross Margin</strong> is what’s left over after that.</p>
+<p><strong>Gross Margin % tells you: for every dollar of sales, how many cents are left after paying for the product?</strong></p>
+<p>The formula is:</p>
+<blockquote class="blockquote">
+<p>Gross Margin % = (Gross Margin ÷ Net Revenue) × 100</p>
+</blockquote>
+<p>Let’s run it for each company:</p>
+<p><strong>Walmart:</strong> $169,232,000 ÷ $680,985,000 × 100 = <strong>24.9%</strong> → For every $1 Walmart brings in, it keeps about <strong>25 cents</strong> after paying for the merchandise.</p>
+<p><strong>Target:</strong> $30,064,000 ÷ $106,566,000 × 100 = <strong>28.2%</strong> → For every $1 Target brings in, it keeps about <strong>28 cents</strong> after paying for the merchandise.</p>
+<p>So Target actually holds on to a slightly larger slice of each sales dollar than Walmart does — even though Walmart is a much bigger company overall.</p>
+<p>This makes sense when you think about it: Walmart is famous for rock-bottom prices, which means thinner margins on each product. Target tends to sell more private-label and style-forward merchandise, which can command slightly higher prices relative to cost.</p>
+<p>Does that help clarify what Gross Margin % is measuring? Want to dig into why the two companies differ, or move on to another line item?</p>
 
 
 </section>
