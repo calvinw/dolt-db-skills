@@ -30,3 +30,74 @@ The target database is `calvinw/BusMgmtBenchmarks/main`.
 ## Setup
 
 The environment is automatically set up on container creation. Skills are pre-installed and ready to use through agent execution with `claude.sh` or `opencode.sh`.
+
+---
+
+## Skill session files — naming convention and format
+
+When a skill session is run and the user asks to save it, save the transcript inside a subfolder named after the skill, inside `skills_sessions/`. Each skill has its own subfolder:
+
+```
+skills_sessions/
+  find-financials-from-pdfs/
+  create-new-company-sql/
+  verify-dolt-db-financials/
+  create-verified-dolt-db-financials-sql/
+  download-new-year-data/
+  insert-dolt-db-sql/
+```
+
+The file itself follows this naming convention:
+
+```
+skills_sessions/{skill-name}/{skill-name}-{ticker}-v{version}-{user}-{model}-session{n}.md
+```
+
+For skills with no ticker argument, omit the `{ticker}` segment:
+
+```
+skills_sessions/{skill-name}/{skill-name}-v{version}-{user}-{model}-session{n}.md
+```
+
+**Examples:**
+- `skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md`
+- `skills_sessions/create-new-company-sql/create-new-company-sql-BOOT-v1.0-calvinw-sonnet-4-6-session1.md`
+- `skills_sessions/download-new-year-data/download-new-year-data-WMT-v1.0-calvinw-sonnet-4-6-session2.md`
+
+**Rules:**
+- `{skill-name}` — the kebab-case skill name exactly as it appears in the slash command (e.g. `verify-dolt-db-financials`, `create-new-company-sql`)
+- `{ticker}` — the ticker symbol passed to the skill (e.g. `M`, `WMT`, `BOOT`); omit for skills that take no argument
+- `{version}` — the skill version (e.g. `1.0`, `1.1`); use `1.0` if the SKILL.md has no explicit version field
+- `{user}` — the first name or username of the person who ran the session (e.g. `calvinw`)
+- `{model}` — the short model name of the AI running the skill (e.g. `sonnet-4-6`, `opus-4-8`)
+- `{n}` — a counter starting at 1; increment it when the same skill+ticker+version+user+model combination has already been saved
+
+**File header format:**
+
+The first line of every session file must be the slash command that was used to invoke the skill, including any argument:
+
+```markdown
+# /verify-dolt-db-financials M
+**Skill_Version:** 1.0
+**Student:** calvinw
+**Model:** sonnet-4-6
+**Date:** 2026-06-17
+```
+
+For skills with no argument, the first line is just the command, e.g. `# /find-financials-from-pdfs`.
+
+**Speaker labels:**
+
+Always use `**AI:**` for the AI's turns and `**User:**` for the user's turns.
+
+**What to include in the file:**
+
+Save only the header and the verbatim conversation that took place while the skill was running — the back-and-forth between `**AI:**` and `**User:**` turns, exactly as they happened. Nothing else. Do not add notes, summaries, meta-comments, or any text that was not part of the actual skill conversation. If the session ended early, just stop — do not add a line explaining that it was incomplete.
+
+**After saving a session file, always run:**
+
+```bash
+python3 skills_sessions/generate_sessions.py
+```
+
+This updates `sessions.json`, which the Quarto site uses to list sessions. If you skip this step, the new session will not appear in the site.

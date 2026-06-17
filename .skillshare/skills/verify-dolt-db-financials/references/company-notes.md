@@ -52,11 +52,23 @@ Add new entries here whenever a new pattern is discovered for a company — this
 
 **Segment:** Department Stores
 
-**SGA:** Single combined line. Yahoo and SEC generally agree. Use SEC.
+**SGA:** Single combined `us-gaap_SellingGeneralAndAdministrativeExpense` line. Yahoo and SEC agree. Use SEC.
 
-**Fiscal year:** Ends late January/early February.
+**Fiscal year:** Ends late January/early February. DB year = reportDate year − 1. Example: reportDate 2025-02-01 → Dolt year=2024.
 
-**Notes:** Multi-year data verified from SEC and Yahoo — values consistent.
+**Revenue structure (CRITICAL):** Always use `us-gaap_Revenues` (Total Revenue), NOT `us-gaap_RevenueFromContractWithCustomerExcludingAssessedTax` (Contract Revenue only). Total Revenue = Contract Revenue + Other Revenue (Credit Card + Macy's Media Network). Difference is ~700M–1B/year. FY2024 Dolt entry was wrong — used contract only (22,293K) instead of total (23,006K). Corrected 2026-06-17.
+
+**Macy's Media Network (MMN) reclassification:** Starting FY2023 10-K, MMN revenue was reclassified from an SGA offset to a separate "Other Revenue" line above COGS. Effect: Revenue increases by MMN amount, SGA increases by same amount, Operating Income unchanged. All comparative years were restated in subsequent filings:
+- FY2022: MMN 144K reclassified (Revenue 25,305→25,449; SGA 8,317→8,461)
+- FY2021: MMN 107K reclassified (Revenue 24,460+CC832+MMN107=25,399; SGA 8,047→8,154)
+
+**FY2021 revenue error:** Dolt stored 24,460K (contract only) — missing Credit Card revenue 832K. Correct = 25,399K (contract + CC 832 + MMN 107 per FY2023 10-K restated). Corrected 2026-06-17.
+
+**Restatements found (FY2024 10-K):**
+- FY2023: COGS restated 14,143→14,224 (+81K); Op Inc 382→301; Net Prof 105→45; Curr Liab 4,430→4,532; SE 4,137→4,035
+- FY2022: COGS restated 15,306→15,347 (+41K); Op Inc 1,730→1,689; Net Prof 1,177→1,146
+
+**FY2018/FY2019:** Revenue convention not re-verified in 2026-06-17 session — CC revenue placement (above/below COGS) in original filings unknown. Use caution.
 
 ---
 

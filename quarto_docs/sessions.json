@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "file": "verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md",
+    "command": "/verify-dolt-db-financials M",
+    "skill": "Verify Dolt DB Financials",
+    "caseStudy": "M",
+    "student": "Calvinw",
+    "model": "Sonnet 4.6",
+    "version": "1.0",
+    "n": 1
+  }
+]
