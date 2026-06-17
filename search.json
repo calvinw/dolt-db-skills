@@ -495,51 +495,47 @@
     ]
   },
   {
-    "objectID": "plan/index.html",
-    "href": "plan/index.html",
-    "title": "Plans",
+    "objectID": "plan/PLAN_skill_recommendations.html",
+    "href": "plan/PLAN_skill_recommendations.html",
+    "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
     "section": "",
-    "text": "Plans\nProject and planning documents for the BusMgmtBenchmarks database.",
+    "text": "Date: 2026-06-17 Status: Draft\n\n\n\n\n\n\n\n\n\n\n\nSkill\nCommand\nPurpose\n\n\n\n\nbasic-financials\n/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]\nInteractive side-by-side comparison of income statement, ratios, and balance sheet for two companies; stays open for student questions\n\n\nfind-financials-from-pdfs\n/find-financials-from-pdfs COMPANY NAME\nExtract financials from PDF annual reports for private companies\n\n\ncreate-new-company-sql\n/create-new-company-sql TICKER [CIK]\nFetch SEC + Yahoo data for a new company and generate SQL insert files\n\n\nverify-dolt-db-financials\n/verify-dolt-db-financials TICKER [YEAR]\nCompare SEC, Yahoo, and Dolt DB values, detect anomalies, produce reconciled values\n\n\ncreate-verified-dolt-db-financials-sql\n/create-verified-dolt-db-financials-sql TICKER [YEAR]\nGenerate REPLACE INTO SQL from a verified report\n\n\ndownload-new-year-data\n/download-new-year-data TICKER\nCheck for newly available fiscal year data and generate an insert file\n\n\ninsert-dolt-db-sql\n/insert-dolt-db-sql [FILE...]\nClone Dolt DB, run SQL inserts, show diff, commit, and push\n\n\n\n\n\n\n\n\n\nCommand: /basic-financials-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz companion to basic-financials. After the student has explored the comparison, this skill generates a set of multiple-choice and fill-in-the-blank questions drawn from the actual data for the two companies. Questions test whether the student can read, calculate, and interpret the income statement and key ratios.\nExample questions: - “What was Walmart’s gross margin % in FY2024? (a) 18.2% (b) 24.9% (c) 31.0%” - “Which company kept more of each sales dollar after paying for merchandise?” - “Calculate Target’s operating margin % using the values shown.”\nData source: BusMgmtBenchmarks Dolt DB (same data as basic-financials)\nOutput: Interactive — presents questions one at a time, checks answers, gives immediate feedback with explanations, shows final score.\n\n\n\n\nCommand: /roa-analysis TICKER1 [YEAR1] TICKER2 [YEAR2]\nAn interactive skill that teaches Return on Assets (ROA) — how efficiently a company uses its assets to generate profit. Pulls financials and balance sheet data from the Dolt DB, explains the ROA formula, shows historical trends, and compares each company against its segment benchmark.\nKey concepts covered: - ROA = Net Profit ÷ Total Assets × 100 - What “asset efficiency” means in plain language - Why ROA differs across retail segments (grocery vs. specialty vs. warehouse clubs) - How ROA relates to the income statement (Net Profit) and balance sheet (Total Assets) - DuPont decomposition: ROA = Net Profit Margin % × Asset Turnover\nData source: BusMgmtBenchmarks Dolt DB — financials, financial_metrics, segment_metrics\nOutput: Interactive — presents ROA comparison table, segment benchmark context, historical trend, then stays open for student questions.\n\n\n\n\nCommand: /roa-analysis-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz on ROA concepts, using the same two-company data as roa-analysis. Tests students on calculation, interpretation, and comparison of ROA values.\nExample questions: - “Calculate Walmart’s ROA for FY2024 using Net Profit and Total Assets.” - “Which company was more efficient at turning its assets into profit?” - “Walmart’s Net Profit Margin is 2.9% and its Asset Turnover is 2.61. What is its ROA?” - “A grocery store typically has a lower ROA than a specialty retailer — true or false? Why?”\nData source: BusMgmtBenchmarks Dolt DB\nOutput: Interactive quiz — one question at a time, answer checking, explanations, final score.\n\n\n\n\n\n\n\nThe three new skills above follow a consistent two-step pattern: a teaching skill (basic-financials, roa-analysis) is always paired with a quiz skill (basic-financials-quiz, roa-analysis-quiz). This should become the standard pattern for all student-facing financial concept skills. Future skills covering gross margin deep-dives, inventory turnover, DuPont analysis, or liquidity ratios should be built in teach+quiz pairs from the start rather than added later.\n\n\n\nAs more quiz skills are built, the mechanics of presenting questions, checking answers, tracking scores, and formatting feedback will be identical across all of them. Extract this into a shared quiz framework — either a references/quiz-engine.md instruction block that all quiz SKILLs include, or a base quiz skill that others extend. This avoids duplicating the question-loop logic across basic-financials-quiz, roa-analysis-quiz, and every future quiz skill, and makes it easy to improve the quiz format in one place.",
     "crumbs": [
       "Plans",
-      "Overview"
+      "skill_recommendations"
     ]
   },
   {
-    "objectID": "skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html",
-    "href": "skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html",
-    "title": "/basic-financials WMT 2024 TGT 2024",
+    "objectID": "plan/PLAN_skill_recommendations.html#current-skills",
+    "href": "plan/PLAN_skill_recommendations.html#current-skills",
+    "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
     "section": "",
-    "text": "/basic-financials WMT 2024 TGT 2024\nSkill_Version: 1.0 Student: elena Model: sonnet-4-6 Date: 2026-06-17\nAI: Comparing Walmart FY2024 vs. Target FY2024.\n\nNote: All dollar amounts are in thousands. For example, $106,566,000 means approximately $106.6 billion in actual dollars.\n\n\n\nIncome Statement\n\n\n\n\nWalmart (FY2024)\nTarget (FY2024)\n\n\n\n\nNet Revenue\n$680,985,000\n$106,566,000\n\n\nCost of Goods (COGS)\n$511,753,000\n$76,502,000\n\n\nGross Margin\n$169,232,000\n$30,064,000\n\n\nSG&A\n$139,884,000\n$21,969,000\n\n\nOperating Profit\n$29,348,000\n$5,566,000\n\n\nNet Profit\n$19,436,000\n$4,091,000\n\n\n\n\n\n\nKey Ratios\n\n\n\n\nWalmart (FY2024)\nTarget (FY2024)\n\n\n\n\nGross Margin %\n24.9%\n28.2%\n\n\nSG&A % of Revenue\n20.5%\n20.6%\n\n\nOperating Margin %\n4.3%\n5.2%\n\n\nNet Profit Margin %\n2.9%\n3.8%\n\n\n\n\n\n\nBalance Sheet\n\n\n\n\nWalmart (FY2024)\nTarget (FY2024)\n\n\n\n\nInventory\n$56,435,000\n$12,740,000\n\n\nCurrent Assets\n$79,458,000\n$19,454,000\n\n\nTotal Assets\n$260,823,000\n$57,769,000\n\n\nCurrent Liabilities\n$96,584,000\n$20,799,000\n\n\nTotal Liabilities\n$169,810,000\n$43,103,000\n\n\nTotal Equity\n$91,013,000\n$14,666,000\n\n\n\n\nI’ve pulled up Walmart FY2024 (Discount Store) vs. Target FY2024 (Discount Store). What would you like to understand about these numbers? You can ask about any line item, what the ratios mean, how the two companies compare, or what these businesses look like financially.\nUser: can you explain the gross margin % to me\nAI: Great question — Gross Margin % is one of the most important numbers on an income statement!\nHere’s the idea. When a company sells something, it first has to pay for the product itself — what it costs to buy or make the merchandise. Gross Margin is what’s left over after that.\nGross Margin % tells you: for every dollar of sales, how many cents are left after paying for the product?\nThe formula is:\n\nGross Margin % = (Gross Margin ÷ Net Revenue) × 100\n\nLet’s run it for each company:\nWalmart: $169,232,000 ÷ $680,985,000 × 100 = 24.9% → For every $1 Walmart brings in, it keeps about 25 cents after paying for the merchandise.\nTarget: $30,064,000 ÷ $106,566,000 × 100 = 28.2% → For every $1 Target brings in, it keeps about 28 cents after paying for the merchandise.\nSo Target actually holds on to a slightly larger slice of each sales dollar than Walmart does — even though Walmart is a much bigger company overall.\nThis makes sense when you think about it: Walmart is famous for rock-bottom prices, which means thinner margins on each product. Target tends to sell more private-label and style-forward merchandise, which can command slightly higher prices relative to cost.\nDoes that help clarify what Gross Margin % is measuring? Want to dig into why the two companies differ, or move on to another line item?",
+    "text": "Skill\nCommand\nPurpose\n\n\n\n\nbasic-financials\n/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]\nInteractive side-by-side comparison of income statement, ratios, and balance sheet for two companies; stays open for student questions\n\n\nfind-financials-from-pdfs\n/find-financials-from-pdfs COMPANY NAME\nExtract financials from PDF annual reports for private companies\n\n\ncreate-new-company-sql\n/create-new-company-sql TICKER [CIK]\nFetch SEC + Yahoo data for a new company and generate SQL insert files\n\n\nverify-dolt-db-financials\n/verify-dolt-db-financials TICKER [YEAR]\nCompare SEC, Yahoo, and Dolt DB values, detect anomalies, produce reconciled values\n\n\ncreate-verified-dolt-db-financials-sql\n/create-verified-dolt-db-financials-sql TICKER [YEAR]\nGenerate REPLACE INTO SQL from a verified report\n\n\ndownload-new-year-data\n/download-new-year-data TICKER\nCheck for newly available fiscal year data and generate an insert file\n\n\ninsert-dolt-db-sql\n/insert-dolt-db-sql [FILE...]\nClone Dolt DB, run SQL inserts, show diff, commit, and push",
     "crumbs": [
-      "Sessions",
-      "Basic Financials",
-      "WMT-2024-TGT-2024 v1.0 session1"
+      "Plans",
+      "skill_recommendations"
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Dolt DB Skills",
+    "objectID": "plan/PLAN_skill_recommendations.html#proposed-new-skills",
+    "href": "plan/PLAN_skill_recommendations.html#proposed-new-skills",
+    "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
     "section": "",
-    "text": "Resources for managing the BusMgmtBenchmarks Dolt database — a financial data project tracking retail company financials from SEC 10-K filings and Yahoo Finance.\n\nSessions — AI-guided conversations using each skill\nPlans — Project and planning documents\nSkills — AI skill definitions for database management tasks\n\n\n\n\nCalvin Williamson (calvinw)"
-  },
-  {
-    "objectID": "index.html#contributors",
-    "href": "index.html#contributors",
-    "title": "Dolt DB Skills",
-    "section": "",
-    "text": "Calvin Williamson (calvinw)"
-  },
-  {
-    "objectID": "skills_sessions/index.html",
-    "href": "skills_sessions/index.html",
-    "title": "Sessions",
-    "section": "",
-    "text": "Sessions\nAI-guided conversations using each Dolt DB skill.\nSessions are organised by skill in the sidebar on the left.",
+    "text": "Command: /basic-financials-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz companion to basic-financials. After the student has explored the comparison, this skill generates a set of multiple-choice and fill-in-the-blank questions drawn from the actual data for the two companies. Questions test whether the student can read, calculate, and interpret the income statement and key ratios.\nExample questions: - “What was Walmart’s gross margin % in FY2024? (a) 18.2% (b) 24.9% (c) 31.0%” - “Which company kept more of each sales dollar after paying for merchandise?” - “Calculate Target’s operating margin % using the values shown.”\nData source: BusMgmtBenchmarks Dolt DB (same data as basic-financials)\nOutput: Interactive — presents questions one at a time, checks answers, gives immediate feedback with explanations, shows final score.\n\n\n\n\nCommand: /roa-analysis TICKER1 [YEAR1] TICKER2 [YEAR2]\nAn interactive skill that teaches Return on Assets (ROA) — how efficiently a company uses its assets to generate profit. Pulls financials and balance sheet data from the Dolt DB, explains the ROA formula, shows historical trends, and compares each company against its segment benchmark.\nKey concepts covered: - ROA = Net Profit ÷ Total Assets × 100 - What “asset efficiency” means in plain language - Why ROA differs across retail segments (grocery vs. specialty vs. warehouse clubs) - How ROA relates to the income statement (Net Profit) and balance sheet (Total Assets) - DuPont decomposition: ROA = Net Profit Margin % × Asset Turnover\nData source: BusMgmtBenchmarks Dolt DB — financials, financial_metrics, segment_metrics\nOutput: Interactive — presents ROA comparison table, segment benchmark context, historical trend, then stays open for student questions.\n\n\n\n\nCommand: /roa-analysis-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz on ROA concepts, using the same two-company data as roa-analysis. Tests students on calculation, interpretation, and comparison of ROA values.\nExample questions: - “Calculate Walmart’s ROA for FY2024 using Net Profit and Total Assets.” - “Which company was more efficient at turning its assets into profit?” - “Walmart’s Net Profit Margin is 2.9% and its Asset Turnover is 2.61. What is its ROA?” - “A grocery store typically has a lower ROA than a specialty retailer — true or false? Why?”\nData source: BusMgmtBenchmarks Dolt DB\nOutput: Interactive quiz — one question at a time, answer checking, explanations, final score.",
     "crumbs": [
-      "Sessions",
-      "Overview"
+      "Plans",
+      "skill_recommendations"
+    ]
+  },
+  {
+    "objectID": "plan/PLAN_skill_recommendations.html#recommendations",
+    "href": "plan/PLAN_skill_recommendations.html#recommendations",
+    "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
+    "section": "",
+    "text": "The three new skills above follow a consistent two-step pattern: a teaching skill (basic-financials, roa-analysis) is always paired with a quiz skill (basic-financials-quiz, roa-analysis-quiz). This should become the standard pattern for all student-facing financial concept skills. Future skills covering gross margin deep-dives, inventory turnover, DuPont analysis, or liquidity ratios should be built in teach+quiz pairs from the start rather than added later.\n\n\n\nAs more quiz skills are built, the mechanics of presenting questions, checking answers, tracking scores, and formatting feedback will be identical across all of them. Extract this into a shared quiz framework — either a references/quiz-engine.md instruction block that all quiz SKILLs include, or a base quiz skill that others extend. This avoids duplicating the question-loop logic across basic-financials-quiz, roa-analysis-quiz, and every future quiz skill, and makes it easy to improve the quiz format in one place.",
+    "crumbs": [
+      "Plans",
+      "skill_recommendations"
     ]
   },
   {
@@ -564,6 +560,54 @@
       "Sessions",
       "Verify Dolt DB Financials",
       "M v1.0 session1"
+    ]
+  },
+  {
+    "objectID": "skills_sessions/index.html",
+    "href": "skills_sessions/index.html",
+    "title": "Sessions",
+    "section": "",
+    "text": "Sessions\nAI-guided conversations using each Dolt DB skill.\nSessions are organised by skill in the sidebar on the left.",
+    "crumbs": [
+      "Sessions",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Dolt DB Skills",
+    "section": "",
+    "text": "Resources for managing the BusMgmtBenchmarks Dolt database — a financial data project tracking retail company financials from SEC 10-K filings and Yahoo Finance.\n\nSessions — AI-guided conversations using each skill\nPlans — Project and planning documents\nSkills — AI skill definitions for database management tasks\n\n\n\n\nCalvin Williamson (calvinw)"
+  },
+  {
+    "objectID": "index.html#contributors",
+    "href": "index.html#contributors",
+    "title": "Dolt DB Skills",
+    "section": "",
+    "text": "Calvin Williamson (calvinw)"
+  },
+  {
+    "objectID": "skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html",
+    "href": "skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html",
+    "title": "/basic-financials WMT 2024 TGT 2024",
+    "section": "",
+    "text": "/basic-financials WMT 2024 TGT 2024\nSkill_Version: 1.0 Student: elena Model: sonnet-4-6 Date: 2026-06-17\nAI: Comparing Walmart FY2024 vs. Target FY2024.\n\nNote: All dollar amounts are in thousands. For example, $106,566,000 means approximately $106.6 billion in actual dollars.\n\n\n\nIncome Statement\n\n\n\n\nWalmart (FY2024)\nTarget (FY2024)\n\n\n\n\nNet Revenue\n$680,985,000\n$106,566,000\n\n\nCost of Goods (COGS)\n$511,753,000\n$76,502,000\n\n\nGross Margin\n$169,232,000\n$30,064,000\n\n\nSG&A\n$139,884,000\n$21,969,000\n\n\nOperating Profit\n$29,348,000\n$5,566,000\n\n\nNet Profit\n$19,436,000\n$4,091,000\n\n\n\n\n\n\nKey Ratios\n\n\n\n\nWalmart (FY2024)\nTarget (FY2024)\n\n\n\n\nGross Margin %\n24.9%\n28.2%\n\n\nSG&A % of Revenue\n20.5%\n20.6%\n\n\nOperating Margin %\n4.3%\n5.2%\n\n\nNet Profit Margin %\n2.9%\n3.8%\n\n\n\n\n\n\nBalance Sheet\n\n\n\n\nWalmart (FY2024)\nTarget (FY2024)\n\n\n\n\nInventory\n$56,435,000\n$12,740,000\n\n\nCurrent Assets\n$79,458,000\n$19,454,000\n\n\nTotal Assets\n$260,823,000\n$57,769,000\n\n\nCurrent Liabilities\n$96,584,000\n$20,799,000\n\n\nTotal Liabilities\n$169,810,000\n$43,103,000\n\n\nTotal Equity\n$91,013,000\n$14,666,000\n\n\n\n\nI’ve pulled up Walmart FY2024 (Discount Store) vs. Target FY2024 (Discount Store). What would you like to understand about these numbers? You can ask about any line item, what the ratios mean, how the two companies compare, or what these businesses look like financially.\nUser: can you explain the gross margin % to me\nAI: Great question — Gross Margin % is one of the most important numbers on an income statement!\nHere’s the idea. When a company sells something, it first has to pay for the product itself — what it costs to buy or make the merchandise. Gross Margin is what’s left over after that.\nGross Margin % tells you: for every dollar of sales, how many cents are left after paying for the product?\nThe formula is:\n\nGross Margin % = (Gross Margin ÷ Net Revenue) × 100\n\nLet’s run it for each company:\nWalmart: $169,232,000 ÷ $680,985,000 × 100 = 24.9% → For every $1 Walmart brings in, it keeps about 25 cents after paying for the merchandise.\nTarget: $30,064,000 ÷ $106,566,000 × 100 = 28.2% → For every $1 Target brings in, it keeps about 28 cents after paying for the merchandise.\nSo Target actually holds on to a slightly larger slice of each sales dollar than Walmart does — even though Walmart is a much bigger company overall.\nThis makes sense when you think about it: Walmart is famous for rock-bottom prices, which means thinner margins on each product. Target tends to sell more private-label and style-forward merchandise, which can command slightly higher prices relative to cost.\nDoes that help clarify what Gross Margin % is measuring? Want to dig into why the two companies differ, or move on to another line item?",
+    "crumbs": [
+      "Sessions",
+      "Basic Financials",
+      "WMT-2024-TGT-2024 v1.0 session1"
+    ]
+  },
+  {
+    "objectID": "plan/index.html",
+    "href": "plan/index.html",
+    "title": "Plans",
+    "section": "",
+    "text": "Plans\nProject and planning documents for the BusMgmtBenchmarks database.",
+    "crumbs": [
+      "Plans",
+      "Overview"
     ]
   },
   {
