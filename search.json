@@ -563,14 +563,15 @@
     ]
   },
   {
-    "objectID": "skills_sessions/index.html",
-    "href": "skills_sessions/index.html",
-    "title": "Sessions",
+    "objectID": "skills_sessions/basic-financials/basic-financials-WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1.html",
+    "href": "skills_sessions/basic-financials/basic-financials-WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1.html",
+    "title": "/basic-financials wmt 2023, tgt 2023",
     "section": "",
-    "text": "Sessions\nAI-guided conversations using each Dolt DB skill.\nSessions are organised by skill in the sidebar on the left.",
+    "text": "/basic-financials wmt 2023, tgt 2023\nSkill_Version: 1.0 Student: elena Model: sonnet-4-6 Date: 2026-06-18\nAI: Both companies found. Both years are explicit (2023 for each), so I’ll fetch the financial data directly.\n\nNote: All dollar amounts below are in thousands. For example, $107,412,000 means approximately $107.4 billion in actual dollars.\n\nComparing Walmart FY2023 vs. Target FY2023 — both Discount Store retailers.\n\nIncome Statement\n\n\n\n\nWalmart (FY2023)\nTarget (FY2023)\n\n\n\n\nNet Revenue\n$648,125,000\n$107,412,000\n\n\nCost of Goods (COGS)\n$490,142,000\n$77,736,000\n\n\nGross Margin\n$157,983,000\n$29,676,000\n\n\nSG&A\n$130,971,000\n$21,554,000\n\n\nOperating Profit\n$27,012,000\n$5,707,000\n\n\nNet Profit\n$15,511,000\n$4,138,000\n\n\n\n\n\nKey Ratios\n\n\n\n\nWalmart (FY2023)\nTarget (FY2023)\n\n\n\n\nGross Margin %\n24.38%\n27.63%\n\n\nSG&A % of Revenue\n20.21%\n20.07%\n\n\nOperating Margin %\n4.17%\n5.31%\n\n\nNet Profit Margin %\n2.39%\n3.85%\n\n\n\n\n\nBalance Sheet\n\n\n\n\nWalmart (FY2023)\nTarget (FY2023)\n\n\n\n\nInventory\n$54,892,000\n$11,886,000\n\n\nCurrent Assets\n$76,877,000\n$17,498,000\n\n\nTotal Assets\n$252,399,000\n$55,356,000\n\n\nCurrent Liabilities\n$92,415,000\n$19,304,000\n\n\nTotal Liabilities\n$168,538,000\n$41,924,000\n\n\nTotal Equity\n$83,861,000\n$13,432,000\n\n\n\nI’ve pulled up Walmart FY2023 (Discount Store) vs. Target FY2023 (Discount Store). What would you like to understand about these numbers? You can ask about any line item, what the ratios mean, how the companies compare, or what these businesses look like financially.\nUser: what is a gross margin\nAI: Gross Margin is the money a company has left over after paying for the products it sold, but before paying for anything else (like rent, employees, or marketing).\nThink of it like a restaurant: before the restaurant pays its staff, rent, or electric bill, it first has to pay for the ingredients that went into the food it served. Whatever’s left after covering just the ingredients is the restaurant’s “gross margin.”\nFor our two companies:\n\nWalmart: Net Revenue of $648,125,000 − Cost of Goods $490,142,000 = Gross Margin of $157,983,000\nTarget: Net Revenue of $107,412,000 − Cost of Goods $77,736,000 = Gross Margin of $29,676,000\n\nWe usually talk about this as a percentage of revenue, called Gross Margin %, so we can compare companies of very different sizes fairly:\n\nWalmart: 24.38% — for every $1 of sales, Walmart keeps about 24 cents after paying for the products it sold\nTarget: 27.63% — for every $1 of sales, Target keeps about 28 cents\n\nSo even though Walmart’s total gross margin dollar amount is much bigger (it’s a much bigger company), Target actually keeps a slightly larger share of each sales dollar after covering its product costs.\nWant to dig into why Target’s percentage is a bit higher, or move on to what happens to that money next (SG&A and Operating Profit)?",
     "crumbs": [
       "Sessions",
-      "Overview"
+      "Basic Financials",
+      "WMT-2023-TGT-2023 v1.0 session1"
     ]
   },
   {
@@ -586,6 +587,17 @@
     "title": "Dolt DB Skills",
     "section": "",
     "text": "Calvin Williamson (calvinw)\nElena Choi (elenachoi01)"
+  },
+  {
+    "objectID": "skills_sessions/index.html",
+    "href": "skills_sessions/index.html",
+    "title": "Sessions",
+    "section": "",
+    "text": "Sessions\nAI-guided conversations using each Dolt DB skill.\nSessions are organised by skill in the sidebar on the left.",
+    "crumbs": [
+      "Sessions",
+      "Overview"
+    ]
   },
   {
     "objectID": "skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html",
