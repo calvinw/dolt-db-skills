@@ -495,47 +495,47 @@
     ]
   },
   {
-    "objectID": "plan/PLAN_skill_recommendations.html",
-    "href": "plan/PLAN_skill_recommendations.html",
+    "objectID": "plan/PLAN_SKILL_RECOMMENDATIONS.html",
+    "href": "plan/PLAN_SKILL_RECOMMENDATIONS.html",
     "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
     "section": "",
     "text": "Date: 2026-06-17 Status: Draft\n\n\n\n\n\n\n\n\n\n\n\nSkill\nCommand\nPurpose\n\n\n\n\nbasic-financials\n/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]\nInteractive side-by-side comparison of income statement, ratios, and balance sheet for two companies; stays open for student questions\n\n\nfind-financials-from-pdfs\n/find-financials-from-pdfs COMPANY NAME\nExtract financials from PDF annual reports for private companies\n\n\ncreate-new-company-sql\n/create-new-company-sql TICKER [CIK]\nFetch SEC + Yahoo data for a new company and generate SQL insert files\n\n\nverify-dolt-db-financials\n/verify-dolt-db-financials TICKER [YEAR]\nCompare SEC, Yahoo, and Dolt DB values, detect anomalies, produce reconciled values\n\n\ncreate-verified-dolt-db-financials-sql\n/create-verified-dolt-db-financials-sql TICKER [YEAR]\nGenerate REPLACE INTO SQL from a verified report\n\n\ndownload-new-year-data\n/download-new-year-data TICKER\nCheck for newly available fiscal year data and generate an insert file\n\n\ninsert-dolt-db-sql\n/insert-dolt-db-sql [FILE...]\nClone Dolt DB, run SQL inserts, show diff, commit, and push\n\n\n\n\n\n\n\n\n\nCommand: /basic-financials-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz companion to basic-financials. After the student has explored the comparison, this skill generates a set of multiple-choice and fill-in-the-blank questions drawn from the actual data for the two companies. Questions test whether the student can read, calculate, and interpret the income statement and key ratios.\nExample questions: - “What was Walmart’s gross margin % in FY2024? (a) 18.2% (b) 24.9% (c) 31.0%” - “Which company kept more of each sales dollar after paying for merchandise?” - “Calculate Target’s operating margin % using the values shown.”\nData source: BusMgmtBenchmarks Dolt DB (same data as basic-financials)\nOutput: Interactive — presents questions one at a time, checks answers, gives immediate feedback with explanations, shows final score.\n\n\n\n\nCommand: /roa-analysis TICKER1 [YEAR1] TICKER2 [YEAR2]\nAn interactive skill that teaches Return on Assets (ROA) — how efficiently a company uses its assets to generate profit. Pulls financials and balance sheet data from the Dolt DB, explains the ROA formula, shows historical trends, and compares each company against its segment benchmark.\nKey concepts covered: - ROA = Net Profit ÷ Total Assets × 100 - What “asset efficiency” means in plain language - Why ROA differs across retail segments (grocery vs. specialty vs. warehouse clubs) - How ROA relates to the income statement (Net Profit) and balance sheet (Total Assets) - DuPont decomposition: ROA = Net Profit Margin % × Asset Turnover\nData source: BusMgmtBenchmarks Dolt DB — financials, financial_metrics, segment_metrics\nOutput: Interactive — presents ROA comparison table, segment benchmark context, historical trend, then stays open for student questions.\n\n\n\n\nCommand: /roa-analysis-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz on ROA concepts, using the same two-company data as roa-analysis. Tests students on calculation, interpretation, and comparison of ROA values.\nExample questions: - “Calculate Walmart’s ROA for FY2024 using Net Profit and Total Assets.” - “Which company was more efficient at turning its assets into profit?” - “Walmart’s Net Profit Margin is 2.9% and its Asset Turnover is 2.61. What is its ROA?” - “A grocery store typically has a lower ROA than a specialty retailer — true or false? Why?”\nData source: BusMgmtBenchmarks Dolt DB\nOutput: Interactive quiz — one question at a time, answer checking, explanations, final score.\n\n\n\n\n\n\n\nThe three new skills above follow a consistent two-step pattern: a teaching skill (basic-financials, roa-analysis) is always paired with a quiz skill (basic-financials-quiz, roa-analysis-quiz). This should become the standard pattern for all student-facing financial concept skills. Future skills covering gross margin deep-dives, inventory turnover, DuPont analysis, or liquidity ratios should be built in teach+quiz pairs from the start rather than added later.\n\n\n\nAs more quiz skills are built, the mechanics of presenting questions, checking answers, tracking scores, and formatting feedback will be identical across all of them. Extract this into a shared quiz framework — either a references/quiz-engine.md instruction block that all quiz SKILLs include, or a base quiz skill that others extend. This avoids duplicating the question-loop logic across basic-financials-quiz, roa-analysis-quiz, and every future quiz skill, and makes it easy to improve the quiz format in one place.",
     "crumbs": [
       "Plans",
-      "skill_recommendations"
+      "SKILL_RECOMMENDATIONS"
     ]
   },
   {
-    "objectID": "plan/PLAN_skill_recommendations.html#current-skills",
-    "href": "plan/PLAN_skill_recommendations.html#current-skills",
+    "objectID": "plan/PLAN_SKILL_RECOMMENDATIONS.html#current-skills",
+    "href": "plan/PLAN_SKILL_RECOMMENDATIONS.html#current-skills",
     "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
     "section": "",
     "text": "Skill\nCommand\nPurpose\n\n\n\n\nbasic-financials\n/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]\nInteractive side-by-side comparison of income statement, ratios, and balance sheet for two companies; stays open for student questions\n\n\nfind-financials-from-pdfs\n/find-financials-from-pdfs COMPANY NAME\nExtract financials from PDF annual reports for private companies\n\n\ncreate-new-company-sql\n/create-new-company-sql TICKER [CIK]\nFetch SEC + Yahoo data for a new company and generate SQL insert files\n\n\nverify-dolt-db-financials\n/verify-dolt-db-financials TICKER [YEAR]\nCompare SEC, Yahoo, and Dolt DB values, detect anomalies, produce reconciled values\n\n\ncreate-verified-dolt-db-financials-sql\n/create-verified-dolt-db-financials-sql TICKER [YEAR]\nGenerate REPLACE INTO SQL from a verified report\n\n\ndownload-new-year-data\n/download-new-year-data TICKER\nCheck for newly available fiscal year data and generate an insert file\n\n\ninsert-dolt-db-sql\n/insert-dolt-db-sql [FILE...]\nClone Dolt DB, run SQL inserts, show diff, commit, and push",
     "crumbs": [
       "Plans",
-      "skill_recommendations"
+      "SKILL_RECOMMENDATIONS"
     ]
   },
   {
-    "objectID": "plan/PLAN_skill_recommendations.html#proposed-new-skills",
-    "href": "plan/PLAN_skill_recommendations.html#proposed-new-skills",
+    "objectID": "plan/PLAN_SKILL_RECOMMENDATIONS.html#proposed-new-skills",
+    "href": "plan/PLAN_SKILL_RECOMMENDATIONS.html#proposed-new-skills",
     "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
     "section": "",
     "text": "Command: /basic-financials-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz companion to basic-financials. After the student has explored the comparison, this skill generates a set of multiple-choice and fill-in-the-blank questions drawn from the actual data for the two companies. Questions test whether the student can read, calculate, and interpret the income statement and key ratios.\nExample questions: - “What was Walmart’s gross margin % in FY2024? (a) 18.2% (b) 24.9% (c) 31.0%” - “Which company kept more of each sales dollar after paying for merchandise?” - “Calculate Target’s operating margin % using the values shown.”\nData source: BusMgmtBenchmarks Dolt DB (same data as basic-financials)\nOutput: Interactive — presents questions one at a time, checks answers, gives immediate feedback with explanations, shows final score.\n\n\n\n\nCommand: /roa-analysis TICKER1 [YEAR1] TICKER2 [YEAR2]\nAn interactive skill that teaches Return on Assets (ROA) — how efficiently a company uses its assets to generate profit. Pulls financials and balance sheet data from the Dolt DB, explains the ROA formula, shows historical trends, and compares each company against its segment benchmark.\nKey concepts covered: - ROA = Net Profit ÷ Total Assets × 100 - What “asset efficiency” means in plain language - Why ROA differs across retail segments (grocery vs. specialty vs. warehouse clubs) - How ROA relates to the income statement (Net Profit) and balance sheet (Total Assets) - DuPont decomposition: ROA = Net Profit Margin % × Asset Turnover\nData source: BusMgmtBenchmarks Dolt DB — financials, financial_metrics, segment_metrics\nOutput: Interactive — presents ROA comparison table, segment benchmark context, historical trend, then stays open for student questions.\n\n\n\n\nCommand: /roa-analysis-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]\nA structured quiz on ROA concepts, using the same two-company data as roa-analysis. Tests students on calculation, interpretation, and comparison of ROA values.\nExample questions: - “Calculate Walmart’s ROA for FY2024 using Net Profit and Total Assets.” - “Which company was more efficient at turning its assets into profit?” - “Walmart’s Net Profit Margin is 2.9% and its Asset Turnover is 2.61. What is its ROA?” - “A grocery store typically has a lower ROA than a specialty retailer — true or false? Why?”\nData source: BusMgmtBenchmarks Dolt DB\nOutput: Interactive quiz — one question at a time, answer checking, explanations, final score.",
     "crumbs": [
       "Plans",
-      "skill_recommendations"
+      "SKILL_RECOMMENDATIONS"
     ]
   },
   {
-    "objectID": "plan/PLAN_skill_recommendations.html#recommendations",
-    "href": "plan/PLAN_skill_recommendations.html#recommendations",
+    "objectID": "plan/PLAN_SKILL_RECOMMENDATIONS.html#recommendations",
+    "href": "plan/PLAN_SKILL_RECOMMENDATIONS.html#recommendations",
     "title": "Skill Recommendations — BusMgmtBenchmarks Learning Skills",
     "section": "",
     "text": "The three new skills above follow a consistent two-step pattern: a teaching skill (basic-financials, roa-analysis) is always paired with a quiz skill (basic-financials-quiz, roa-analysis-quiz). This should become the standard pattern for all student-facing financial concept skills. Future skills covering gross margin deep-dives, inventory turnover, DuPont analysis, or liquidity ratios should be built in teach+quiz pairs from the start rather than added later.\n\n\n\nAs more quiz skills are built, the mechanics of presenting questions, checking answers, tracking scores, and formatting feedback will be identical across all of them. Extract this into a shared quiz framework — either a references/quiz-engine.md instruction block that all quiz SKILLs include, or a base quiz skill that others extend. This avoids duplicating the question-loop logic across basic-financials-quiz, roa-analysis-quiz, and every future quiz skill, and makes it easy to improve the quiz format in one place.",
     "crumbs": [
       "Plans",
-      "skill_recommendations"
+      "SKILL_RECOMMENDATIONS"
     ]
   },
   {
