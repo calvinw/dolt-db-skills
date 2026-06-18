@@ -105,10 +105,4 @@ Always use `**AI:**` for the AI's turns and `**User:**` for the user's turns.
 
 Save only the header and the verbatim conversation that took place while the skill was running — the back-and-forth between `**AI:**` and `**User:**` turns, exactly as they happened. Nothing else. Do not add notes, summaries, meta-comments, or any text that was not part of the actual skill conversation. If the session ended early, just stop — do not add a line explaining that it was incomplete.
 
-**After saving a session file, always run:**
-
-```bash
-python3 skills_sessions/generate_sessions.py
-```
-
-This updates `sessions.json`, which the Quarto site uses to list sessions. If you skip this step, the new session will not appear in the site.
+**Do not run any generator scripts after saving a session file.** The generators run automatically as part of `make` inside `quarto_docs/`. Running them manually at other times is unnecessary and should be avoided.

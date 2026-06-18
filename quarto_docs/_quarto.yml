@@ -4,6 +4,7 @@ project:
   render:
     - index.md
     - skills_sessions/index.md
+    - skills_sessions/basic-financials/basic-financials-WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1.md
     - skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md
     - skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md
     - plan/index.md
@@ -34,17 +35,20 @@ website:
     - id: sessions
       title: "Sessions"
       style: docked
+      collapse-level: 1
       contents:
         - text: Overview
           href: skills_sessions/index.md
-        - section: "Verify Dolt DB Financials"
-          contents:
-            - text: "M v1.0 session1"
-              href: skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md
         - section: "Basic Financials"
           contents:
-            - text: "WMT-2024-TGT-2024 v1.0 session1"
+            - text: "WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1"
+              href: skills_sessions/basic-financials/basic-financials-WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1.md
+            - text: "WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1"
               href: skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md
+        - section: "Verify Dolt DB Financials"
+          contents:
+            - text: "M-v1.0-calvinw-sonnet-4-6-session1"
+              href: skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md
 
     - id: plans
       title: "Plans"
@@ -97,4 +101,5 @@ format:
     toc: true
     include-after-body: sidebar-tweaks.html
     grid:
+      sidebar-width: 400px
       body-width: 2000px
