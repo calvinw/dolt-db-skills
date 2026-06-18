@@ -1,5 +1,15 @@
 [
   {
+    "file": "basic-financials/basic-financials-WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1.md",
+    "command": "/basic-financials wmt 2023, tgt 2023",
+    "skill": "Basic Financials",
+    "caseStudy": "Wmt 2023, Tgt 2023",
+    "student": "Elena",
+    "model": "Sonnet 4.6",
+    "version": "1.0",
+    "n": 1
+  },
+  {
     "file": "basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md",
     "command": "/basic-financials WMT 2024 TGT 2024",
     "skill": "Basic Financials",
