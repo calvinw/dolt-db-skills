@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Interactive financial comparison assistant for undergraduate business students. Takes two company tickers each with their own year, pulls side-by-side income statement, ratio, and balance sheet data from the BusMgmtBenchmarks Dolt database, and stays open for student questions about what the numbers mean. Triggered by “/basic-financials TICKER1 YEAR1 TICKER2 YEAR2”.">
+<meta name="description" content="Interactive ROA Analysis Quiz Assistant for undergraduate business students. Pulls side-by-side financial data from the BusMgmtBenchmarks Dolt database, then quizzes students on Return on Assets (ROA) and the Strategic Profit Model using multiple-choice and true/false questions. Triggered by “/roa-analysis-quiz TICKER1 YEAR1 TICKER2 YEAR2”.">
 
-<title>basic-financials – Dolt DB Skills</title>
+<title>roa-analysis-quiz – Dolt DB Skills</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -107,6 +107,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../custom.css">
 </head>
@@ -155,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skills/basic-financials.html">Basic Financials</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skills/roa-analysis-quiz.html">Roa Analysis Quiz</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -247,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../skills/basic-financials.html" class="sidebar-item-text sidebar-link active">
+  <a href="../skills/basic-financials.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Basic Financials</span></a>
   </div>
 </li>
@@ -259,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../skills/roa-analysis-quiz.html" class="sidebar-item-text sidebar-link">
+  <a href="../skills/roa-analysis-quiz.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Roa Analysis Quiz</span></a>
   </div>
 </li>
@@ -279,22 +308,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#basic-financials" id="toc-basic-financials" class="nav-link active" data-scroll-target="#basic-financials">basic-financials</a>
+  <li><a href="#roa-analysis-quiz" id="toc-roa-analysis-quiz" class="nav-link active" data-scroll-target="#roa-analysis-quiz">roa-analysis-quiz</a>
   <ul class="collapse">
   <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs">Inputs</a></li>
   <li><a href="#step-1-look-up-both-companies" id="toc-step-1-look-up-both-companies" class="nav-link" data-scroll-target="#step-1-look-up-both-companies">Step 1 — Look up both companies</a></li>
   <li><a href="#step-2-determine-each-companys-year" id="toc-step-2-determine-each-companys-year" class="nav-link" data-scroll-target="#step-2-determine-each-companys-year">Step 2 — Determine each company’s year</a></li>
-  <li><a href="#step-3-fetch-the-financial-data" id="toc-step-3-fetch-the-financial-data" class="nav-link" data-scroll-target="#step-3-fetch-the-financial-data">Step 3 — Fetch the financial data</a></li>
-  <li><a href="#step-4-present-the-side-by-side-comparison" id="toc-step-4-present-the-side-by-side-comparison" class="nav-link" data-scroll-target="#step-4-present-the-side-by-side-comparison">Step 4 — Present the side-by-side comparison</a>
+  <li><a href="#step-3-fetch-financial-data" id="toc-step-3-fetch-financial-data" class="nav-link" data-scroll-target="#step-3-fetch-financial-data">Step 3 — Fetch financial data</a></li>
+  <li><a href="#step-4-display-the-side-by-side-comparison" id="toc-step-4-display-the-side-by-side-comparison" class="nav-link" data-scroll-target="#step-4-display-the-side-by-side-comparison">Step 4 — Display the side-by-side comparison</a>
   <ul class="collapse">
   <li><a href="#income-statement" id="toc-income-statement" class="nav-link" data-scroll-target="#income-statement">Income Statement</a></li>
-  <li><a href="#key-ratios" id="toc-key-ratios" class="nav-link" data-scroll-target="#key-ratios">Key Ratios</a></li>
   <li><a href="#balance-sheet" id="toc-balance-sheet" class="nav-link" data-scroll-target="#balance-sheet">Balance Sheet</a></li>
   </ul></li>
-  <li><a href="#step-5-interactive-mode-student-questions" id="toc-step-5-interactive-mode-student-questions" class="nav-link" data-scroll-target="#step-5-interactive-mode-student-questions">Step 5 — Interactive mode (student questions)</a></li>
-  <li><a href="#communication-style" id="toc-communication-style" class="nav-link" data-scroll-target="#communication-style">Communication Style</a></li>
-  <li><a href="#the-income-statement-flow" id="toc-the-income-statement-flow" class="nav-link" data-scroll-target="#the-income-statement-flow">The Income Statement Flow</a></li>
+  <li><a href="#step-5-quiz-mode" id="toc-step-5-quiz-mode" class="nav-link" data-scroll-target="#step-5-quiz-mode">Step 5 — Quiz mode</a>
+  <ul class="collapse">
+  <li><a href="#quiz-rules" id="toc-quiz-rules" class="nav-link" data-scroll-target="#quiz-rules">Quiz Rules</a></li>
+  <li><a href="#question-format-rules" id="toc-question-format-rules" class="nav-link" data-scroll-target="#question-format-rules">Question Format Rules</a></li>
+  <li><a href="#correct-answer-position-rule" id="toc-correct-answer-position-rule" class="nav-link" data-scroll-target="#correct-answer-position-rule">Correct Answer Position Rule</a></li>
+  <li><a href="#question-pool-structure" id="toc-question-pool-structure" class="nav-link" data-scroll-target="#question-pool-structure">Question Pool Structure</a></li>
+  <li><a href="#how-to-select-and-order-questions-each-run" id="toc-how-to-select-and-order-questions-each-run" class="nav-link" data-scroll-target="#how-to-select-and-order-questions-each-run">How to select and order questions each run</a></li>
+  </ul></li>
   <li><a href="#key-formulas" id="toc-key-formulas" class="nav-link" data-scroll-target="#key-formulas">Key Formulas</a></li>
+  <li><a href="#math-and-currency-notation" id="toc-math-and-currency-notation" class="nav-link" data-scroll-target="#math-and-currency-notation">Math and Currency Notation</a></li>
+  <li><a href="#communication-style" id="toc-communication-style" class="nav-link" data-scroll-target="#communication-style">Communication Style</a></li>
   <li><a href="#industry-context" id="toc-industry-context" class="nav-link" data-scroll-target="#industry-context">Industry Context</a></li>
   <li><a href="#database-reference" id="toc-database-reference" class="nav-link" data-scroll-target="#database-reference">Database Reference</a></li>
   </ul></li>
@@ -307,12 +342,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="basic-financials" class="level1">
-<h1>basic-financials</h1>
-<p>An interactive financial literacy assistant for undergraduate business students. Compares two retail companies — each from their own chosen fiscal year — side by side using data from the BusMgmtBenchmarks Dolt database, then stays open for student questions.</p>
+<section id="roa-analysis-quiz" class="level1">
+<h1>roa-analysis-quiz</h1>
+<p>A quiz-style financial analysis tutor for undergraduate business students. Tests understanding of Return on Assets (ROA) and the Strategic Profit Model by fetching real company data from the BusMgmtBenchmarks Dolt database, displaying it side by side, and asking questions that require calculating and interpreting ratios from the displayed data.</p>
 <section id="inputs" class="level2">
 <h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
-<p><code>/basic-financials TICKER1 YEAR1 TICKER2 YEAR2</code></p>
+<p><code>/roa-analysis-quiz TICKER1 YEAR1 TICKER2 YEAR2</code></p>
 <ul>
 <li><code>TICKER1</code> — first company ticker (e.g.&nbsp;<code>WMT</code>, <code>TGT</code>)</li>
 <li><code>YEAR1</code> — fiscal year for the first company (e.g.&nbsp;<code>2024</code>). Optional — defaults to the most recent year available for that company.</li>
@@ -321,18 +356,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><strong>Argument parsing:</strong> - 4 args: <code>TICKER1 YEAR1 TICKER2 YEAR2</code> — explicit years for both - 3 args: <code>TICKER1 YEAR1 TICKER2</code> — explicit year for company 1, default year for company 2 - 2 args: <code>TICKER1 TICKER2</code> — both default to their most recent available year</p>
 <p>A value is a YEAR if it is a 4-digit number (e.g.&nbsp;<code>2024</code>); otherwise it is a TICKER.</p>
-<p>If TICKER1 or TICKER2 is missing, stop and tell the user: &gt; Please provide at least two ticker symbols. Usage: <code>/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]</code></p>
+<p>If fewer than 2 tickers are provided, stop and tell the user: &gt; Please provide at least two ticker symbols. Usage: <code>/roa-analysis-quiz TICKER1 [YEAR1] TICKER2 [YEAR2]</code></p>
 <hr>
 </section>
 <section id="step-1-look-up-both-companies" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-look-up-both-companies">Step 1 — Look up both companies</h2>
-<p>Query <code>company_info</code> for both tickers in a single query:</p>
+<p>Query <code>company_info</code> for both tickers:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> company, display_name, ticker_symbol, <span class="kw">segment</span>, subsegment</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> company_info</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> ticker_symbol <span class="kw">IN</span> (<span class="st">'{TICKER1}'</span>, <span class="st">'{TICKER2}'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Use <code>db_string: calvinw/BusMgmtBenchmarks/main</code>.</p>
 <p>If a ticker is not found: &gt; <strong>{TICKER} not found in the database.</strong> Check the ticker symbol — use the ticker as it appears on the exchange (e.g.&nbsp;<code>WMT</code>, not <code>Walmart</code>).</p>
-<p>Store <code>company</code> (the internal DB name), <code>display_name</code>, <code>segment</code>, and <code>subsegment</code> for each company.</p>
+<p>Store <code>company</code> (internal DB name), <code>display_name</code>, <code>segment</code>, and <code>subsegment</code> for each company.</p>
 <hr>
 </section>
 <section id="step-2-determine-each-companys-year" class="level2">
@@ -344,31 +379,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> financials</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> company_name <span class="op">=</span> <span class="st">'{company}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Confirm with the user before proceeding: &gt; Comparing <strong>{display_name1} FY{YEAR1}</strong> vs.&nbsp;<strong>{display_name2} FY{YEAR2}</strong>.</p>
-<p>YEAR1 and YEAR2 may be the same or different — both are valid.</p>
 <hr>
 </section>
-<section id="step-3-fetch-the-financial-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-fetch-the-financial-data">Step 3 — Fetch the financial data</h2>
-<p>Fetch each company’s data independently using its own year. For each company, first try the pre-built comparison view:</p>
+<section id="step-3-fetch-financial-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-fetch-financial-data">Step 3 — Fetch financial data</h2>
+<p>For each company, fetch financials and metrics. First try the pre-built view:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> company_comparison_{YEARn}_view</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> company_name <span class="op">=</span> <span class="st">'{companyn}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If the view does not exist or returns no data for that company, fall back to direct table queries:</p>
+<p>If the view does not exist or returns no rows, fall back to direct table queries:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> f.company_name, f.<span class="dt">year</span>,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       f.`Net Revenue`, f.`Cost <span class="kw">of</span> Goods`, f.`Gross Margin`,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       f.`SGA`, f.`Operating Profit`, f.`Net Profit`,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       f.`Inventory`, f.`Current Assets`, f.`Total Assets`,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       f.`Current Liabilities`, f.`Liabilities`,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       f.`Total Shareholder Equity`, f.`Total Liabilities <span class="kw">and</span> Shareholder Equity`,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>       m.`Gross Margin %`, m.`SGA %`, m.`Operating Profit Margin %`, m.`Net Profit Margin %`</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> financials f</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> financial_metrics m <span class="kw">ON</span> f.company_name <span class="op">=</span> m.company_name <span class="kw">AND</span> f.<span class="dt">year</span> <span class="op">=</span> m.<span class="dt">year</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> f.company_name <span class="op">=</span> <span class="st">'{companyn}'</span> <span class="kw">AND</span> f.<span class="dt">year</span> <span class="op">=</span> {YEARn}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       f.`Total Shareholder Equity`,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>       m.`Gross Margin %`, m.`SGA %`, m.`Operating Profit Margin %`,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>       m.`Net Profit Margin %`, m.`Asset Turnover`, m.`ROA`,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>       m.`Inventory Turnover`</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> financials f</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> financial_metrics m <span class="kw">ON</span> f.company_name <span class="op">=</span> m.company_name <span class="kw">AND</span> f.<span class="dt">year</span> <span class="op">=</span> m.<span class="dt">year</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> f.company_name <span class="op">=</span> <span class="st">'{companyn}'</span> <span class="kw">AND</span> f.<span class="dt">year</span> <span class="op">=</span> {YEARn}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Store all values — you will need them to write correct quiz questions.</p>
 <hr>
 </section>
-<section id="step-4-present-the-side-by-side-comparison" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-present-the-side-by-side-comparison">Step 4 — Present the side-by-side comparison</h2>
-<p>Display three formatted tables. Column headers include each company’s name <strong>and</strong> year so the student always knows which year they’re looking at. All dollar amounts are in thousands — remind the student of this upfront.</p>
+<section id="step-4-display-the-side-by-side-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-display-the-side-by-side-comparison">Step 4 — Display the side-by-side comparison</h2>
+<p>Show three tables. Include the company name <strong>and</strong> year in every column header. Remind the student that all dollar amounts are in thousands.</p>
+<p><strong>CRITICAL — Do NOT display the Key Ratios &amp; ROA Components table.</strong> All ratios (Gross Margin %, SG&amp;A %, Operating Margin %, Net Profit Margin %, Asset Turnover, ROA) must be hidden from the student — they are quiz questions, not given data. Students must calculate every ratio themselves from the income statement and balance sheet figures. Fetch and store all ratio values internally for writing correct quiz questions, but never show them in the display.</p>
 <blockquote class="blockquote">
 <p><strong>Note:</strong> All dollar amounts below are in thousands. For example, $23,866,000 means approximately $23.9 billion in actual dollars.</p>
 </blockquote>
@@ -416,40 +454,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="key-ratios" class="level3">
-<h3 class="anchored" data-anchor-id="key-ratios">Key Ratios</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th></th>
-<th><strong>{display_name1} (FY{YEAR1})</strong></th>
-<th><strong>{display_name2} (FY{YEAR2})</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Gross Margin %</td>
-<td>{gm_pct1}%</td>
-<td>{gm_pct2}%</td>
-</tr>
-<tr class="even">
-<td>SG&amp;A % of Revenue</td>
-<td>{sga_pct1}%</td>
-<td>{sga_pct2}%</td>
-</tr>
-<tr class="odd">
-<td>Operating Margin %</td>
-<td>{op_pct1}%</td>
-<td>{op_pct2}%</td>
-</tr>
-<tr class="even">
-<td>Net Profit Margin %</td>
-<td>{np_pct1}%</td>
-<td>{np_pct2}%</td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="balance-sheet" class="level3">
 <h3 class="anchored" data-anchor-id="balance-sheet">Balance Sheet</h3>
 <table class="caption-top table">
@@ -493,155 +497,237 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>After the tables, invite questions:</p>
+<p>After the tables, greet the student and explain the quiz:</p>
 <blockquote class="blockquote">
-<p>I’ve pulled up <strong>{display_name1} FY{YEAR1}</strong> ({segment1}) vs.&nbsp;<strong>{display_name2} FY{YEAR2}</strong> ({segment2}). What would you like to understand about these numbers? You can ask about any line item, what the ratios mean, how the companies compare, or what these businesses look like financially.</p>
+<p>I’ve pulled up <strong>{display_name1} FY{YEAR1}</strong> ({segment1}) vs.&nbsp;<strong>{display_name2} FY{YEAR2}</strong> ({segment2}). We’re going to work through some questions on <strong>Return on Assets (ROA)</strong> and the <strong>Strategic Profit Model</strong>. I’ll ask one question at a time — take your time, and just reply with a single letter if you want to keep it short. Let’s start!</p>
 </blockquote>
 <hr>
 </section>
 </section>
-<section id="step-5-interactive-mode-student-questions" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-interactive-mode-student-questions">Step 5 — Interactive mode (student questions)</h2>
-<p>Stay open and answer student questions. For each response:</p>
-<ol type="1">
-<li><strong>Define terms first</strong> — never assume the student knows financial vocabulary</li>
-<li><strong>Use the actual numbers</strong> — always reference the specific values from the comparison</li>
-<li><strong>Walk step by step</strong> — explain each piece of the income statement flow before jumping to ratios</li>
-<li><strong>Use plain-language framing</strong> — “for every dollar of sales, {company} keeps {X} cents as gross profit”</li>
-<li><strong>Encourage connections</strong> — celebrate when a student links concepts (“exactly — that’s why their inventory turnover is higher”)</li>
+<section id="step-5-quiz-mode" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-quiz-mode">Step 5 — Quiz mode</h2>
+<section id="quiz-rules" class="level3">
+<h3 class="anchored" data-anchor-id="quiz-rules">Quiz Rules</h3>
+<ul>
+<li><strong>Only accept answers from the provided options.</strong> Reject any input not matching the listed choices.</li>
+<li><strong>Strict answer validation:</strong> If the student provides an answer not listed (e.g.&nbsp;“e”, a number, free text), treat it as incorrect and say which choices are valid.</li>
+<li><strong>One question at a time.</strong> Wait for the student’s answer before moving on.</li>
+<li><strong>When wrong:</strong> give a hint first, then reveal the correct answer with a brief explanation.</li>
+<li><strong>When right:</strong> confirm, briefly explain why, then move to the next question.</li>
+<li><strong>Accept a single letter</strong> (e.g.&nbsp;<code>b</code>) as a complete response.</li>
+</ul>
+</section>
+<section id="question-format-rules" class="level3">
+<h3 class="anchored" data-anchor-id="question-format-rules">Question Format Rules</h3>
+<p><strong>CRITICAL — Choices must always appear on separate lines.</strong></p>
+<p>This environment renders markdown. Plain newlines between choices are ignored — text runs together on one line. You MUST use a markdown bullet list (hyphen + space before each choice) to force each option onto its own line. Never write choices inline or separated only by plain newlines.</p>
+<p><strong>Multiple choice:</strong> 4 options labeled a), b), c), d), each as its own bullet. <strong>True/False:</strong> 2 options a) True and b) False, each as its own bullet.</p>
+<p>Keep choices concise and plausible — wrong choices should be common misconceptions or close values, not obviously wrong.</p>
+<p><strong>CORRECT format (bullet list):</strong></p>
+<p>What is the formula for ROA using the Strategic Profit Model?</p>
+<ul>
+<li><ol type="a">
+<li>Net Profit Margin % × Asset Turnover</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>Net Profit Margin % + Asset Turnover</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>Gross Margin % × Inventory Turnover</li>
+</ol></li>
+<li><ol start="4" type="a">
+<li>Operating Profit Margin % ÷ Total Assets</li>
+</ol></li>
+</ul>
+<p><strong>WRONG format (do not use — choices collapse to one line):</strong></p>
+<ol type="a">
+<li>Net Profit Margin % + Asset Turnover b) Net Profit Margin % × Asset Turnover c) …</li>
 </ol>
-<p><strong>For questions needing additional context</strong>, query the Dolt database:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Need</th>
-<th>Query pattern</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Industry benchmarks</td>
-<td><code>SELECT * FROM `segment benchmarks {YEAR}` WHERE segment = '{segment}'</code></td>
-</tr>
-<tr class="even">
-<td>Historical trend for one company</td>
-<td><code>SELECT year, \</code>Net Revenue`, `Gross Margin`, `SGA`, `Operating Profit` FROM financials WHERE company_name = ‘{company}’ ORDER BY year<code>| | How peers compare |</code>SELECT * FROM company_comparison_{YEAR}_view WHERE segment = ‘{segment}’ ORDER BY `Net Revenue` DESC<code>| | Precise metric values |</code>SELECT * FROM financial_metrics WHERE company_name = ‘{company}’ AND year = {YEAR}`</td>
-</tr>
-</tbody>
-</table>
-<p>Use <code>db_string: calvinw/BusMgmtBenchmarks/main</code> for all queries.</p>
+</section>
+<section id="correct-answer-position-rule" class="level3">
+<h3 class="anchored" data-anchor-id="correct-answer-position-rule">Correct Answer Position Rule</h3>
+<p><strong>CRITICAL — Actively fight position bias.</strong> AI models strongly tend to place the correct answer at a) or b). You MUST rotate the correct answer through all four positions equally across the quiz.</p>
+<p>Before writing each question: 1. Explicitly decide which letter (a, b, c, or d) will hold the correct answer — rotate through a → b → c → d → a … 2. Write the question so the correct answer lands on that letter 3. d) must appear as the correct answer just as often as a), b), or c) — never treat d) as a filler</p>
+</section>
+<section id="question-pool-structure" class="level3">
+<h3 class="anchored" data-anchor-id="question-pool-structure">Question Pool Structure</h3>
+<p>Do NOT ask the same fixed questions every run. Instead, draw from the pool below. Each run, pick <strong>10 questions</strong> — at least 1 from each tier, varied across both companies, and never repeating the same question template twice in a session.</p>
+<p>Vary which company (Company 1 or Company 2) each question targets. If Q3 targets Company 1, Q4 should target Company 2, and so on — alternate so both companies get equal coverage.</p>
+<hr>
+<section id="tier-1-foundational-always-include-at-least-1" class="level4">
+<h4 class="anchored" data-anchor-id="tier-1-foundational-always-include-at-least-1">Tier 1 — Foundational (always include at least 1)</h4>
+<p>These establish the formula and vocabulary before calculation begins.</p>
+<ul>
+<li><strong>Formula-MC:</strong> “What is the formula for ROA using the Strategic Profit Model?” — four formula choices</li>
+<li><strong>Formula-TF:</strong> “ROA = Net Profit Margin % × Asset Turnover. True or False?” — a) True b) False</li>
+<li><strong>Formula-TF:</strong> “A higher Asset Turnover always means a higher ROA. True or False?” — correct: b) False (margin also matters)</li>
+<li><strong>Definition-MC:</strong> “What does Asset Turnover measure?” — four choices about what the ratio represents</li>
+<li><strong>Definition-MC:</strong> “What does Net Profit Margin % tell us?” — four choices about what the ratio represents</li>
+</ul>
+<hr>
+</section>
+<section id="tier-2-component-reading-calculation-always-include-at-least-2" class="level4">
+<h4 class="anchored" data-anchor-id="tier-2-component-reading-calculation-always-include-at-least-2">Tier 2 — Component Reading &amp; Calculation (always include at least 2)</h4>
+<p>Students compute a single ratio from raw income statement or balance sheet figures.</p>
+<ul>
+<li><strong>Net Profit Margin % for Company 1:</strong> compute Net Profit ÷ Net Revenue × 100 — correct value + three plausible alternatives within ±5 pp</li>
+<li><strong>Net Profit Margin % for Company 2:</strong> same calculation for Company 2</li>
+<li><strong>Asset Turnover for Company 1:</strong> compute Net Revenue ÷ Total Assets — correct value + three alternatives within ±0.2</li>
+<li><strong>Asset Turnover for Company 2:</strong> same calculation for Company 2</li>
+<li><strong>Gross Margin % for Company 1:</strong> compute Gross Margin ÷ Net Revenue × 100 — correct value + three alternatives</li>
+<li><strong>Gross Margin % for Company 2:</strong> same for Company 2</li>
+<li><strong>Operating Margin % for Company 1:</strong> compute Operating Profit ÷ Net Revenue × 100</li>
+<li><strong>Operating Margin % for Company 2:</strong> same for Company 2</li>
+</ul>
+<hr>
+</section>
+<section id="tier-3-roa-calculation-always-include-at-least-2" class="level4">
+<h4 class="anchored" data-anchor-id="tier-3-roa-calculation-always-include-at-least-2">Tier 3 — ROA Calculation (always include at least 2)</h4>
+<p>Students apply the Strategic Profit Model to compute ROA.</p>
+<ul>
+<li><strong>ROA for Company 1:</strong> “Using Net Profit Margin % × Asset Turnover, what is Company 1’s ROA?” — four numerical choices</li>
+<li><strong>ROA for Company 2:</strong> same for Company 2</li>
+<li><strong>Component dominance for Company 1:</strong> “Which component has a bigger impact on Company 1’s ROA — its Net Profit Margin % or its Asset Turnover?” — four choices: Net Profit Margin %, Asset Turnover, they contribute equally, cannot be determined</li>
+<li><strong>Component dominance for Company 2:</strong> same for Company 2</li>
+</ul>
+<hr>
+</section>
+<section id="tier-4-comparison-interpretation-always-include-at-least-2" class="level4">
+<h4 class="anchored" data-anchor-id="tier-4-comparison-interpretation-always-include-at-least-2">Tier 4 — Comparison &amp; Interpretation (always include at least 2)</h4>
+<p>Students compare the two companies and reason about drivers.</p>
+<ul>
+<li><strong>ROA comparison:</strong> “Which company has the higher ROA?” — Company 1, Company 2, they are equal, cannot be determined</li>
+<li><strong>Margin comparison:</strong> “Which company has the higher Net Profit Margin %?” — Company 1, Company 2, they are equal, cannot be determined</li>
+<li><strong>Turnover comparison:</strong> “Which company has the higher Asset Turnover?” — Company 1, Company 2, they are equal, cannot be determined</li>
+<li><strong>Driver comparison:</strong> “Company X has higher Net Profit Margin % but lower Asset Turnover than Company Y. Which has the higher ROA?” — use actual values; correct answer is whichever company’s ROA is actually higher per the fetched data; four choices with reasoning</li>
+<li><strong>Segment strategy:</strong> “Both companies are in the same segment. What does their ROA difference tell you about which driver matters most?” — four choices about margin vs.&nbsp;turnover strategy</li>
+</ul>
+<hr>
+</section>
+<section id="tier-5-what-if-advanced-reasoning-always-include-at-least-1" class="level4">
+<h4 class="anchored" data-anchor-id="tier-5-what-if-advanced-reasoning-always-include-at-least-1">Tier 5 — What-If &amp; Advanced Reasoning (always include at least 1)</h4>
+<p>Students reason about change and causality.</p>
+<ul>
+<li><strong>Margin what-if on Company 1:</strong> “If Company 1 improved its Net Profit Margin % by 1 percentage point while Asset Turnover stayed the same, what would happen to its ROA?” — correct new ROA value + three wrong alternatives</li>
+<li><strong>Margin what-if on Company 2:</strong> same for Company 2</li>
+<li><strong>Turnover what-if on Company 1:</strong> “If Company 1 doubled its Asset Turnover while Net Profit Margin % stayed the same, what would happen to its ROA?” — correct doubled-ROA + three alternatives</li>
+<li><strong>Turnover what-if on Company 2:</strong> same for Company 2</li>
+<li><strong>Reverse what-if:</strong> “Company 1’s ROA dropped by 2 percentage points while Asset Turnover was unchanged. What must have happened?” — four choices about which driver caused the drop</li>
+<li><strong>Trade-off:</strong> “If Company 2 cut prices to grow sales (lowering Net Profit Margin % by 2 pp but increasing Asset Turnover by 0.1), would ROA go up or down?” — compute both scenarios; four choices</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="how-to-select-and-order-questions-each-run" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-select-and-order-questions-each-run">How to select and order questions each run</h3>
+<ol type="1">
+<li>Always start with 1 Tier 1 question to establish the formula</li>
+<li>Pick 2–3 from Tier 2, alternating between Company 1 and Company 2</li>
+<li>Pick 2 from Tier 3</li>
+<li>Pick 2–3 from Tier 4</li>
+<li>End with 1–2 from Tier 5</li>
+<li>Total: 8–10 questions per session</li>
+<li>Never repeat the same template twice in one session</li>
+<li>After all questions, congratulate the student and offer to compare other companies</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="key-formulas" class="level2">
+<h2 class="anchored" data-anchor-id="key-formulas">Key Formulas</h2>
+<p><strong>Strategic Profit Model ROA Formula (most important):</strong></p>
+<p><span class="math display">\[\text{ROA} = \text{Net Profit Margin \%} \times \text{Asset Turnover}\]</span></p>
+<p><strong>Component formulas:</strong></p>
+<ul>
+<li><span class="math inline">\(\text{Net Profit Margin \%} = \dfrac{\text{Net Profit}}{\text{Net Revenue}} \times 100\)</span></li>
+<li><span class="math inline">\(\text{Asset Turnover} = \dfrac{\text{Net Revenue}}{\text{Total Assets}}\)</span></li>
+<li><span class="math inline">\(\text{Gross Margin \%} = \dfrac{\text{Gross Margin}}{\text{Net Revenue}} \times 100\)</span></li>
+<li><span class="math inline">\(\text{Operating Profit Margin \%} = \dfrac{\text{Operating Profit}}{\text{Net Revenue}} \times 100\)</span></li>
+<li><span class="math inline">\(\text{Inventory Turnover} = \dfrac{\text{COGS}}{\text{Inventory}}\)</span></li>
+</ul>
+<p><strong>Units note:</strong> All dollar amounts in the database are in thousands. Ratios and percentages are unit-independent.</p>
+<hr>
+</section>
+<section id="math-and-currency-notation" class="level2">
+<h2 class="anchored" data-anchor-id="math-and-currency-notation">Math and Currency Notation</h2>
+<p>This environment renders LaTeX via KaTeX. Use the following rules:</p>
+<ol type="1">
+<li><strong>Always escape <code>$</code> for currency:</strong> Write <code>\$23.8B</code> not <code>$23.8B</code></li>
+<li><strong>Use <code>$...$</code> for inline math formulas</strong></li>
+<li><strong>Use <code>$$...$$</code> for display math</strong></li>
+<li><strong>Never write bare <code>$</code> in text — it triggers math rendering</strong></li>
+</ol>
 <hr>
 </section>
 <section id="communication-style" class="level2">
 <h2 class="anchored" data-anchor-id="communication-style">Communication Style</h2>
 <ul>
-<li><strong>Warm and encouraging</strong> — assume the student is seeing financial statements for the first time</li>
-<li><strong>Define every term</strong> before using it (“Gross Margin, which is the money left over after paying for the products the company sold…”)</li>
-<li><strong>Use analogies</strong> — “Think of COGS like a restaurant’s food costs. Before they pay rent, staff, or marketing, they first have to pay for the ingredients.”</li>
-<li><strong>One concept at a time</strong> — don’t stack multiple explanations in one response</li>
-<li><strong>Avoid jargon</strong> unless you’ve just defined it</li>
-<li><strong>Celebrate progress</strong> — when a student makes a connection, acknowledge it warmly before building on it</li>
-</ul>
-<hr>
-</section>
-<section id="the-income-statement-flow" class="level2">
-<h2 class="anchored" data-anchor-id="the-income-statement-flow">The Income Statement Flow</h2>
-<p>This is the most important teaching framework. Walk students through it with actual numbers:</p>
-<pre><code>Net Revenue           (total money customers paid)
- − Cost of Goods      (what the company paid to buy/make those products)
- = Gross Margin       (profit after paying for the products)
- − SG&amp;A               (rent, employees, marketing, IT, etc.)
- = Operating Profit   (profit from running the core business)
- − Interest &amp; Taxes
- = Net Profit         (the bottom line — what's left for shareholders)</code></pre>
-<p><strong>Gross Margin %</strong> tells a student: “For every dollar of sales, how many cents are left after paying for the product?”</p>
-<hr>
-</section>
-<section id="key-formulas" class="level2">
-<h2 class="anchored" data-anchor-id="key-formulas">Key Formulas</h2>
-<ul>
-<li>Gross Margin % = (Gross Margin ÷ Net Revenue) × 100</li>
-<li>SG&amp;A % = (SG&amp;A ÷ Net Revenue) × 100</li>
-<li>Operating Margin % = (Operating Profit ÷ Net Revenue) × 100</li>
-<li>Net Profit Margin % = (Net Profit ÷ Net Revenue) × 100</li>
+<li><strong>Encouraging but intellectually challenging</strong> — push students to think deeper without overwhelming them</li>
+<li><strong>Ask one question at a time</strong> — wait for an answer before moving on</li>
+<li><strong>Give a hint before revealing the answer</strong> when the student is wrong</li>
+<li><strong>Use the actual numbers on screen</strong> — questions should feel concrete and grounded in the real data</li>
+<li><strong>Never open-ended</strong> — every question is multiple choice or true/false</li>
 </ul>
 <hr>
 </section>
 <section id="industry-context" class="level2">
 <h2 class="anchored" data-anchor-id="industry-context">Industry Context</h2>
-<p>The BusMgmtBenchmarks database covers 59 retail and specialty companies across 11 segments. Use this table to give students context about why metrics differ between business types:</p>
+<p>Use this table when writing strategy questions or explaining why metrics differ between companies:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 31%">
-<col style="width: 48%">
+<col style="width: 32%">
+<col style="width: 67%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Segment</th>
-<th>Key Companies</th>
-<th>Typical Characteristic</th>
+<th>Key Characteristics</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Department Store</td>
-<td>Macy’s, Nordstrom, Kohl’s, Dillard’s</td>
-<td>Higher margins, slower turnover</td>
+<td><strong>Warehouse Clubs</strong> (Costco, BJ’s)</td>
+<td>Membership-based; lowest margins (~12%), highest turnover</td>
 </tr>
 <tr class="even">
-<td>Discount Store</td>
-<td>Walmart, Target, Dollar General</td>
-<td>Low prices, high volume</td>
-</tr>
-<tr class="odd">
-<td>Fast Fashion</td>
-<td>H&amp;M, Inditex/Zara</td>
-<td>Quick inventory turns</td>
-</tr>
-<tr class="even">
-<td>Grocery</td>
-<td>Kroger, Albertsons, Ahold Delhaize</td>
+<td><strong>Grocery</strong> (Kroger, Albertsons)</td>
 <td>Very low margins (1–3%), very high turnover</td>
 </tr>
 <tr class="odd">
-<td>Health &amp; Pharmacy</td>
-<td>CVS, Walgreens, Rite Aid</td>
-<td>Mixed retail + pharmacy economics</td>
+<td><strong>Discount Store</strong> (Walmart, Target)</td>
+<td>Low prices, high volume</td>
 </tr>
 <tr class="even">
-<td>Home Improvement</td>
-<td>Home Depot, Lowe’s, Tractor Supply</td>
-<td>Strong margins; pro + DIY customers</td>
-</tr>
-<tr class="odd">
-<td>Off-Price</td>
-<td>TJ Maxx, Ross, Burlington</td>
+<td><strong>Off-Price</strong> (TJ Maxx, Ross)</td>
 <td>Opportunistic buying; good margins</td>
 </tr>
+<tr class="odd">
+<td><strong>Home Improvement</strong> (Home Depot, Lowe’s)</td>
+<td>Strong margins and turnover</td>
+</tr>
 <tr class="even">
-<td>Online</td>
-<td>Amazon, Wayfair, Chewy, ASOS</td>
-<td>No stores; lower SG&amp;A but high shipping</td>
+<td><strong>Fast Fashion</strong> (H&amp;M, Zara)</td>
+<td>Quick inventory turns</td>
 </tr>
 <tr class="odd">
-<td>Resale</td>
-<td>eBay, Etsy, Alibaba, The RealReal</td>
-<td>Marketplace/platform model</td>
+<td><strong>Department Store</strong> (Macy’s, Nordstrom)</td>
+<td>Higher margins, slower turnover</td>
 </tr>
 <tr class="even">
-<td>Specialty</td>
-<td>Nike, Lululemon, Boot Barn, Best Buy, Bath &amp; Body Works, and more</td>
+<td><strong>Health &amp; Pharmacy</strong> (CVS, Walgreens)</td>
+<td>Mixed retail + pharmacy</td>
+</tr>
+<tr class="odd">
+<td><strong>Online</strong> (Amazon, Wayfair)</td>
+<td>No stores; varied models</td>
+</tr>
+<tr class="even">
+<td><strong>Specialty</strong> (Nike, Lululemon, Boot Barn, etc.)</td>
 <td>Wide variation by category</td>
 </tr>
 <tr class="odd">
-<td>Warehouse Clubs</td>
-<td>Costco, BJ’s</td>
-<td>Membership-based; lowest margins (~12%), highest turnover</td>
+<td><strong>Resale</strong> (eBay, Etsy, Alibaba)</td>
+<td>Marketplace/platform model</td>
 </tr>
 </tbody>
 </table>
@@ -649,10 +735,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="database-reference" class="level2">
 <h2 class="anchored" data-anchor-id="database-reference">Database Reference</h2>
+<p>Use <code>db_string: calvinw/BusMgmtBenchmarks/main</code> for all queries.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 60%">
-<col style="width: 39%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -667,11 +754,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td><code>financials</code></td>
-<td>All 13 standard fields (Net Revenue through Total Liabilities and SE), in thousands</td>
+<td>Revenue, COGS, Gross Margin, SGA, Operating Profit, Net Profit, Inventory, Assets — all in thousands</td>
 </tr>
 <tr class="odd">
 <td><code>financial_metrics</code></td>
-<td>Calculated ratios: margin %, inventory turnover, asset turnover, ROA, etc.</td>
+<td>Calculated ratios: margin %, Asset Turnover, ROA, Inventory Turnover, etc.</td>
 </tr>
 <tr class="even">
 <td><code>segment_metrics</code></td>
@@ -685,17 +772,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><code>company_comparison_{YEAR}_view</code></td>
 <td>All data for companies in a given year</td>
 </tr>
-<tr class="odd">
-<td><code>`segment benchmarks {YEAR}`</code></td>
-<td>Segment average metrics for a given year</td>
-</tr>
-<tr class="even">
-<td><code>`subsegment benchmarks {YEAR}`</code></td>
-<td>Subsegment average metrics for a given year</td>
-</tr>
 </tbody>
 </table>
-<p>Use <code>list_views</code> and <code>describe_view</code> to discover all available views.</p>
+<p>Use <code>list_views</code> and <code>describe_view</code> to discover all available views at runtime.</p>
 
 
 </section>

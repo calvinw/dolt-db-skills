@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Find SQL files in extract/2026/inserts/, clone the BusMgmtBenchmarks Dolt database, execute each SQL file against the local clone, show the diff, then commit and push. Triggered by “/insert-dolt-db-sql” (all files) or “/insert-dolt-db-sql FILE1 FILE2 …” (specific files).">
 
-<title>insert-dolt-db-sql – Dolt DB Skills</title>
+<title>roa-analysis-quiz-baba-2024-ebay-2024-v1.1-catie-sonnet-4-6-session1 – Dolt DB Skills</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,61 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-62eb1f71a55283cc3b79b02e9883d837.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-62eb1f71a55283cc3b79b02e9883d837.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../custom.css">
+<link rel="stylesheet" href="../../custom.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed quarto-light">
@@ -118,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Dolt DB Skills</span>
     </a>
   </div>
@@ -129,19 +93,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../skills_sessions/index.html"> 
+    <a class="nav-link active" href="../../skills_sessions/index.html" aria-current="page"> 
 <span class="menu-text">Sessions</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../plan/index.html"> 
+    <a class="nav-link" href="../../plan/index.html"> 
 <span class="menu-text">Plans</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../skills/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../skills/index.html"> 
 <span class="menu-text">Skills</span></a>
   </li>  
 </ul>
@@ -155,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skills/insert-dolt-db-sql.html">Insert Dolt DB SQL</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../skills_sessions/roa-analysis-quiz/roa-analysis-quiz-BABA-2024-EBAY-2024-v1.0-catie-sonnet-4-6-session2.html">Roa Analysis Quiz</a></li><li class="breadcrumb-item"><a href="../../skills_sessions/roa-analysis-quiz/roa-analysis-quiz-BABA-2024-EBAY-2024-v1.1-catie-sonnet-4-6-session1.html">BABA-2024-EBAY-2024-v1.1-catie-sonnet-4-6-session1</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -169,106 +133,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../skills/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../skills_sessions/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/find-financials-from-pdfs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Find Financials from PDFs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/find-financials-from-pdfs/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/create-new-company-sql.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Create New Company SQL</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/create-new-company-sql/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/verify-dolt-db-financials.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Verify Dolt DB Financials</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/verify-dolt-db-financials/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/create-verified-dolt-db-financials-sql.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Create Verified Dolt DB Financials SQL</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/create-verified-dolt-db-financials-sql/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/download-new-year-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Download New Year Data</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/download-new-year-data/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/insert-dolt-db-sql.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Insert Dolt DB SQL</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/insert-dolt-db-sql/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../skills/basic-financials.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Basic Financials</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../skills_sessions/basic-financials/basic-financials-WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">WMT-2023-TGT-2023-v1.0-elena-sonnet-4-6-session1</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/basic-financials/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
+  <a href="../../skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Verify Dolt DB Financials</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../skills/roa-analysis-quiz.html" class="sidebar-item-text sidebar-link">
+  <a href="../../skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">M-v1.0-calvinw-sonnet-4-6-session1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Roa Analysis Quiz</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/roa-analysis-quiz/SKILL.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(.md)</span></a>
+  <a href="../../skills_sessions/roa-analysis-quiz/roa-analysis-quiz-BABA-2024-EBAY-2024-v1.0-catie-sonnet-4-6-session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BABA-2024-EBAY-2024-v1.0-catie-sonnet-4-6-session2</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../skills_sessions/roa-analysis-quiz/roa-analysis-quiz-BABA-2024-EBAY-2024-v1.1-catie-sonnet-4-6-session1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">BABA-2024-EBAY-2024-v1.1-catie-sonnet-4-6-session1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../skills_sessions/roa-analysis-quiz/roa-analysis-quiz-BABA-2024-EBAY-2024-v1.2-catie-sonnet-4-6-session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BABA-2024-EBAY-2024-v1.2-catie-sonnet-4-6-session1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -279,102 +216,220 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#insert-dolt-db-sql" id="toc-insert-dolt-db-sql" class="nav-link active" data-scroll-target="#insert-dolt-db-sql">insert-dolt-db-sql</a>
+  <li><a href="#roa-analysis-quiz-baba-2024-ebay-2024" id="toc-roa-analysis-quiz-baba-2024-ebay-2024" class="nav-link active" data-scroll-target="#roa-analysis-quiz-baba-2024-ebay-2024">/roa-analysis-quiz BABA 2024 EBAY 2024</a>
   <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs">Inputs</a></li>
-  <li><a href="#step-0-gather-sql-files" id="toc-step-0-gather-sql-files" class="nav-link" data-scroll-target="#step-0-gather-sql-files">Step 0 — Gather SQL files</a></li>
-  <li><a href="#step-1-clone-the-target-database" id="toc-step-1-clone-the-target-database" class="nav-link" data-scroll-target="#step-1-clone-the-target-database">Step 1 — Clone the target database</a></li>
-  <li><a href="#step-2-execute-each-sql-file" id="toc-step-2-execute-each-sql-file" class="nav-link" data-scroll-target="#step-2-execute-each-sql-file">Step 2 — Execute each SQL file</a></li>
-  <li><a href="#step-3-show-the-diff" id="toc-step-3-show-the-diff" class="nav-link" data-scroll-target="#step-3-show-the-diff">Step 3 — Show the diff</a></li>
-  <li><a href="#step-4-commit" id="toc-step-4-commit" class="nav-link" data-scroll-target="#step-4-commit">Step 4 — Commit</a></li>
-  <li><a href="#step-5-push" id="toc-step-5-push" class="nav-link" data-scroll-target="#step-5-push">Step 5 — Push</a></li>
-  <li><a href="#step-6-cleanup" id="toc-step-6-cleanup" class="nav-link" data-scroll-target="#step-6-cleanup">Step 6 — Cleanup</a></li>
-  <li><a href="#step-7-print-summary" id="toc-step-7-print-summary" class="nav-link" data-scroll-target="#step-7-print-summary">Step 7 — Print summary</a></li>
+  <li><a href="#income-statement" id="toc-income-statement" class="nav-link" data-scroll-target="#income-statement">Income Statement</a></li>
+  <li><a href="#key-ratios-roa-components" id="toc-key-ratios-roa-components" class="nav-link" data-scroll-target="#key-ratios-roa-components">Key Ratios &amp; ROA Components</a></li>
+  <li><a href="#balance-sheet" id="toc-balance-sheet" class="nav-link" data-scroll-target="#balance-sheet">Balance Sheet</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../skills_sessions/roa-analysis-quiz/roa-analysis-quiz-BABA-2024-EBAY-2024-v1.0-catie-sonnet-4-6-session2.html">Roa Analysis Quiz</a></li><li class="breadcrumb-item"><a href="../../skills_sessions/roa-analysis-quiz/roa-analysis-quiz-BABA-2024-EBAY-2024-v1.1-catie-sonnet-4-6-session1.html">BABA-2024-EBAY-2024-v1.1-catie-sonnet-4-6-session1</a></li></ol></nav></header>
 
 
 
 
-<section id="insert-dolt-db-sql" class="level1">
-<h1>insert-dolt-db-sql</h1>
-<p>Find SQL files in <code>extract/2026/inserts/</code>, clone the target Dolt database, execute each SQL file, show the diff, and commit+push to DoltHub.</p>
-<p><strong>This skill writes directly to the Dolt database. Use with caution.</strong></p>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<ul>
-<li>Dolt CLI must be installed (<code>dolt version</code>)</li>
-<li>Git-style user config must be set (<code>dolt config --global --add user.email</code> and <code>user.name</code>)</li>
-<li>The target repo must be public (clone-able without auth). For push access, DoltHub credentials must be configured.</li>
-</ul>
-</section>
-<section id="inputs" class="level2">
-<h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
-<ul>
-<li><code>/insert-dolt-db-sql</code> — find and apply all <code>.sql</code> files in <code>extract/2026/inserts/</code></li>
-<li><code>/insert-dolt-db-sql FILE1 FILE2 ...</code> — apply only the named files (paths relative to <code>extract/2026/inserts/</code>)</li>
-</ul>
-</section>
-<section id="step-0-gather-sql-files" class="level2">
-<h2 class="anchored" data-anchor-id="step-0-gather-sql-files">Step 0 — Gather SQL files</h2>
-<p>List all <code>.sql</code> files under <code>extract/2026/inserts/</code>. If specific filenames were provided, filter to only those (error if any are not found).</p>
-<p>Display the list:</p>
+<section id="roa-analysis-quiz-baba-2024-ebay-2024" class="level1">
+<h1>/roa-analysis-quiz BABA 2024 EBAY 2024</h1>
+<p><strong>Skill_Version:</strong> 1.1 <strong>Student:</strong> catie <strong>Model:</strong> sonnet-4-6 <strong>Date:</strong> 2026-06-18</p>
+<p><strong>AI:</strong> Comparing <strong>Alibaba FY2024</strong> vs.&nbsp;<strong>eBay FY2024</strong>.</p>
 <blockquote class="blockquote">
-<p>Found {N} SQL file(s): file1.sql, file2.sql, …</p>
+<p><strong>Note:</strong> All dollar amounts below are in thousands. For example, $137,300,000 means approximately $137.3 billion in actual dollars.</p>
 </blockquote>
-<p>If no files found, stop and tell the user: “No SQL files found in <code>extract/2026/inserts/</code>.”</p>
-</section>
-<section id="step-1-clone-the-target-database" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-clone-the-target-database">Step 1 — Clone the target database</h2>
-<p>Create a temporary directory and clone <code>calvinw/BusMgmtBenchmarks</code> into it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">TMPDIR</span><span class="op">=</span><span class="va">$(</span><span class="fu">mktemp</span> <span class="at">-d</span><span class="va">)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> clone calvinw/BusMgmtBenchmarks <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Confirm clone succeeded. If it fails, stop with an error.</p>
-</section>
-<section id="step-2-execute-each-sql-file" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-execute-each-sql-file">Step 2 — Execute each SQL file</h2>
-<p>For each SQL file (in alphabetical order):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> sql <span class="op">&lt;</span> <span class="st">"{SQL_FILE_PATH}"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Show the output of each execution. If any SQL file produces errors, display them but continue processing remaining files.</p>
-</section>
-<section id="step-3-show-the-diff" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-show-the-diff">Step 3 — Show the diff</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> diff</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Display the full diff to the user for review.</p>
-</section>
-<section id="step-4-commit" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-commit">Step 4 — Commit</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> add <span class="at">-A</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> commit <span class="at">-am</span> <span class="st">"Apply SQL inserts from extract/2026/inserts/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Show the commit hash.</p>
-</section>
-<section id="step-5-push" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-push">Step 5 — Push</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dolt</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If push fails due to missing credentials, tell the user to push manually:</p>
-<blockquote class="blockquote">
-<p>Push requires DoltHub credentials. Run <code>dolt push origin main</code> from <code>{TMPDIR}</code> manually.</p>
-</blockquote>
-</section>
-<section id="step-6-cleanup" class="level2">
-<h2 class="anchored" data-anchor-id="step-6-cleanup">Step 6 — Cleanup</h2>
-<p>Remove the temporary clone directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TMPDIR</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="step-7-print-summary" class="level2">
-<h2 class="anchored" data-anchor-id="step-7-print-summary">Step 7 — Print summary</h2>
 <hr>
-<p><strong>Applied {N} SQL file(s) to calvinw/BusMgmtBenchmarks/main:</strong> - file1.sql - file2.sql - …</p>
-<p><strong>Commit:</strong> {hash}</p>
-<p><strong>Diff summary:</strong> {N} rows changed across {N} tables.</p>
+<section id="income-statement" class="level3">
+<h3 class="anchored" data-anchor-id="income-statement">Income Statement</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Alibaba (FY2024)</strong></th>
+<th><strong>eBay (FY2024)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Net Revenue</td>
+<td>$137,300,000</td>
+<td>$10,283,000</td>
+</tr>
+<tr class="even">
+<td>Cost of Goods (COGS)</td>
+<td>$82,446,000</td>
+<td>$2,880,000</td>
+</tr>
+<tr class="odd">
+<td><strong>Gross Margin</strong></td>
+<td><strong>$54,854,000</strong></td>
+<td><strong>$7,403,000</strong></td>
+</tr>
+<tr class="even">
+<td>SG&amp;A</td>
+<td>$25,943,000</td>
+<td>$3,233,000</td>
+</tr>
+<tr class="odd">
+<td><strong>Operating Profit</strong></td>
+<td><strong>$19,417,000</strong></td>
+<td><strong>$2,318,000</strong></td>
+</tr>
+<tr class="even">
+<td>Net Profit</td>
+<td>$17,929,000</td>
+<td>$1,975,000</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="key-ratios-roa-components" class="level3">
+<h3 class="anchored" data-anchor-id="key-ratios-roa-components">Key Ratios &amp; ROA Components</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Alibaba (FY2024)</strong></th>
+<th><strong>eBay (FY2024)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gross Margin %</td>
+<td>39.95%</td>
+<td>71.99%</td>
+</tr>
+<tr class="even">
+<td>SG&amp;A % of Revenue</td>
+<td>18.90%</td>
+<td>31.44%</td>
+</tr>
+<tr class="odd">
+<td>Operating Margin %</td>
+<td>14.14%</td>
+<td>22.54%</td>
+</tr>
+<tr class="even">
+<td><strong>Net Profit Margin %</strong></td>
+<td><strong>13.06%</strong></td>
+<td><strong>19.21%</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Asset Turnover</strong></td>
+<td><strong>0.55</strong></td>
+<td><strong>0.53</strong></td>
+</tr>
+<tr class="even">
+<td>Inventory Turnover</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="balance-sheet" class="level3">
+<h3 class="anchored" data-anchor-id="balance-sheet">Balance Sheet</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Alibaba (FY2024)</strong></th>
+<th><strong>eBay (FY2024)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inventory</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr class="even">
+<td>Current Assets</td>
+<td>$92,886,000</td>
+<td>$7,567,000</td>
+</tr>
+<tr class="odd">
+<td>Total Assets</td>
+<td>$248,629,000</td>
+<td>$19,365,000</td>
+</tr>
+<tr class="even">
+<td>Current Liabilities</td>
+<td>$59,992,000</td>
+<td>$6,098,000</td>
+</tr>
+<tr class="odd">
+<td>Total Liabilities</td>
+<td>$98,409,000</td>
+<td>$14,207,000</td>
+</tr>
+<tr class="even">
+<td>Total Equity</td>
+<td>$150,220,000</td>
+<td>$5,158,000</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>I’ve pulled up <strong>Alibaba FY2024</strong> (Resale) vs.&nbsp;<strong>eBay FY2024</strong> (Resale). We’re going to work through some questions on <strong>Return on Assets (ROA)</strong> and the <strong>Strategic Profit Model</strong>. I’ll ask one question at a time — take your time, and just reply with a single letter if you want to keep it short. Let’s start!</p>
+<hr>
+<p><strong>Question 1 of 10</strong></p>
+<p>What does Asset Turnover measure?</p>
+<ul>
+<li><ol type="a">
+<li>How efficiently a company generates revenue from its assets</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>How much profit a company keeps from each dollar of sales</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>How quickly a company sells through its inventory</li>
+</ol></li>
+<li><ol start="4" type="a">
+<li>How much debt a company uses to finance its assets</li>
+</ol></li>
+</ul>
+<p><strong>User:</strong> c</p>
+<p><strong>AI:</strong> Not quite! Here’s a hint: Asset Turnover has the word <strong>“assets”</strong> in it — think about what assets are (everything a company owns: buildings, equipment, cash, etc.) and what a company does with them to make money.</p>
+<p>What does Asset Turnover measure?</p>
+<ul>
+<li><ol type="a">
+<li>How efficiently a company generates revenue from its assets</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>How much profit a company keeps from each dollar of sales</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>How quickly a company sells through its inventory</li>
+</ol></li>
+<li><ol start="4" type="a">
+<li>How much debt a company uses to finance its assets</li>
+</ol></li>
+</ul>
+<p><strong>User:</strong> a</p>
+<p><strong>AI:</strong> Correct! ✓</p>
+<p>Asset Turnover = Net Revenue ÷ Total Assets. It tells you how many dollars of revenue the company squeezes out of every dollar of assets it owns. Alibaba generates $0.55 in revenue per dollar of assets; eBay generates $0.53. Both are marketplace platforms with no inventory, so neither turns its assets over very fast.</p>
+<hr>
+<p><strong>Question 2 of 10</strong></p>
+<p>Using the income statement data in the table, calculate Alibaba’s Gross Margin % for FY2024. Which value is closest?</p>
+<p><em>(Hint: Gross Margin ÷ Net Revenue × 100)</em></p>
+<ul>
+<li><ol type="a">
+<li>44.2%</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>39.9%</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>34.7%</li>
+</ol></li>
+<li><ol start="4" type="a">
+<li>60.1%</li>
+</ol></li>
+</ul>
+<p><strong>User:</strong> b ok lets stop this is showed on the table</p>
 
 
 </section>
