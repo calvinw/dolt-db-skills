@@ -4,7 +4,10 @@ project:
   render:
     - index.md
     - skills_sessions/index.md
+    - skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md
+    - skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md
     - plan/index.md
+    - plan/PLAN_skill_recommendations.md
     - skills/index.md
     - skills/find-financials-from-pdfs.md
     - skills/create-new-company-sql.md
@@ -12,6 +15,7 @@ project:
     - skills/create-verified-dolt-db-financials-sql.md
     - skills/download-new-year-data.md
     - skills/insert-dolt-db-sql.md
+    - skills/basic-financials.md
 
 website:
   title: "Dolt DB Skills"
@@ -33,6 +37,14 @@ website:
       contents:
         - text: Overview
           href: skills_sessions/index.md
+        - section: "Verify Dolt DB Financials"
+          contents:
+            - text: "M v1.0 session1"
+              href: skills_sessions/verify-dolt-db-financials/verify-dolt-db-financials-M-v1.0-calvinw-sonnet-4-6-session1.md
+        - section: "Basic Financials"
+          contents:
+            - text: "WMT-2024-TGT-2024 v1.0 session1"
+              href: skills_sessions/basic-financials/basic-financials-WMT-2024-TGT-2024-v1.0-elena-sonnet-4-6-session1.md
 
     - id: plans
       title: "Plans"
@@ -40,6 +52,8 @@ website:
       contents:
         - text: Overview
           href: plan/index.md
+        - text: "skill_recommendations"
+          href: plan/PLAN_skill_recommendations.md
 
     - id: skills
       title: "Skills"
@@ -50,27 +64,31 @@ website:
         - text: "Find Financials from PDFs"
           href: skills/find-financials-from-pdfs.md
         - text: "(.md)"
-          href: '#'
+          href: https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/find-financials-from-pdfs/SKILL.md
         - text: "Create New Company SQL"
           href: skills/create-new-company-sql.md
         - text: "(.md)"
-          href: '#'
+          href: https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/create-new-company-sql/SKILL.md
         - text: "Verify Dolt DB Financials"
           href: skills/verify-dolt-db-financials.md
         - text: "(.md)"
-          href: '#'
+          href: https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/verify-dolt-db-financials/SKILL.md
         - text: "Create Verified Dolt DB Financials SQL"
           href: skills/create-verified-dolt-db-financials-sql.md
         - text: "(.md)"
-          href: '#'
+          href: https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/create-verified-dolt-db-financials-sql/SKILL.md
         - text: "Download New Year Data"
           href: skills/download-new-year-data.md
         - text: "(.md)"
-          href: '#'
+          href: https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/download-new-year-data/SKILL.md
         - text: "Insert Dolt DB SQL"
           href: skills/insert-dolt-db-sql.md
         - text: "(.md)"
-          href: '#'
+          href: https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/insert-dolt-db-sql/SKILL.md
+        - text: "Basic Financials"
+          href: skills/basic-financials.md
+        - text: "(.md)"
+          href: https://github.com/calvinw/dolt-db-skills/blob/main/.skillshare/skills/basic-financials/SKILL.md
 
 format:
   html:

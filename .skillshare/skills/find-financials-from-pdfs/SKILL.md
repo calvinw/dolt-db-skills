@@ -1,5 +1,6 @@
 ---
 name: find-financials-from-pdfs
+version: 0.1
 description: Extract financial data from PDF annual reports for private companies not listed on public exchanges, standardize the data to match the BusMgmtBenchmarks schema, and generate SQL files for insertion into the company_info and financials tables. Use when adding a private company (e.g. ACE Hardware) from PDF sources. Triggered by "/find-financials-from-pdfs COMPANY NAME".
 ---
 

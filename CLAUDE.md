@@ -4,6 +4,14 @@ This repo is for working on skills that manage the **BusMgmtBenchmarks** Dolt da
 
 Skills are slash commands available through agent execution.
 
+## Skill authoring — master copies live in `.skillshare/`
+
+**The canonical source of truth for all skills is `.skillshare/skills/`.** This is the only place skills should be edited or created. Do not edit skill files anywhere else.
+
+Agent-specific directories (`.claude/skills/`, `.agents/skills/`, `.opencode/skills/`, etc.) are **generated copies** — populated by running `skillshare sync` from `.skillshare/`. They are git-ignored and must never be committed. If a skill file appears outside `.skillshare/`, treat it as stale and refer to `.skillshare/` instead.
+
+To update a skill: edit `.skillshare/skills/<skill-name>/SKILL.md`, then run `skillshare sync` to push the change to all agent directories.
+
 ## Available Skills
 
 - `/basic-financials TICKER1 [YEAR1] TICKER2 [YEAR2]` — Interactive financial comparison assistant for undergraduate business students. Each company gets its own fiscal year. Pulls side-by-side income statement, ratio, and balance sheet data from the BusMgmtBenchmarks Dolt database and stays open for student questions about what the numbers mean. Years default to the most recent available for each company if omitted.
